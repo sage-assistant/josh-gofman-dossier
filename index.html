@@ -3,37 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CLASSIFIED — Republic of South Africa Department of Culinary Intelligence</title>
+  <title>The Gofman — A Nature Documentary</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Source+Code+Pro:wght@300;400;500;600;700&family=Playfair+Display:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0a0e0a;
-      --surface: #0f150f;
-      --surface-2: #141c14;
-      --border: rgba(76,175,80,0.12);
-      --text: #e8ede8;
-      --text-dim: #7a8a7a;
-      --green: #4caf50;
-      --green-soft: rgba(76,175,80,0.08);
-      --green-glow: rgba(76,175,80,0.25);
-      --red: #d32f2f;
-      --red-soft: rgba(211,47,47,0.1);
-      --amber: #ffa000;
-      --amber-soft: rgba(255,160,0,0.1);
-      --gold: #c9a84c;
-      --stamp: #d32f2f;
+      --bg: #0d0b08;
+      --surface: #161210;
+      --surface-2: #1c1814;
+      --border: rgba(196,164,112,0.1);
+      --text: #f0ebe3;
+      --text-dim: #9a8e7e;
+      --gold: #c4a470;
+      --gold-soft: rgba(196,164,112,0.08);
+      --gold-glow: rgba(196,164,112,0.2);
+      --warm: #c47044;
+      --warm-soft: rgba(196,112,68,0.1);
+      --sage: #7a9a6d;
+      --sage-soft: rgba(122,154,109,0.1);
+      --cream: #e8dcc8;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'Inter', -apple-system, sans-serif;
+      font-family: 'DM Sans', -apple-system, sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.6;
+      line-height: 1.7;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
@@ -42,13 +41,13 @@
       content: '';
       position: fixed;
       inset: 0;
-      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      opacity: 0.03;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.035;
       pointer-events: none;
       z-index: 9997;
     }
 
-    /* ============ SPLASH SCREEN ============ */
+    /* ============ SPLASH ============ */
     .splash {
       position: fixed;
       inset: 0;
@@ -60,211 +59,188 @@
       justify-content: center;
       text-align: center;
       padding: 2rem;
-      transition: opacity 0.6s, visibility 0.6s;
+      transition: opacity 0.8s, visibility 0.8s;
     }
+    .splash.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
-    .splash.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
-
-    .splash-icon {
-      width: 80px;
-      height: 80px;
-      border: 3px solid var(--green);
+    .splash-logo {
+      width: 100px;
+      height: 100px;
+      border: 2px solid var(--gold);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2rem;
+      font-size: 2.5rem;
       margin-bottom: 2rem;
-      animation: scan-pulse 2s ease-in-out infinite;
       position: relative;
     }
 
-    .splash-icon::after {
+    .splash-logo::after {
       content: '';
       position: absolute;
-      inset: -8px;
-      border: 1px solid rgba(76,175,80,0.3);
+      inset: -12px;
+      border: 1px solid rgba(196,164,112,0.2);
       border-radius: 50%;
-      animation: scan-ring 2s ease-in-out infinite;
+      animation: logo-breathe 3s ease-in-out infinite;
     }
 
-    @keyframes scan-pulse { 0%, 100% { box-shadow: 0 0 20px var(--green-glow); } 50% { box-shadow: 0 0 40px var(--green-glow), 0 0 80px rgba(76,175,80,0.1); } }
-    @keyframes scan-ring { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.15); opacity: 0.5; } }
+    @keyframes logo-breathe { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.08); opacity: 1; } }
 
-    .splash-classification {
-      font-family: 'Special Elite', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.3em;
+    .splash-network {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
       text-transform: uppercase;
-      color: var(--red);
-      margin-bottom: 1.5rem;
-      padding: 0.5rem 1.5rem;
-      border: 1px solid var(--red);
-      display: inline-block;
+      color: var(--gold);
+      margin-bottom: 2rem;
+      opacity: 0.7;
     }
 
     .splash h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.8rem, 5vw, 3rem);
-      margin-bottom: 0.75rem;
-      color: var(--text);
-      font-weight: 700;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2.5rem, 7vw, 4.5rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.02em;
     }
 
-    .splash h1 span { color: var(--green); }
-
-    .splash p {
-      font-size: 1rem;
+    .splash h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      font-weight: 300;
       color: var(--text-dim);
-      max-width: 480px;
-      margin-bottom: 2.5rem;
-      line-height: 1.7;
+      margin-bottom: 3rem;
+      font-style: italic;
     }
 
-    .enter-btn {
-      padding: 1rem 2.5rem;
+    .splash-btn {
+      padding: 1rem 3rem;
       background: transparent;
-      border: 2px solid var(--green);
-      border-radius: 4px;
-      color: var(--green);
-      font-family: 'Source Code Pro', monospace;
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
+      border: 1px solid var(--gold);
+      border-radius: 100px;
+      color: var(--gold);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       cursor: pointer;
-      transition: all 0.3s;
-      position: relative;
-      overflow: hidden;
+      transition: all 0.4s;
     }
 
-    .enter-btn::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: var(--green);
-      transform: translateX(-101%);
-      transition: transform 0.3s;
-      z-index: -1;
-    }
-
-    .enter-btn:hover { color: var(--bg); }
-    .enter-btn:hover::before { transform: translateX(0); }
+    .splash-btn:hover { background: var(--gold); color: var(--bg); }
 
     .splash-footer {
       position: absolute;
-      bottom: 2rem;
-      font-family: 'Source Code Pro', monospace;
+      bottom: 2.5rem;
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.6rem;
       color: var(--text-dim);
-      opacity: 0.4;
-      letter-spacing: 0.1em;
+      opacity: 0.35;
+      letter-spacing: 0.15em;
     }
 
-    /* ============ CLASSIFICATION BAR ============ */
-    .class-bar {
+    /* ============ NARRATOR BAR ============ */
+    .narrator-bar {
       position: fixed;
-      top: 0;
+      bottom: 0;
       left: 0;
       right: 0;
-      z-index: 9998;
-      padding: 0.4rem 2rem;
-      background: var(--red);
-      color: white;
-      font-family: 'Special Elite', monospace;
-      font-size: 0.65rem;
+      z-index: 9999;
+      padding: 1rem 2rem;
+      background: linear-gradient(transparent, rgba(13,11,8,0.95) 30%);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.6s;
+    }
+    .narrator-bar.visible { opacity: 1; }
+
+    .narrator-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .narrator-label {
+      font-size: 0.55rem;
       letter-spacing: 0.3em;
       text-transform: uppercase;
-      text-align: center;
-      opacity: 0;
-      transform: translateY(-100%);
-      transition: all 0.5s;
+      color: var(--gold);
+      margin-bottom: 0.3rem;
+      opacity: 0.6;
     }
 
-    .class-bar.visible { opacity: 1; transform: translateY(0); }
+    .narrator-text {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      color: var(--cream);
+      line-height: 1.6;
+      opacity: 0.9;
+    }
 
-    /* ============ THREAT LEVEL TRACKER ============ */
-    .threat-tracker {
+    /* ============ EPISODE COUNTER ============ */
+    .episode-tracker {
       position: fixed;
-      top: 3.5rem;
+      top: 1.5rem;
       right: 2rem;
       z-index: 9999;
-      padding: 1rem 1.25rem;
-      background: var(--surface-2);
-      border: 1px solid var(--green);
-      border-radius: 8px;
+      text-align: right;
       opacity: 0;
       transition: opacity 0.5s;
-      min-width: 180px;
     }
+    .episode-tracker.visible { opacity: 1; }
 
-    .threat-tracker.visible { opacity: 1; }
-
-    .threat-label {
-      font-family: 'Source Code Pro', monospace;
-      font-size: 0.55rem;
-      letter-spacing: 0.2em;
+    .episode-tracker .ep-label {
+      font-size: 0.5rem;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: var(--green);
-      margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      color: var(--gold);
+      opacity: 0.5;
     }
 
-    .threat-label::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      background: var(--green);
-      border-radius: 50%;
-      animation: blink 1s ease-in-out infinite;
-    }
-
-    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.2; } }
-
-    .threat-value {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--amber);
-    }
-
-    .threat-status {
-      font-family: 'Source Code Pro', monospace;
-      font-size: 0.6rem;
-      color: var(--amber);
-      margin-top: 0.25rem;
+    .episode-tracker .ep-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.9rem;
+      font-style: italic;
+      color: var(--text-dim);
     }
 
     /* ============ LAYOUT ============ */
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 4rem); position: relative; z-index: 1; }
+    .container { max-width: 1000px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 4rem); position: relative; z-index: 1; }
+
     .label {
-      font-family: 'Source Code Pro', monospace;
-      font-size: 0.6rem;
+      font-size: 0.55rem;
       font-weight: 600;
-      letter-spacing: 0.25em;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--green);
+      color: var(--gold);
+      opacity: 0.7;
     }
 
-    section { padding: clamp(4rem, 10vw, 7rem) 0; }
-    .section-header { text-align: center; max-width: 750px; margin: 0 auto 3.5rem; }
+    section { padding: clamp(5rem, 12vw, 8rem) 0; }
+    .section-header { text-align: center; max-width: 700px; margin: 0 auto 4rem; }
+
     .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.8rem, 4.5vw, 3rem);
-      font-weight: 700;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 300;
+      font-style: italic;
       margin-top: 0.75rem;
-      margin-bottom: 1rem;
+      margin-bottom: 1.25rem;
+      color: var(--cream);
     }
-    .section-desc { font-size: 1rem; color: var(--text-dim); line-height: 1.8; }
 
-    /* ============ REVEAL ANIMATION ============ */
-    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+    .section-desc {
+      font-size: 1rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+    }
+
+    .reveal { opacity: 0; transform: translateY(35px); transition: opacity 0.9s ease-out, transform 0.9s ease-out; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
     @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
@@ -279,87 +255,81 @@
       text-align: center;
       padding: 6rem 2rem 4rem;
       position: relative;
+      overflow: hidden;
     }
 
     .hero-glow {
       position: absolute;
-      top: 30%;
+      top: 20%;
       left: 50%;
       transform: translateX(-50%);
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, var(--green-glow) 0%, transparent 70%);
-      filter: blur(80px);
-      opacity: 0.2;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--gold-glow) 0%, transparent 65%);
+      filter: blur(100px);
+      opacity: 0.15;
     }
 
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 1.25rem;
-      background: var(--green-soft);
-      border: 1px solid rgba(76,175,80,0.3);
-      border-radius: 4px;
-      font-family: 'Source Code Pro', monospace;
-      font-size: 0.65rem;
-      font-weight: 600;
-      color: var(--green);
-      letter-spacing: 0.2em;
+    .hero-series {
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
       text-transform: uppercase;
+      color: var(--gold);
       margin-bottom: 2rem;
       opacity: 0;
-      animation: fadeUp 1s ease-out 0.1s forwards;
+      animation: fadeUp 1s ease-out 0.2s forwards;
     }
 
     .hero-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.5rem, 7vw, 5.5rem);
-      font-weight: 800;
-      max-width: 900px;
-      margin-bottom: 1.5rem;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(3rem, 9vw, 7rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--cream);
+      max-width: 800px;
+      margin-bottom: 1rem;
       opacity: 0;
-      animation: fadeUp 1s ease-out 0.3s forwards;
+      animation: fadeUp 1s ease-out 0.4s forwards;
       line-height: 1.05;
+      letter-spacing: 0.01em;
     }
-
-    .hero-title .name { color: var(--green); }
 
     .hero-subtitle {
-      font-size: clamp(1rem, 2.5vw, 1.3rem);
-      font-weight: 400;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-weight: 300;
       color: var(--text-dim);
-      max-width: 650px;
-      line-height: 1.8;
-      margin-bottom: 2rem;
+      max-width: 550px;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+      font-style: italic;
       opacity: 0;
-      animation: fadeUp 1s ease-out 0.5s forwards;
+      animation: fadeUp 1s ease-out 0.6s forwards;
     }
 
-    .hero-file-number {
-      font-family: 'Source Code Pro', monospace;
-      font-size: 0.7rem;
+    .hero-meta {
+      font-size: 0.65rem;
       color: var(--text-dim);
-      opacity: 0.5;
-      opacity: 0;
-      animation: fadeUp 1s ease-out 0.7s forwards;
+      opacity: 0.4;
       letter-spacing: 0.15em;
+      opacity: 0;
+      animation: fadeUp 1s ease-out 0.8s forwards;
     }
 
-    /* ============ DOSSIER CARD ============ */
-    .dossier-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    /* ============ SPECIMEN CARD ============ */
+    .specimen-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 
-    .dossier-card {
-      max-width: 800px;
+    .specimen-card {
+      max-width: 750px;
       margin: 0 auto;
       background: var(--bg);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 16px;
       overflow: hidden;
     }
 
-    .dossier-header {
-      padding: 1.5rem 2rem;
+    .specimen-header {
+      padding: 1.25rem 2rem;
       background: var(--surface-2);
       border-bottom: 1px solid var(--border);
       display: flex;
@@ -367,421 +337,345 @@
       align-items: center;
     }
 
-    .dossier-header-left {
-      font-family: 'Special Elite', monospace;
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--green);
+    .specimen-header-left {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.85rem;
+      font-style: italic;
+      color: var(--gold);
     }
 
-    .dossier-header-right {
-      font-family: 'Source Code Pro', monospace;
+    .specimen-header-right {
       font-size: 0.6rem;
       color: var(--text-dim);
+      letter-spacing: 0.1em;
     }
 
-    .dossier-body { padding: 2.5rem; }
+    .specimen-body { padding: 2.5rem; }
 
-    .dossier-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
+    .specimen-latin {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--gold);
+      margin-bottom: 0.25rem;
     }
 
-    .dossier-field {}
-    .dossier-field-label {
-      font-family: 'Source Code Pro', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: 0.35rem;
-    }
-
-    .dossier-field-value {
-      font-size: 1rem;
-      font-weight: 500;
-    }
-
-    .dossier-field-value.redacted {
-      background: var(--text);
-      color: var(--text);
-      user-select: none;
-      cursor: pointer;
-      padding: 0 0.25rem;
-      border-radius: 2px;
-      transition: all 0.3s;
-    }
-
-    .dossier-field-value.redacted.revealed {
-      background: transparent;
-      color: var(--green);
-    }
-
-    .dossier-full-width { grid-column: 1 / -1; }
-
-    .dossier-divider {
-      grid-column: 1 / -1;
-      height: 1px;
-      background: var(--border);
-      margin: 0.5rem 0;
-    }
-
-    .dossier-stamp {
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 1.5rem;
-      margin-top: 1rem;
-    }
-
-    .stamp-text {
-      display: inline-block;
-      font-family: 'Special Elite', monospace;
-      font-size: 1.5rem;
-      color: var(--red);
-      border: 3px solid var(--red);
-      padding: 0.5rem 2rem;
-      transform: rotate(-5deg);
-      opacity: 0.8;
-      letter-spacing: 0.15em;
-    }
-
-    /* ============ TIMELINE ============ */
-    .timeline-section { background: var(--bg); }
-
-    .timeline {
-      position: relative;
-      max-width: 700px;
-      margin: 0 auto;
-      padding-left: 3rem;
-    }
-
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background: linear-gradient(to bottom, var(--green), var(--amber), var(--red));
-    }
-
-    .timeline-item {
-      position: relative;
-      padding: 0 0 3rem 2rem;
-    }
-
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: -3.45rem;
-      top: 0.5rem;
-      width: 12px;
-      height: 12px;
-      background: var(--green);
-      border-radius: 50%;
-      border: 2px solid var(--bg);
-    }
-
-    .timeline-item:nth-child(3)::before { background: var(--amber); }
-    .timeline-item:nth-child(4)::before,
-    .timeline-item:nth-child(5)::before { background: var(--red); }
-
-    .timeline-date {
-      font-family: 'Source Code Pro', monospace;
-      font-size: 0.65rem;
-      color: var(--green);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 0.5rem;
-    }
-
-    .timeline-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-    }
-
-    .timeline-desc {
+    .specimen-common {
       font-size: 0.9rem;
       color: var(--text-dim);
-      line-height: 1.7;
+      margin-bottom: 2rem;
     }
 
-    /* ============ EVIDENCE GRID ============ */
-    .evidence-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-
-    .evidence-grid {
+    .specimen-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
     }
 
-    .evidence-card {
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 2rem;
-      text-align: center;
-      transition: transform 0.3s, border-color 0.3s;
-      cursor: default;
-    }
-
-    .evidence-card:hover { transform: translateY(-4px); border-color: var(--green); }
-
-    .evidence-icon { font-size: 2.5rem; margin-bottom: 1rem; }
-    .evidence-label {
-      font-family: 'Source Code Pro', monospace;
+    .specimen-field {}
+    .specimen-field-label {
       font-size: 0.55rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: var(--amber);
-      margin-bottom: 0.5rem;
-    }
-    .evidence-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
-    .evidence-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; }
-
-    /* ============ THREAT ASSESSMENT CALCULATOR ============ */
-    .calculator-section { background: var(--bg); }
-
-    .calculator-box {
-      max-width: 600px;
-      margin: 0 auto;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 2.5rem;
-    }
-
-    .calc-field { margin-bottom: 1.5rem; }
-    .calc-field label {
-      display: block;
-      font-family: 'Source Code Pro', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
       color: var(--text-dim);
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.25rem;
     }
+    .specimen-field-value { font-size: 0.95rem; }
 
-    .calc-field select {
-      width: 100%;
-      padding: 0.85rem 1rem;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      color: var(--text);
-      font-family: 'Inter', sans-serif;
-      font-size: 0.9rem;
-      appearance: none;
-      cursor: pointer;
-    }
+    .specimen-full { grid-column: 1 / -1; }
 
-    .calc-field select:focus { outline: none; border-color: var(--green); }
+    .specimen-divider { grid-column: 1 / -1; height: 1px; background: var(--border); margin: 0.5rem 0; }
 
-    .calc-btn {
-      width: 100%;
-      padding: 1rem;
-      background: transparent;
-      border: 2px solid var(--green);
-      border-radius: 6px;
-      color: var(--green);
-      font-family: 'Source Code Pro', monospace;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .calc-btn:hover { background: var(--green); color: var(--bg); }
-
-    .calc-result {
-      margin-top: 2rem;
-      padding: 2rem;
-      background: var(--bg);
-      border: 1px solid var(--border);
+    .specimen-note {
+      grid-column: 1 / -1;
+      margin-top: 1rem;
+      padding: 1.25rem;
+      background: var(--gold-soft);
       border-radius: 8px;
-      text-align: center;
-      display: none;
+      border-left: 3px solid var(--gold);
     }
 
-    .calc-result.visible { display: block; animation: fadeUp 0.5s ease-out; }
-
-    .calc-result-level {
-      font-family: 'Special Elite', monospace;
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
+    .specimen-note-label {
+      font-family: 'Caveat', cursive;
+      font-size: 0.8rem;
+      color: var(--gold);
+      margin-bottom: 0.25rem;
     }
 
-    .calc-result-level.extreme { color: var(--red); }
-    .calc-result-level.severe { color: var(--amber); }
+    .specimen-note-text {
+      font-family: 'Caveat', cursive;
+      font-size: 1.05rem;
+      color: var(--cream);
+      line-height: 1.5;
+    }
 
-    .calc-result-desc { font-size: 0.9rem; color: var(--text-dim); line-height: 1.7; }
+    /* ============ NARRATED SECTIONS (prose) ============ */
+    .narration-block {
+      max-width: 650px;
+      margin: 0 auto;
+    }
 
-    /* ============ INTERCEPTED COMMS ============ */
-    .comms-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .narration-text {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      line-height: 1.9;
+      color: var(--cream);
+    }
 
-    .comms-grid {
+    .narration-text em { color: var(--gold); font-style: italic; }
+
+    .narration-aside {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background: var(--surface);
+      border-radius: 12px;
+      border-left: 3px solid var(--gold);
+    }
+
+    .narration-aside-label {
+      font-family: 'Caveat', cursive;
+      font-size: 0.85rem;
+      color: var(--gold);
+      margin-bottom: 0.25rem;
+    }
+
+    .narration-aside-text {
+      font-family: 'Caveat', cursive;
+      font-size: 1.1rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+
+    /* ============ HABITAT MAP ============ */
+    .habitat-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .habitat-cards {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 1.5rem;
-      max-width: 900px;
+      max-width: 800px;
       margin: 0 auto;
     }
 
-    .comm-card {
+    .habitat-card {
       background: var(--bg);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 14px;
       padding: 2rem;
-    }
-
-    .comm-header {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      margin-bottom: 1rem;
-    }
-
-    .comm-avatar {
-      width: 40px;
-      height: 40px;
-      background: var(--green-soft);
-      border: 1px solid var(--green);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1rem;
-    }
-
-    .comm-meta strong { display: block; font-size: 0.85rem; }
-    .comm-meta span { font-family: 'Source Code Pro', monospace; font-size: 0.6rem; color: var(--text-dim); letter-spacing: 0.1em; }
-
-    .comm-body {
-      font-size: 0.9rem;
-      color: var(--text-dim);
-      line-height: 1.7;
-      font-style: italic;
-      padding-left: 1rem;
-      border-left: 2px solid var(--green-soft);
-    }
-
-    /* ============ YOGA DECODER ============ */
-    .decoder-section { background: var(--bg); }
-
-    .decoder-box {
-      max-width: 650px;
-      margin: 0 auto;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 2.5rem;
-    }
-
-    .decoder-grid {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      gap: 0.5rem 1.5rem;
-      align-items: center;
-    }
-
-    .decoder-col-header {
-      font-family: 'Source Code Pro', monospace;
-      font-size: 0.6rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: var(--green);
-      padding-bottom: 0.75rem;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 0.5rem;
-    }
-
-    .decoder-col-header.center { text-align: center; }
-
-    .decoder-pose, .decoder-real {
-      padding: 0.75rem 0;
-      font-size: 0.9rem;
-      border-bottom: 1px solid rgba(76,175,80,0.05);
-    }
-
-    .decoder-arrow {
-      text-align: center;
-      color: var(--green);
-      font-family: 'Source Code Pro', monospace;
-      padding: 0.75rem 0;
-      border-bottom: 1px solid rgba(76,175,80,0.05);
-    }
-
-    .decoder-real { color: var(--amber); font-weight: 500; }
-
-    /* ============ APPETITE INDEX ============ */
-    .appetite-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-
-    .appetite-chart {
-      max-width: 700px;
-      margin: 0 auto;
-    }
-
-    .appetite-bar-group { margin-bottom: 1.25rem; }
-
-    .appetite-bar-label {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 0.35rem;
-      font-size: 0.85rem;
-    }
-
-    .appetite-bar-label span:last-child {
-      font-family: 'Source Code Pro', monospace;
-      font-size: 0.75rem;
-      color: var(--green);
-    }
-
-    .appetite-bar-track {
-      height: 8px;
-      background: var(--bg);
-      border-radius: 4px;
+      transition: transform 0.3s, border-color 0.3s;
+      position: relative;
       overflow: hidden;
     }
 
-    .appetite-bar-fill {
-      height: 100%;
-      border-radius: 4px;
-      width: 0;
-      transition: width 1.5s ease-out;
+    .habitat-card:hover { transform: translateY(-3px); border-color: var(--gold); }
+
+    .habitat-card.current::after {
+      content: 'CURRENT';
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      color: var(--sage);
+      background: var(--sage-soft);
+      padding: 0.25rem 0.6rem;
+      border-radius: 100px;
     }
 
-    .appetite-bar-fill.green { background: linear-gradient(90deg, var(--green), #66bb6a); }
-    .appetite-bar-fill.amber { background: linear-gradient(90deg, var(--amber), #ffb74d); }
-    .appetite-bar-fill.red { background: linear-gradient(90deg, var(--red), #e57373); }
+    .habitat-card.former::after {
+      content: 'FORMER';
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 0.5rem;
+      letter-spacing: 0.2em;
+      color: var(--text-dim);
+      background: rgba(154,142,126,0.1);
+      padding: 0.25rem 0.6rem;
+      border-radius: 100px;
+    }
 
-    /* ============ MENU GENERATOR ============ */
-    .generator-section { background: var(--bg); }
+    .habitat-icon { font-size: 2rem; margin-bottom: 1rem; }
 
-    .generator-box {
+    .habitat-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.25rem;
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .habitat-region { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 1rem; }
+
+    .habitat-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.7; }
+
+    /* ============ BEHAVIORAL TRAITS ============ */
+    .traits-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+    }
+
+    .trait-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+
+    .trait-card:hover { transform: translateY(-3px); }
+
+    .trait-icon { font-size: 2rem; margin-bottom: 1rem; }
+
+    .trait-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      margin-bottom: 0.5rem;
+    }
+
+    .trait-desc { font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; }
+
+    /* ============ MIGRATION PATTERN ============ */
+    .migration-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .migration-path {
+      max-width: 700px;
+      margin: 0 auto;
+      position: relative;
+      padding-left: 3rem;
+    }
+
+    .migration-path::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--gold), var(--warm), var(--sage));
+      opacity: 0.4;
+    }
+
+    .migration-stop {
+      position: relative;
+      padding: 0 0 3.5rem 2rem;
+    }
+
+    .migration-stop::before {
+      content: '';
+      position: absolute;
+      left: -2.55rem;
+      top: 0.6rem;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 2px solid var(--gold);
+      background: var(--bg);
+    }
+
+    .migration-stop:last-child::before { background: var(--sage); border-color: var(--sage); }
+
+    .migration-season {
+      font-family: 'Caveat', cursive;
+      font-size: 0.9rem;
+      color: var(--gold);
+      margin-bottom: 0.35rem;
+    }
+
+    .migration-place {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.4rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .migration-observation {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+
+    /* ============ DIET ANALYSIS ============ */
+    .diet-section { background: var(--bg); }
+
+    .diet-wheel {
       max-width: 600px;
       margin: 0 auto;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 14px;
+      padding: 2.5rem;
+    }
+
+    .diet-item {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .diet-item:last-child { border-bottom: none; }
+
+    .diet-icon { font-size: 1.5rem; flex-shrink: 0; width: 40px; text-align: center; }
+
+    .diet-info { flex: 1; }
+    .diet-name { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.15rem; }
+    .diet-note { font-size: 0.75rem; color: var(--text-dim); }
+
+    .diet-bar-track {
+      width: 120px;
+      height: 6px;
+      background: var(--bg);
+      border-radius: 3px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .diet-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      width: 0;
+      transition: width 1.2s ease-out;
+    }
+
+    .diet-bar-fill.gold { background: var(--gold); }
+    .diet-bar-fill.warm { background: var(--warm); }
+    .diet-bar-fill.sage { background: var(--sage); }
+
+    /* ============ MATING CALL (Interactive) ============ */
+    .call-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .call-box {
+      max-width: 600px;
+      margin: 0 auto;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
       padding: 2.5rem;
       text-align: center;
     }
 
-    .generator-btn {
+    .call-prompt {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--text-dim);
+      margin-bottom: 2rem;
+    }
+
+    .call-btn {
       padding: 1rem 2.5rem;
-      background: var(--green);
+      background: var(--gold);
       border: none;
-      border-radius: 6px;
+      border-radius: 100px;
       color: var(--bg);
-      font-family: 'Source Code Pro', monospace;
-      font-size: 0.85rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
       font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -790,292 +684,361 @@
       margin-bottom: 2rem;
     }
 
-    .generator-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px var(--green-glow); }
+    .call-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px var(--gold-glow); }
 
-    .generator-output {
-      padding: 2rem;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      min-height: 120px;
-      text-align: left;
+    .call-output {
+      min-height: 80px;
+      padding: 1.5rem;
+      background: var(--surface);
+      border-radius: 10px;
     }
 
-    .generator-output .dish-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--green);
+    .call-output .call-text {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.3rem;
+      font-style: italic;
+      color: var(--cream);
       margin-bottom: 0.5rem;
     }
 
-    .generator-output .dish-desc {
+    .call-output .call-context {
+      font-family: 'Caveat', cursive;
       font-size: 0.9rem;
       color: var(--text-dim);
-      line-height: 1.7;
-      margin-bottom: 1rem;
     }
 
-    .generator-output .dish-price {
-      font-family: 'Source Code Pro', monospace;
+    /* ============ FIELD NOTES ============ */
+    .notes-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .field-note {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem;
+      position: relative;
+    }
+
+    .field-note-date {
+      font-family: 'Caveat', cursive;
+      font-size: 0.85rem;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+
+    .field-note-text {
+      font-family: 'Caveat', cursive;
+      font-size: 1.1rem;
+      color: var(--cream);
+      line-height: 1.6;
+    }
+
+    .field-note-author {
+      margin-top: 1rem;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      font-style: italic;
+    }
+
+    /* ============ COMPATIBILITY QUIZ ============ */
+    .quiz-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .quiz-box {
+      max-width: 600px;
+      margin: 0 auto;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2.5rem;
+    }
+
+    .quiz-question {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.2rem;
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      color: var(--cream);
+    }
+
+    .quiz-options { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; }
+
+    .quiz-option {
+      padding: 1rem 1.25rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 0.9rem;
+      color: var(--text-dim);
+    }
+
+    .quiz-option:hover { border-color: var(--gold); color: var(--text); }
+    .quiz-option.selected { border-color: var(--gold); background: var(--gold-soft); color: var(--gold); }
+
+    .quiz-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .quiz-nav-btn {
+      padding: 0.75rem 1.5rem;
+      background: transparent;
+      border: 1px solid var(--gold);
+      border-radius: 100px;
+      color: var(--gold);
+      font-family: 'DM Sans', sans-serif;
       font-size: 0.75rem;
-      color: var(--amber);
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .quiz-nav-btn:hover { background: var(--gold); color: var(--bg); }
+    .quiz-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .quiz-nav-btn:disabled:hover { background: transparent; color: var(--gold); }
+
+    .quiz-progress {
+      font-size: 0.7rem;
+      color: var(--text-dim);
       letter-spacing: 0.1em;
     }
 
-    .generator-output .dish-warning {
-      margin-top: 1rem;
-      padding: 0.75rem 1rem;
-      background: var(--red-soft);
-      border-radius: 6px;
-      font-size: 0.75rem;
-      color: var(--red);
-      font-family: 'Source Code Pro', monospace;
+    .quiz-result {
+      text-align: center;
+      display: none;
     }
 
-    /* ============ WYNN SCALE ============ */
-    .wynn-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .quiz-result.visible { display: block; animation: fadeUp 0.6s ease-out; }
 
-    .wynn-scale {
+    .quiz-result-species {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 2rem;
+      font-style: italic;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+
+    .quiz-result-desc {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .quiz-result-compat {
+      display: inline-block;
+      padding: 0.5rem 1.5rem;
+      background: var(--sage-soft);
+      border: 1px solid var(--sage);
+      border-radius: 100px;
+      font-size: 0.75rem;
+      color: var(--sage);
+      letter-spacing: 0.1em;
+    }
+
+    /* ============ CONSERVATION STATUS ============ */
+    .conservation-section { background: var(--bg); }
+
+    .conservation-card {
       max-width: 700px;
       margin: 0 auto;
-      position: relative;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 3rem;
+      text-align: center;
     }
 
-    .wynn-track {
-      height: 12px;
-      background: linear-gradient(90deg, var(--green), var(--amber), var(--red));
-      border-radius: 6px;
-      position: relative;
+    .conservation-badge {
+      display: inline-block;
+      padding: 0.6rem 2rem;
+      border: 2px solid var(--sage);
+      border-radius: 100px;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.3rem;
+      font-style: italic;
+      color: var(--sage);
       margin-bottom: 2rem;
     }
 
-    .wynn-marker {
-      position: absolute;
-      top: -8px;
-      right: 3%;
-      width: 28px;
-      height: 28px;
-      background: var(--red);
-      border: 3px solid white;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .conservation-text {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.2rem;
+      color: var(--cream);
+      line-height: 1.9;
+      max-width: 550px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .conservation-fine-print {
       font-size: 0.7rem;
-      font-weight: 700;
-      animation: marker-bounce 2s ease-in-out infinite;
-    }
-
-    @keyframes marker-bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-
-    .wynn-labels {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 2.5rem;
-    }
-
-    .wynn-labels span {
-      font-family: 'Source Code Pro', monospace;
-      font-size: 0.6rem;
       color: var(--text-dim);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      opacity: 0.5;
     }
 
-    .wynn-breakdown {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-    }
-
-    .wynn-item {
-      padding: 1.25rem;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-    }
-
-    .wynn-item-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 0.5rem;
-    }
-
-    .wynn-item-label { font-size: 0.85rem; font-weight: 500; }
-    .wynn-item-score {
-      font-family: 'Source Code Pro', monospace;
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 0.2rem 0.6rem;
-      border-radius: 4px;
-    }
-
-    .wynn-item-score.high { background: var(--red-soft); color: var(--red); }
-    .wynn-item-score.med { background: var(--amber-soft); color: var(--amber); }
-
-    .wynn-item-desc { font-size: 0.75rem; color: var(--text-dim); }
-
-    /* ============ FINAL ASSESSMENT ============ */
-    .final-section {
-      background: var(--bg);
+    /* ============ CLOSING ============ */
+    .closing-section {
       text-align: center;
       padding: 8rem 2rem;
     }
 
-    .final-stamp {
-      font-family: 'Special Elite', monospace;
-      font-size: clamp(2rem, 6vw, 4rem);
-      color: var(--green);
-      border: 4px solid var(--green);
-      display: inline-block;
-      padding: 1rem 3rem;
-      transform: rotate(-3deg);
-      margin-bottom: 2rem;
-      animation: stamp-in 0.5s ease-out;
+    .closing-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--cream);
+      margin-bottom: 1.5rem;
     }
 
-    @keyframes stamp-in { from { transform: rotate(-3deg) scale(2); opacity: 0; } to { transform: rotate(-3deg) scale(1); opacity: 1; } }
-
-    .final-text {
-      font-size: 1.1rem;
+    .closing-text {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.15rem;
       color: var(--text-dim);
-      max-width: 600px;
-      margin: 0 auto 2rem;
+      max-width: 550px;
+      margin: 0 auto 3rem;
       line-height: 1.8;
+      font-style: italic;
     }
 
-    .final-footnote {
-      font-family: 'Source Code Pro', monospace;
+    .closing-credits {
       font-size: 0.6rem;
       color: var(--text-dim);
-      opacity: 0.4;
-      letter-spacing: 0.1em;
+      opacity: 0.35;
+      letter-spacing: 0.15em;
+      line-height: 2;
     }
 
-    /* ============ EASTER EGG ============ */
-    .easter-egg-toast {
+    /* ============ TOAST ============ */
+    .toast {
       position: fixed;
-      bottom: 2rem;
+      bottom: 5rem;
       left: 50%;
-      transform: translateX(-50%) translateY(100px);
+      transform: translateX(-50%) translateY(80px);
       background: var(--surface-2);
-      border: 1px solid var(--green);
-      border-radius: 8px;
-      padding: 1rem 2rem;
-      font-family: 'Source Code Pro', monospace;
-      font-size: 0.8rem;
-      color: var(--green);
+      border: 1px solid var(--gold);
+      border-radius: 100px;
+      padding: 0.75rem 1.75rem;
+      font-family: 'Caveat', cursive;
+      font-size: 1rem;
+      color: var(--gold);
       z-index: 10001;
       transition: transform 0.4s ease-out;
       pointer-events: none;
+      white-space: nowrap;
     }
 
-    .easter-egg-toast.show { transform: translateX(-50%) translateY(0); }
+    .toast.show { transform: translateX(-50%) translateY(0); }
 
     /* ============ RESPONSIVE ============ */
     @media (max-width: 768px) {
-      .dossier-grid { grid-template-columns: 1fr; }
-      .evidence-grid { grid-template-columns: 1fr; }
-      .comms-grid { grid-template-columns: 1fr; }
-      .wynn-breakdown { grid-template-columns: 1fr; }
-      .threat-tracker { display: none; }
-      .decoder-grid { grid-template-columns: 1fr; gap: 0; }
-      .decoder-col-header.center, .decoder-arrow { display: none; }
-      .decoder-real { padding-left: 1rem; border-left: 2px solid var(--amber); margin-bottom: 0.5rem; }
+      .specimen-grid { grid-template-columns: 1fr; }
+      .habitat-cards { grid-template-columns: 1fr; }
+      .traits-grid { grid-template-columns: 1fr; }
+      .notes-grid { grid-template-columns: 1fr; }
+      .episode-tracker { display: none; }
+      .narrator-bar { padding: 0.75rem 1rem; }
+      .diet-bar-track { width: 80px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- SPLASH SCREEN -->
+  <!-- SPLASH -->
   <div class="splash" id="splash">
-    <div class="splash-icon">🔒</div>
-    <div class="splash-classification">Top Secret // NOFORN</div>
-    <h1>Republic of South Africa<br><span>Department of Culinary Intelligence</span></h1>
-    <p>You are attempting to access a classified dossier. Unauthorized viewing may result in an irreversible increase in appetite.</p>
-    <button class="enter-btn" onclick="enterSite()">AUTHORIZE ACCESS</button>
-    <div class="splash-footer">DCI-FILE-2026-JG-0041 // EYES ONLY // DO NOT DISTRIBUTE</div>
+    <div class="splash-logo">🌍</div>
+    <div class="splash-network">Cape Town Natural History Society</div>
+    <h1>The Gofman</h1>
+    <h2>A Nature Documentary in Ten Observations</h2>
+    <button class="splash-btn" onclick="enterSite()">Begin Viewing</button>
+    <div class="splash-footer">Filmed on location in the Western Cape &bull; No Gofmans were harmed in the making of this documentary</div>
   </div>
 
-  <!-- CLASSIFICATION BAR -->
-  <div class="class-bar" id="classBar">TOP SECRET // DEPARTMENT OF CULINARY INTELLIGENCE // EYES ONLY</div>
+  <!-- NARRATOR BAR -->
+  <div class="narrator-bar" id="narratorBar">
+    <div class="narrator-inner">
+      <div class="narrator-label">Narrator</div>
+      <div class="narrator-text" id="narratorText">And here, in its natural habitat, we observe the creature at rest...</div>
+    </div>
+  </div>
 
-  <!-- THREAT TRACKER -->
-  <div class="threat-tracker" id="threatTracker">
-    <div class="threat-label">Appetite Threat Level</div>
-    <div class="threat-value" id="threatValue">ELEVATED</div>
-    <div class="threat-status" id="threatStatus">Subject within 5km radius</div>
+  <!-- EPISODE TRACKER -->
+  <div class="episode-tracker" id="episodeTracker">
+    <div class="ep-label">Now Viewing</div>
+    <div class="ep-title" id="epTitle">The Gofman</div>
   </div>
 
   <!-- TOAST -->
-  <div class="easter-egg-toast" id="toast"></div>
+  <div class="toast" id="toast"></div>
 
-  <div class="gradient-bg" style="position:fixed;inset:0;background:radial-gradient(ellipse 100% 70% at 50% 0%, rgba(76,175,80,0.04) 0%, transparent 50%);pointer-events:none;"></div>
+  <div style="position:fixed;inset:0;background:radial-gradient(ellipse 120% 80% at 50% 0%, rgba(196,164,112,0.03) 0%, transparent 60%);pointer-events:none;"></div>
 
   <main id="mainContent" style="display:none;">
 
     <!-- HERO -->
     <section class="hero">
       <div class="hero-glow"></div>
-      <div class="hero-badge">⚠️ ACTIVE INVESTIGATION // CASE OPEN</div>
-      <h1 class="hero-title">The <span class="name">Gofman</span> File</h1>
-      <p class="hero-subtitle">A comprehensive intelligence dossier on one of the most dangerous culinary operatives currently active in the Western Cape.</p>
-      <div class="hero-file-number">FILE NO. DCI-2026-JG-0041 // COMPILED BY FIELD OFFICE CAPE TOWN</div>
+      <div class="hero-series" style="opacity:0;animation:fadeUp 1s ease-out 0.2s forwards;">Cape Town Natural History Society Presents</div>
+      <h1 class="hero-title">The Gofman</h1>
+      <p class="hero-subtitle">A study of one of the most remarkable migratory species ever observed in the Western Cape. Part yoga instructor, part tech visionary, entirely uncategorizable.</p>
+      <div class="hero-meta" style="opacity:0;animation:fadeUp 1s ease-out 0.8s forwards;">Narrated with the gravity this subject deserves</div>
     </section>
 
-    <!-- SUBJECT DOSSIER -->
-    <section class="dossier-section">
+    <!-- SPECIMEN CARD -->
+    <section class="specimen-section" data-narrator="The specimen before you has been studied extensively. And yet, it continues to surprise.">
       <div class="container">
         <div class="section-header reveal">
-          <span class="label">Section 1 // Subject Profile</span>
-          <h2 class="section-title">Subject Identification</h2>
-          <p class="section-desc">The following information has been compiled through extensive field surveillance, open-source intelligence gathering, and two very expensive dinners.</p>
+          <span class="label">Observation I</span>
+          <h2 class="section-title">Specimen Identification</h2>
+          <p class="section-desc">Every great documentary begins with classification. Though, in this case, the subject resists it.</p>
         </div>
 
-        <div class="dossier-card reveal">
-          <div class="dossier-header">
-            <div class="dossier-header-left">Personnel File // Active</div>
-            <div class="dossier-header-right">Last Updated: Today, probably</div>
+        <div class="specimen-card reveal">
+          <div class="specimen-header">
+            <div class="specimen-header-left">Field Specimen Card No. 041</div>
+            <div class="specimen-header-right">Western Cape Registry</div>
           </div>
-          <div class="dossier-body">
-            <div class="dossier-grid">
-              <div class="dossier-field">
-                <div class="dossier-field-label">Full Name</div>
-                <div class="dossier-field-value">Joshua "Josh" Gofman</div>
+          <div class="specimen-body">
+            <div class="specimen-latin">Gofmanus entrepreneurius</div>
+            <div class="specimen-common">Common name: The Gofman &nbsp;|&nbsp; Josh to associates</div>
+            <div class="specimen-grid">
+              <div class="specimen-field">
+                <div class="specimen-field-label">Species Origin</div>
+                <div class="specimen-field-value">Ontario, Canada (Thornhill region)</div>
               </div>
-              <div class="dossier-field">
-                <div class="dossier-field-label">Known Aliases</div>
-                <div class="dossier-field-value">The Menu Whisperer, Mr. WYNN</div>
+              <div class="specimen-field">
+                <div class="specimen-field-label">Current Range</div>
+                <div class="specimen-field-value">Cape Town, Western Cape</div>
               </div>
-              <div class="dossier-field">
-                <div class="dossier-field-label">Country of Origin</div>
-                <div class="dossier-field-value">Canada (Ontario Sector)</div>
+              <div class="specimen-field">
+                <div class="specimen-field-label">Primary Vocation</div>
+                <div class="specimen-field-value">CEO & Founder, EatApp Menu</div>
               </div>
-              <div class="dossier-field">
-                <div class="dossier-field-label">Current Location</div>
-                <div class="dossier-field-value">Cape Town, South Africa</div>
+              <div class="specimen-field">
+                <div class="specimen-field-label">Previous Vocation</div>
+                <div class="specimen-field-value">Co-owner, WYNN Yoga (Thornhill)</div>
               </div>
-              <div class="dossier-field">
-                <div class="dossier-field-label">Occupation (Stated)</div>
-                <div class="dossier-field-value">CEO & Founder, EatApp Menu</div>
+              <div class="specimen-divider"></div>
+              <div class="specimen-field specimen-full">
+                <div class="specimen-field-label">Distinguishing Characteristics</div>
+                <div class="specimen-field-value">Ability to make any restaurant menu look 400% more appealing through digital technology. Also possesses alarming flexibility from years of yoga instruction, though this skill appears dormant in the current phase.</div>
               </div>
-              <div class="dossier-field">
-                <div class="dossier-field-label">Occupation (Actual)</div>
-                <div class="dossier-field-value redacted" onclick="this.classList.toggle('revealed')">Professional Appetite Amplifier</div>
+              <div class="specimen-field specimen-full">
+                <div class="specimen-field-label">Conservation Status</div>
+                <div class="specimen-field-value" style="color: var(--sage);">One of a kind. No known duplicates. Handle with admiration.</div>
               </div>
-              <div class="dossier-divider"></div>
-              <div class="dossier-field dossier-full-width">
-                <div class="dossier-field-label">Threat Classification</div>
-                <div class="dossier-field-value" style="color: var(--red); font-weight: 600;">SEVERE — Makes people hungry through technology. Cannot be stopped.</div>
-              </div>
-              <div class="dossier-field dossier-full-width">
-                <div class="dossier-field-label">Previous Cover Operations</div>
-                <div class="dossier-field-value">Co-owner/operator of WYNN Yoga, Thornhill, Ontario. Believed to be a front for flexibility training required to read oversized restaurant menus. Studio name an acronym: "What You Need Now" (suspected subliminal food messaging).</div>
-              </div>
-              <div class="dossier-stamp">
-                <div class="stamp-text">ACTIVE THREAT</div>
+              <div class="specimen-note">
+                <div class="specimen-note-label">Researcher's note —</div>
+                <div class="specimen-note-text">I've been studying this specimen for weeks and I still can't figure out how you go from running the biggest yoga studio in Thornhill to building restaurant tech in Cape Town. The evolutionary leap is staggering. Darwin would have questions.</div>
               </div>
             </div>
           </div>
@@ -1083,398 +1046,334 @@
       </div>
     </section>
 
-    <!-- OPERATIONAL TIMELINE -->
-    <section class="timeline-section">
+    <!-- NARRATION: ORIGINS -->
+    <section data-narrator="Listen closely. The origin story is always the most important part." data-episode="I. Origins">
       <div class="container">
         <div class="section-header reveal">
-          <span class="label">Section 2 // Operational History</span>
-          <h2 class="section-title">The Gofman Timeline</h2>
-          <p class="section-desc">How a Canadian yoga instructor became one of the most influential figures in Cape Town's culinary underground.</p>
+          <span class="label">Observation II</span>
+          <h2 class="section-title">The Ontario Period</h2>
         </div>
-
-        <div class="timeline reveal">
-          <div class="timeline-item">
-            <div class="timeline-date">Phase 1 — Ontario, Canada</div>
-            <div class="timeline-title">The Yoga Cover</div>
-            <div class="timeline-desc">Subject establishes WYNN Yoga in Thornhill, Ontario. Grows it into the largest yoga studio in the city, the only one with a fitness offering. Intelligence analysts now believe this was a front to develop the core flexibility needed to photograph food from impossible angles. The "WYNN" acronym ("What You Need Now") is later identified as a subliminal food prompt.</div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-date">Phase 2 — The Pivot</div>
-            <div class="timeline-title">Activation Event</div>
-            <div class="timeline-desc">Subject abruptly transitions from yoga to restaurant technology. When questioned, claims he "wanted to help restaurants." Intelligence community remains skeptical. Nobody leaves yoga for menus unless they're running from something or toward something much bigger.</div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-date">Phase 3 — EatApp Founded</div>
-            <div class="timeline-title">Operation Digital Menu</div>
-            <div class="timeline-desc">Subject creates EatApp Menu, a platform that replaces boring printed menus with interactive digital experiences integrated with POS systems. Within months, restaurants using EatApp report a suspicious 40% increase in dessert orders. The connection is classified.</div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-date">Phase 4 — Relocation to Cape Town</div>
-            <div class="timeline-title">The Southern Hemisphere Expansion</div>
-            <div class="timeline-desc">Subject relocates to Cape Town, South Africa. Motive unclear. Working theories include: the food scene, the weather, the wine, or an elaborate plan to control appetite levels across an entire hemisphere. All theories are considered equally plausible.</div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-date">Phase 5 — Present Day</div>
-            <div class="timeline-title">Currently At Large</div>
-            <div class="timeline-desc">Subject continues to operate freely in Cape Town, making restaurants look better than they've ever looked and making everyone around him unreasonably hungry. Multiple attempts to contain his influence have failed. He keeps launching features.</div>
+        <div class="narration-block reveal">
+          <p class="narration-text">
+            In the suburban sprawl of Thornhill, Ontario, a young Josh Gofman did something that most people only talk about at dinner parties: he <em>actually started a business</em>. Not just any business. A yoga studio. WYNN Yoga. He grew it into the largest studio in the city, the only one with a fitness offering alongside the stretching and the silence.
+          </p>
+          <br>
+          <p class="narration-text">
+            He even coined the name himself. W.Y.N.N. <em>"What You Need Now."</em> Then, in a move of staggering commitment, he registered the definition on Urban Dictionary. This is a man who does not do things halfway.
+          </p>
+          <br>
+          <p class="narration-text">
+            For years, this was his world. Mats and mantras. Breath and balance. A quiet kingdom of downward dogs and sun salutations. And then, with no warning that anyone can recall, he <em>left</em>.
+          </p>
+          <div class="narration-aside">
+            <div class="narration-aside-label">Field researcher's annotation —</div>
+            <div class="narration-aside-text">When asked why he left yoga for restaurant tech, most of his former students just stare into the middle distance and whisper "we never saw it coming." One of them is still holding a tree pose.</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- EVIDENCE EXHIBITS -->
-    <section class="evidence-section">
+    <!-- HABITAT CARDS -->
+    <section class="habitat-section" data-narrator="Every creature is shaped by the places it inhabits. The Gofman is no exception." data-episode="II. Habitat">
       <div class="container">
         <div class="section-header reveal">
-          <span class="label">Section 3 // Physical Evidence</span>
-          <h2 class="section-title">Exhibits A through F</h2>
-          <p class="section-desc">Items collected from the field. Each one paints a picture of a man who has made it his personal mission to ensure nobody ever looks at a paper menu the same way again.</p>
+          <span class="label">Observation III</span>
+          <h2 class="section-title">Known Habitats</h2>
+          <p class="section-desc">The Gofman has been observed in two primary environments, each leaving a distinct mark on its development.</p>
         </div>
 
-        <div class="evidence-grid reveal">
-          <div class="evidence-card">
-            <div class="evidence-icon">🧘</div>
-            <div class="evidence-label">Exhibit A</div>
-            <div class="evidence-title">Yoga Mat (Retired)</div>
-            <div class="evidence-desc">Found in storage. Forensic analysis reveals traces of chai latte and ambition. The mat has not been unrolled since the EatApp pivot. It knows too much.</div>
+        <div class="habitat-cards reveal">
+          <div class="habitat-card former">
+            <div class="habitat-icon">🍁</div>
+            <div class="habitat-name">Thornhill, Ontario</div>
+            <div class="habitat-region">Greater Toronto Area, Canada</div>
+            <div class="habitat-desc">A suburban environment known for strip malls, hockey culture, and a surprising number of yoga studios (one of which was significantly larger than the rest, for reasons that should be obvious by now). Climate: cold enough to make you dream of Africa.</div>
           </div>
-          <div class="evidence-card">
-            <div class="evidence-icon">📱</div>
-            <div class="evidence-label">Exhibit B</div>
-            <div class="evidence-title">The App Itself</div>
-            <div class="evidence-desc">EatApp Menu. Transforms static restaurant menus into interactive digital experiences. Side effects include increased hunger, impulse ordering, and the sudden inability to enjoy a laminated menu.</div>
+          <div class="habitat-card current">
+            <div class="habitat-icon">⛰️</div>
+            <div class="habitat-name">Cape Town, Western Cape</div>
+            <div class="habitat-region">Republic of South Africa</div>
+            <div class="habitat-desc">A coastal metropolis with world-class dining, exceptional wine, and a mountain in the middle of it. The perfect environment for a specimen whose primary skill is making food look irresistible on screens. Coincidence? Researchers think not.</div>
           </div>
-          <div class="evidence-card">
-            <div class="evidence-icon">🍷</div>
-            <div class="evidence-label">Exhibit C</div>
-            <div class="evidence-title">Cape Town Wine Collection</div>
-            <div class="evidence-desc">Subject has developed an alarming familiarity with the Western Cape wine regions. This is considered further evidence of deep integration into the local food ecosystem.</div>
+          <div class="habitat-card former">
+            <div class="habitat-icon">🧘</div>
+            <div class="habitat-name">WYNN Yoga Studio</div>
+            <div class="habitat-region">Thornhill, Ontario (microhabitat)</div>
+            <div class="habitat-desc">The largest yoga studio in Thornhill and the only one with a fitness component. Operated by the specimen for several years before being abandoned during what scientists now call "The Great Pivot." The studio's legacy lives on in the flexibility of everyone who attended and the Urban Dictionary entry that defines its name.</div>
           </div>
-          <div class="evidence-card">
-            <div class="evidence-icon">🇨🇦</div>
-            <div class="evidence-label">Exhibit D</div>
-            <div class="evidence-title">Canadian Passport</div>
-            <div class="evidence-desc">Confirms origin country. Contains stamps from multiple nations, suggesting a global appetite disruption campaign that predates the Cape Town phase.</div>
-          </div>
-          <div class="evidence-card">
-            <div class="evidence-icon">💡</div>
-            <div class="evidence-label">Exhibit E</div>
-            <div class="evidence-title">The WYNN Acronym</div>
-            <div class="evidence-desc">"What You Need Now." Subject coined this himself. Then registered it on Urban Dictionary. This level of commitment to a backronym has only been observed in intelligence operatives and startup founders.</div>
-          </div>
-          <div class="evidence-card">
-            <div class="evidence-icon">📊</div>
-            <div class="evidence-label">Exhibit F</div>
-            <div class="evidence-title">POS Integration Data</div>
-            <div class="evidence-desc">EatApp's point-of-sale integration means subject has access to real-time dining data across multiple restaurants. He knows what you ordered. He always knows.</div>
+          <div class="habitat-card current">
+            <div class="habitat-icon">🍽️</div>
+            <div class="habitat-name">Cape Town Restaurant Scene</div>
+            <div class="habitat-region">Western Cape (ecosystem)</div>
+            <div class="habitat-desc">The specimen's current primary ecosystem. Through EatApp Menu, Gofman has integrated himself into the digital infrastructure of Cape Town dining. Restaurants using his technology report that customers order more, linger longer, and occasionally weep at the beauty of a well-photographed lamb shank.</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- THREAT CALCULATOR -->
-    <section class="calculator-section">
+    <!-- MIGRATION PATTERN -->
+    <section class="migration-section" data-narrator="The migration patterns of the Gofman defy conventional understanding." data-episode="III. Migration">
       <div class="container">
         <div class="section-header reveal">
-          <span class="label">Section 4 // Interactive Assessment</span>
-          <h2 class="section-title">Personal Threat Calculator</h2>
-          <p class="section-desc">Determine your personal threat level based on proximity and vulnerability factors.</p>
+          <span class="label">Observation IV</span>
+          <h2 class="section-title">Migration Pattern</h2>
+          <p class="section-desc">Most creatures migrate for food or warmth. The Gofman migrated because he had a better idea.</p>
         </div>
 
-        <div class="calculator-box reveal">
-          <div class="calc-field">
-            <label>Your proximity to Josh Gofman</label>
-            <select id="calcProximity">
-              <option value="">Select distance...</option>
-              <option value="same_room">Same room</option>
-              <option value="same_city">Same city (Cape Town)</option>
-              <option value="same_country">Same country</option>
-              <option value="different_continent">Different continent</option>
-            </select>
+        <div class="migration-path reveal">
+          <div class="migration-stop">
+            <div class="migration-season">Early Period</div>
+            <div class="migration-place">Ontario: The Nesting Phase</div>
+            <div class="migration-observation">The Gofman establishes territory in Thornhill. Builds WYNN Yoga from scratch. Demonstrates a rare capacity for both physical discipline and entrepreneurial ambition. The local population responds positively. The mat is warm. The studio thrives.</div>
           </div>
-          <div class="calc-field">
-            <label>How recently have you eaten</label>
-            <select id="calcHunger">
-              <option value="">Select...</option>
-              <option value="just_ate">Just ate</option>
-              <option value="few_hours">A few hours ago</option>
-              <option value="hungry">I'm hungry right now</option>
-              <option value="starving">Haven't eaten today</option>
-            </select>
+          <div class="migration-stop">
+            <div class="migration-season">Transitional Period</div>
+            <div class="migration-place">The Restlessness</div>
+            <div class="migration-observation">Something shifts. Researchers have spent years debating what triggered it. Was it a particularly uninspiring paper menu at a Thornhill restaurant? A vision during savasana? The realization that "What You Need Now" could apply to more than yoga? Whatever it was, the Gofman begins to turn his attention toward food.</div>
           </div>
-          <div class="calc-field">
-            <label>Your relationship with restaurant menus</label>
-            <select id="calcMenu">
-              <option value="">Select...</option>
-              <option value="paper">I prefer paper menus</option>
-              <option value="digital">I use digital menus</option>
-              <option value="eatapp">I've used EatApp specifically</option>
-              <option value="no_menu">I don't need a menu, I know what I want</option>
-            </select>
+          <div class="migration-stop">
+            <div class="migration-season">The Pivot</div>
+            <div class="migration-place">EatApp: A New Species Emerges</div>
+            <div class="migration-observation">The Gofman founds EatApp Menu, a platform that transforms static restaurant menus into interactive digital experiences with POS integration. The yoga community mourns. The restaurant industry, unaware of what is about to happen to it, continues printing laminated menus in blissful ignorance.</div>
           </div>
-          <button class="calc-btn" onclick="calculateThreat()">RUN THREAT ANALYSIS</button>
-          <div class="calc-result" id="calcResult">
-            <div class="calc-result-level" id="calcLevel"></div>
-            <div class="calc-result-desc" id="calcDesc"></div>
+          <div class="migration-stop">
+            <div class="migration-season">The Great Migration</div>
+            <div class="migration-place">Destination: Cape Town</div>
+            <div class="migration-observation">In a move that stunned naturalists, the Gofman crosses the Atlantic entirely, relocating from Canada to South Africa. Cape Town's combination of world-class food culture, natural beauty, and an emerging tech scene creates the ideal environment. The specimen thrives immediately. Table Mountain provides a dramatic backdrop for what is essentially a one-man restaurant revolution.</div>
+          </div>
+          <div class="migration-stop">
+            <div class="migration-season">Present Day</div>
+            <div class="migration-place">Fully Established</div>
+            <div class="migration-observation">The Gofman now moves freely through Cape Town's dining ecosystem, leaving a trail of beautifully digitized menus and slightly overwhelmed restaurant owners in his wake. Attempts to predict his next move have proven futile. He is, by all accounts, exactly where he's supposed to be.</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- INTERCEPTED COMMUNICATIONS -->
-    <section class="comms-section">
+    <!-- BEHAVIORAL TRAITS -->
+    <section data-narrator="Observe the behavior carefully. Each trait reveals something extraordinary." data-episode="IV. Behavior">
       <div class="container">
         <div class="section-header reveal">
-          <span class="label">Section 5 // Intercepted Communications</span>
-          <h2 class="section-title">Surveillance Transcripts</h2>
-          <p class="section-desc">The following communications were intercepted by DCI field agents. Names of associates have been partially redacted for their protection.</p>
+          <span class="label">Observation V</span>
+          <h2 class="section-title">Behavioral Analysis</h2>
+          <p class="section-desc">Key behaviors observed during extended fieldwork.</p>
         </div>
 
-        <div class="comms-grid reveal">
-          <div class="comm-card">
-            <div class="comm-header">
-              <div class="comm-avatar">👨‍🍳</div>
-              <div class="comm-meta">
-                <strong>Restaurant Owner, V&A Waterfront</strong>
-                <span>Intercepted 14:32 SAST</span>
-              </div>
-            </div>
-            <div class="comm-body">"Ever since we put our menu on Josh's app, customers have been ordering things they can't even pronounce. Our 'Chef's Special' sales are up 300%. I'm running out of Chef's Specials. I didn't plan for this."</div>
+        <div class="traits-grid reveal">
+          <div class="trait-card">
+            <div class="trait-icon">🔄</div>
+            <div class="trait-name">Radical Adaptation</div>
+            <div class="trait-desc">Capable of completely reinventing itself across industries and continents. Most creatures specialize. The Gofman generalizes, then specializes in the new thing better than most.</div>
           </div>
-          <div class="comm-card">
-            <div class="comm-header">
-              <div class="comm-avatar">🧘‍♀️</div>
-              <div class="comm-meta">
-                <strong>Former WYNN Yoga Student</strong>
-                <span>Intercepted 09:15 EST</span>
-              </div>
-            </div>
-            <div class="comm-body">"He was the best yoga instructor in Thornhill. Then one day he just... left. Said something about 'disrupting menus.' We thought it was a joke. It was not a joke. He disrupted the menus."</div>
+          <div class="trait-card">
+            <div class="trait-icon">📱</div>
+            <div class="trait-name">Digital Symbiosis</div>
+            <div class="trait-desc">Has formed a symbiotic relationship with restaurant technology. The restaurants provide the food; the Gofman provides the platform that makes the food irresistible before it even arrives at the table.</div>
           </div>
-          <div class="comm-card">
-            <div class="comm-header">
-              <div class="comm-avatar">🖨️</div>
-              <div class="comm-meta">
-                <strong>Paper Menu Manufacturer</strong>
-                <span>Intercepted 11:47 SAST</span>
-              </div>
-            </div>
-            <div class="comm-body">"We've lost 12 accounts this quarter to some guy named Gofman. He's making digital menus that make our laminated ones look like cave paintings. We're considering pivoting to placemats."</div>
+          <div class="trait-card">
+            <div class="trait-icon">🧘</div>
+            <div class="trait-name">Residual Flexibility</div>
+            <div class="trait-desc">Despite having left the yoga world, the specimen retains unusual physical and mental flexibility. This manifests as the ability to pivot, bend deadlines, and stretch a metaphor further than any reasonable person would.</div>
           </div>
-          <div class="comm-card">
-            <div class="comm-header">
-              <div class="comm-avatar">🏃</div>
-              <div class="comm-meta">
-                <strong>Anonymous DCI Agent</strong>
-                <span>Intercepted 22:08 SAST</span>
-              </div>
-            </div>
-            <div class="comm-body">"I was assigned to surveillance at a restaurant using EatApp. I was supposed to observe only. I ordered the tasting menu. And the wine pairing. And dessert. I'm requesting a transfer."</div>
+          <div class="trait-card">
+            <div class="trait-icon">✈️</div>
+            <div class="trait-name">Hemispheric Boldness</div>
+            <div class="trait-desc">The decision to move from Thornhill to Cape Town suggests a specimen unafraid of dramatic environmental change. Most entrepreneurs stay in their biome. The Gofman simply chose a better one.</div>
+          </div>
+          <div class="trait-card">
+            <div class="trait-icon">📖</div>
+            <div class="trait-name">Nomenclature Drive</div>
+            <div class="trait-desc">Has a documented compulsion to name and define things. See: coining "WYNN" and then registering it on Urban Dictionary. This is the behavior of a creature that needs the world to understand its vocabulary.</div>
+          </div>
+          <div class="trait-card">
+            <div class="trait-icon">🍷</div>
+            <div class="trait-name">Elevated Palate</div>
+            <div class="trait-desc">Extended time in Cape Town's food scene has resulted in a palate that makes normal menus look insufficient. The specimen reportedly cannot eat anywhere without mentally redesigning the menu.</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- YOGA DECODER -->
-    <section class="decoder-section">
+    <!-- DIET ANALYSIS -->
+    <section class="diet-section" data-narrator="What does the Gofman consume? The answer is more complex than you might expect." data-episode="V. Diet">
       <div class="container">
         <div class="section-header reveal">
-          <span class="label">Section 6 // Intelligence Analysis</span>
-          <h2 class="section-title">The Yoga-to-Menu Pipeline</h2>
-          <p class="section-desc">Our cryptanalysis division has decoded the true meaning behind WYNN Yoga's curriculum. Every pose was preparation for the restaurant industry.</p>
+          <span class="label">Observation VI</span>
+          <h2 class="section-title">Dietary Composition</h2>
+          <p class="section-desc">A breakdown of what sustains the specimen, both literally and figuratively.</p>
         </div>
 
-        <div class="decoder-box reveal">
-          <div class="decoder-grid">
-            <div class="decoder-col-header">Yoga Pose</div>
-            <div class="decoder-col-header center">→</div>
-            <div class="decoder-col-header">Actual Training</div>
-
-            <div class="decoder-pose">Downward Dog</div>
-            <div class="decoder-arrow">→</div>
-            <div class="decoder-real">Leaning over to photograph a flat-lay of food</div>
-
-            <div class="decoder-pose">Warrior II</div>
-            <div class="decoder-arrow">→</div>
-            <div class="decoder-real">Defending your plate from someone who "just wants a bite"</div>
-
-            <div class="decoder-pose">Tree Pose</div>
-            <div class="decoder-arrow">→</div>
-            <div class="decoder-real">Standing perfectly still while a waiter describes the specials</div>
-
-            <div class="decoder-pose">Corpse Pose (Savasana)</div>
-            <div class="decoder-arrow">→</div>
-            <div class="decoder-real">Post-tasting-menu recovery position</div>
-
-            <div class="decoder-pose">Sun Salutation</div>
-            <div class="decoder-arrow">→</div>
-            <div class="decoder-real">Morning routine of checking restaurant analytics dashboards</div>
-
-            <div class="decoder-pose">Chair Pose</div>
-            <div class="decoder-arrow">→</div>
-            <div class="decoder-real">Sitting at a restaurant for 3 hours because the menu is that good</div>
-
-            <div class="decoder-pose">Child's Pose</div>
-            <div class="decoder-arrow">→</div>
-            <div class="decoder-real">The position you assume when you see the bill</div>
+        <div class="diet-wheel reveal" id="dietWheel">
+          <div class="diet-item">
+            <div class="diet-icon">💡</div>
+            <div class="diet-info">
+              <div class="diet-name">New ideas at 2 AM</div>
+              <div class="diet-note">Primary energy source. Arrives uninvited.</div>
+            </div>
+            <div class="diet-bar-track"><div class="diet-bar-fill gold" data-width="95"></div></div>
+          </div>
+          <div class="diet-item">
+            <div class="diet-icon">🍷</div>
+            <div class="diet-info">
+              <div class="diet-name">Western Cape wine</div>
+              <div class="diet-note">For research purposes only, obviously.</div>
+            </div>
+            <div class="diet-bar-track"><div class="diet-bar-fill warm" data-width="82"></div></div>
+          </div>
+          <div class="diet-item">
+            <div class="diet-icon">📊</div>
+            <div class="diet-info">
+              <div class="diet-name">Restaurant analytics dashboards</div>
+              <div class="diet-note">Checks these more than most people check Instagram.</div>
+            </div>
+            <div class="diet-bar-track"><div class="diet-bar-fill gold" data-width="88"></div></div>
+          </div>
+          <div class="diet-item">
+            <div class="diet-icon">☀️</div>
+            <div class="diet-info">
+              <div class="diet-name">Cape Town sunshine</div>
+              <div class="diet-note">A significant upgrade from the Ontario variety.</div>
+            </div>
+            <div class="diet-bar-track"><div class="diet-bar-fill sage" data-width="90"></div></div>
+          </div>
+          <div class="diet-item">
+            <div class="diet-icon">🍳</div>
+            <div class="diet-info">
+              <div class="diet-name">Meals at restaurants he's digitized</div>
+              <div class="diet-note">Quality assurance. Strictly professional.</div>
+            </div>
+            <div class="diet-bar-track"><div class="diet-bar-fill warm" data-width="76"></div></div>
+          </div>
+          <div class="diet-item">
+            <div class="diet-icon">🧘</div>
+            <div class="diet-info">
+              <div class="diet-name">Residual yoga energy</div>
+              <div class="diet-note">Still metabolizing years of stored namaste.</div>
+            </div>
+            <div class="diet-bar-track"><div class="diet-bar-fill sage" data-width="35"></div></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- GOFMAN APPETITE INDEX -->
-    <section class="appetite-section">
+    <!-- VOCALIZATIONS (Interactive) -->
+    <section class="call-section" data-narrator="Every creature has its call. The Gofman's is... distinctive." data-episode="VI. Vocalizations">
       <div class="container">
         <div class="section-header reveal">
-          <span class="label">Section 7 // Data Analysis</span>
-          <h2 class="section-title">The Gofman Appetite Index</h2>
-          <p class="section-desc">Real-time measurements of subject's impact on citywide hunger levels.</p>
+          <span class="label">Observation VII</span>
+          <h2 class="section-title">Documented Vocalizations</h2>
+          <p class="section-desc">Field researchers have catalogued the following phrases, each observed in the wild during various stages of the specimen's daily cycle.</p>
         </div>
 
-        <div class="appetite-chart reveal" id="appetiteChart">
-          <div class="appetite-bar-group">
-            <div class="appetite-bar-label">
-              <span>Restaurant adoption rate (Cape Town)</span>
-              <span>87%</span>
-            </div>
-            <div class="appetite-bar-track">
-              <div class="appetite-bar-fill green" data-width="87"></div>
-            </div>
-          </div>
-          <div class="appetite-bar-group">
-            <div class="appetite-bar-label">
-              <span>Increase in "just looking at the menu" incidents</span>
-              <span>94%</span>
-            </div>
-            <div class="appetite-bar-track">
-              <div class="appetite-bar-fill amber" data-width="94"></div>
-            </div>
-          </div>
-          <div class="appetite-bar-group">
-            <div class="appetite-bar-label">
-              <span>Paper menu nostalgia (declining)</span>
-              <span>12%</span>
-            </div>
-            <div class="appetite-bar-track">
-              <div class="appetite-bar-fill green" data-width="12"></div>
-            </div>
-          </div>
-          <div class="appetite-bar-group">
-            <div class="appetite-bar-label">
-              <span>Dessert orders after viewing digital menu</span>
-              <span>91%</span>
-            </div>
-            <div class="appetite-bar-track">
-              <div class="appetite-bar-fill red" data-width="91"></div>
-            </div>
-          </div>
-          <div class="appetite-bar-group">
-            <div class="appetite-bar-label">
-              <span>Probability subject is thinking about food right now</span>
-              <span>99%</span>
-            </div>
-            <div class="appetite-bar-track">
-              <div class="appetite-bar-fill red" data-width="99"></div>
-            </div>
-          </div>
-          <div class="appetite-bar-group">
-            <div class="appetite-bar-label">
-              <span>Yoga students who followed him to food tech</span>
-              <span>0%</span>
-            </div>
-            <div class="appetite-bar-track">
-              <div class="appetite-bar-fill green" data-width="0"></div>
-            </div>
+        <div class="call-box reveal">
+          <div class="call-prompt">Press to hear a documented Gofman vocalization</div>
+          <button class="call-btn" onclick="playCall()">Observe Vocalization</button>
+          <div class="call-output" id="callOutput">
+            <div style="text-align:center;font-family:'Caveat',cursive;color:var(--text-dim);font-size:1rem;">Awaiting observation...</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- MENU GENERATOR -->
-    <section class="generator-section">
+    <!-- FIELD NOTES -->
+    <section data-narrator="The researchers have been thorough. Perhaps too thorough." data-episode="VII. Field Notes">
       <div class="container">
         <div class="section-header reveal">
-          <span class="label">Section 8 // Simulation</span>
-          <h2 class="section-title">Gofman Menu Item Generator</h2>
-          <p class="section-desc">Our AI has been trained on Josh's methodology. Press the button to generate a menu item he would probably approve of.</p>
+          <span class="label">Observation VIII</span>
+          <h2 class="section-title">Researcher Field Notes</h2>
+          <p class="section-desc">Handwritten observations from field researchers stationed across the Western Cape.</p>
         </div>
 
-        <div class="generator-box reveal">
-          <button class="generator-btn" onclick="generateDish()">GENERATE MENU ITEM</button>
-          <div class="generator-output" id="generatorOutput">
-            <div style="text-align:center;color:var(--text-dim);font-family:'Source Code Pro',monospace;font-size:0.75rem;">AWAITING INPUT...</div>
+        <div class="notes-grid reveal">
+          <div class="field-note">
+            <div class="field-note-date">Day 12, Camps Bay</div>
+            <div class="field-note-text">Spotted the Gofman at a beachfront restaurant. He wasn't eating. He was staring at the menu with the intensity of someone defusing a bomb. After 4 minutes, he pulled out his phone and started taking notes. The waiter looked concerned. I don't think the waiter understands what's happening to his menu.</div>
+            <div class="field-note-author">— Researcher A, Cape Town Field Office</div>
+          </div>
+          <div class="field-note">
+            <div class="field-note-date">Day 27, Stellenbosch</div>
+            <div class="field-note-text">Subject was observed at a wine estate. Tasted 6 wines. Complimented each one. Then asked if their tasting menu was digital. When told it was printed, his expression suggested he'd just been shown a fax machine. He left his business card. I give that paper menu 3 weeks.</div>
+            <div class="field-note-author">— Researcher B, Winelands Division</div>
+          </div>
+          <div class="field-note">
+            <div class="field-note-date">Day 41, Video Call Intercept</div>
+            <div class="field-note-text">Overheard the specimen on a video call explaining EatApp to a potential client. His passion for digital menus is the kind of energy usually reserved for people describing their firstborn child. The client signed up before the call ended. I'm beginning to think resistance is futile.</div>
+            <div class="field-note-author">— Researcher C, Digital Surveillance</div>
+          </div>
+          <div class="field-note">
+            <div class="field-note-date">Day 58, Long Street</div>
+            <div class="field-note-text">Attempted to engage the specimen in conversation about his yoga past. He smiled politely and changed the subject to restaurant technology within 90 seconds. It was the smoothest topic pivot I've ever witnessed. Years of yoga transitions clearly trained him for conversational flexibility.</div>
+            <div class="field-note-author">— Researcher D, Behavioral Analysis</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- WYNN SCALE -->
-    <section class="wynn-section">
+    <!-- SPECIES QUIZ -->
+    <section class="quiz-section" data-narrator="And now... a moment of participation." data-episode="VIII. Classification">
       <div class="container">
         <div class="section-header reveal">
-          <span class="label">Section 9 // Risk Assessment</span>
-          <h2 class="section-title">The W.Y.N.N. Scale</h2>
-          <p class="section-desc">A proprietary measurement system. "What You Need Now" has been repurposed by the DCI to measure how badly you need to eat after encountering Josh Gofman.</p>
+          <span class="label">Observation IX</span>
+          <h2 class="section-title">Species Compatibility Assessment</h2>
+          <p class="section-desc">Determine which species you are, and how compatible you'd be sharing an ecosystem with the Gofman.</p>
         </div>
 
-        <div class="wynn-scale reveal">
-          <div class="wynn-track">
-            <div class="wynn-marker">JG</div>
+        <div class="quiz-box reveal">
+          <div id="quizContainer">
+            <div class="quiz-question" id="quizQuestion"></div>
+            <div class="quiz-options" id="quizOptions"></div>
+            <div class="quiz-nav">
+              <button class="quiz-nav-btn" id="quizPrev" onclick="quizPrev()" disabled>Previous</button>
+              <span class="quiz-progress" id="quizProgress"></span>
+              <button class="quiz-nav-btn" id="quizNext" onclick="quizNext()">Next</button>
+            </div>
           </div>
-          <div class="wynn-labels">
-            <span>"I just ate"</span>
-            <span>"Maybe a snack"</span>
-            <span>"Ordering everything"</span>
-          </div>
-          <div class="wynn-breakdown">
-            <div class="wynn-item">
-              <div class="wynn-item-header">
-                <span class="wynn-item-label">Visual Temptation</span>
-                <span class="wynn-item-score high">9.7/10</span>
-              </div>
-              <div class="wynn-item-desc">EatApp menus make food look 400% more appealing than it already is</div>
-            </div>
-            <div class="wynn-item">
-              <div class="wynn-item-header">
-                <span class="wynn-item-label">Decision Paralysis</span>
-                <span class="wynn-item-score high">8.9/10</span>
-              </div>
-              <div class="wynn-item-desc">When every item looks incredible, choosing becomes impossible</div>
-            </div>
-            <div class="wynn-item">
-              <div class="wynn-item-header">
-                <span class="wynn-item-label">Impulse Ordering</span>
-                <span class="wynn-item-score high">9.4/10</span>
-              </div>
-              <div class="wynn-item-desc">"I'll just have one starter" → orders four courses and wine</div>
-            </div>
-            <div class="wynn-item">
-              <div class="wynn-item-header">
-                <span class="wynn-item-label">Post-Meal Satisfaction</span>
-                <span class="wynn-item-score med">10/10</span>
-              </div>
-              <div class="wynn-item-desc">The worst part: you don't even regret it. Every time.</div>
-            </div>
+          <div class="quiz-result" id="quizResult">
+            <div class="quiz-result-species" id="quizSpecies"></div>
+            <div class="quiz-result-desc" id="quizDesc"></div>
+            <div class="quiz-result-compat" id="quizCompat"></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- FINAL ASSESSMENT -->
-    <section class="final-section reveal">
+    <!-- CONSERVATION STATUS -->
+    <section class="conservation-section" data-narrator="Some things are too rare to let the world overlook them." data-episode="IX. Conservation">
       <div class="container">
-        <div class="final-stamp">CASE: UNSOLVABLE</div>
-        <p class="final-text">
-          After extensive investigation, the Department of Culinary Intelligence has concluded that Josh Gofman cannot be contained. His trajectory from yoga studio owner in Thornhill to culinary tech visionary in Cape Town represents an unprecedented career arc that defies standard profiling.
+        <div class="section-header reveal">
+          <span class="label">Observation X</span>
+          <h2 class="section-title">Conservation Assessment</h2>
+        </div>
+
+        <div class="conservation-card reveal">
+          <div class="conservation-badge">Status: Thriving Brilliantly</div>
+          <p class="conservation-text">
+            After extensive observation, the Cape Town Natural History Society has concluded that the Gofman requires no protection. If anything, the rest of us need protection from the quiet, relentless way he makes everything around him better.
+          </p>
+          <p class="conservation-text">
+            He took a yoga studio in Thornhill and made it the biggest in the city. He took restaurant menus and turned them into experiences. He took himself from Ontario to Cape Town and made it look like the most natural migration in the world.
+          </p>
+          <p class="conservation-text" style="color: var(--gold);">
+            The Gofman doesn't need to be conserved. He needs to be appreciated. Preferably over a well-plated meal, viewed on a beautifully designed digital menu.
+          </p>
+          <div class="conservation-fine-print">Classification verified by peer review &bull; No objections recorded &bull; One reviewer simply wrote "yeah, sounds about right"</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLOSING -->
+    <section class="closing-section reveal">
+      <div class="container">
+        <h2 class="closing-title">End of Observation</h2>
+        <p class="closing-text">
+          The Gofman continues to operate in the wild, unbothered by classification, undeterred by the distance between who he was and who he's becoming. We will continue to watch. And, inevitably, to eat.
         </p>
-        <p class="final-text">
-          He took "What You Need Now" and turned it into a philosophy, a business, and apparently an entire second life on a different continent. The restaurants are better for it. The menus are better for it. Our waistlines are not.
-        </p>
-        <p class="final-text" style="color: var(--green); font-weight: 500;">
-          Subject is classified as: genuinely impressive, annoyingly talented, and a very real threat to anyone trying to stick to a diet.
-        </p>
-        <div class="final-footnote">
-          DCI-FILE-2026-JG-0041 // This document will self-destruct when you close the tab // Or it won't, we're not sure how browsers work
+        <div class="closing-credits">
+          A Cape Town Natural History Society Production<br>
+          Filmed entirely without the subject's knowledge<br>
+          (He was probably too busy redesigning a menu to notice)<br><br>
+          No paper menus were harmed in the making of this documentary<br>
+          (Several were gently retired)
         </div>
       </div>
     </section>
@@ -1482,206 +1381,181 @@
   </main>
 
   <script>
-    // ============ SPLASH & ENTER ============
+    // ============ SPLASH ============
     function enterSite() {
       document.getElementById('splash').classList.add('hidden');
       document.getElementById('mainContent').style.display = 'block';
       setTimeout(() => {
-        document.getElementById('classBar').classList.add('visible');
-        document.getElementById('threatTracker').classList.add('visible');
-      }, 500);
-      startThreatCycle();
+        document.getElementById('episodeTracker').classList.add('visible');
+        document.getElementById('narratorBar').classList.add('visible');
+      }, 600);
+      initQuiz();
     }
 
-    // ============ THREAT LEVEL CYCLING ============
-    const threatLevels = [
-      { level: 'ELEVATED', status: 'Subject within 5km radius', color: 'var(--amber)' },
-      { level: 'HIGH', status: 'Subject is opening his laptop', color: 'var(--amber)' },
-      { level: 'SEVERE', status: 'Subject is updating a menu', color: 'var(--red)' },
-      { level: 'CRITICAL', status: 'Subject just posted a food photo', color: 'var(--red)' },
-      { level: 'MAXIMUM', status: 'You are now hungry', color: 'var(--red)' },
-    ];
-    let threatIdx = 0;
-
-    function startThreatCycle() {
-      setInterval(() => {
-        threatIdx = (threatIdx + 1) % threatLevels.length;
-        const t = threatLevels[threatIdx];
-        document.getElementById('threatValue').textContent = t.level;
-        document.getElementById('threatValue').style.color = t.color;
-        document.getElementById('threatStatus').textContent = t.status;
-      }, 4000);
-    }
-
-    // ============ SCROLL REVEALS ============
+    // ============ SCROLL: REVEALS + NARRATOR + EPISODE ============
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
           e.target.classList.add('visible');
-          // Trigger appetite bars
-          if (e.target.id === 'appetiteChart') {
-            e.target.querySelectorAll('.appetite-bar-fill').forEach(bar => {
+          // diet bars
+          if (e.target.id === 'dietWheel') {
+            e.target.querySelectorAll('.diet-bar-fill').forEach(bar => {
               bar.style.width = bar.dataset.width + '%';
             });
           }
         }
       });
     }, { threshold: 0.15 });
-
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // ============ THREAT CALCULATOR ============
-    function calculateThreat() {
-      const p = document.getElementById('calcProximity').value;
-      const h = document.getElementById('calcHunger').value;
-      const m = document.getElementById('calcMenu').value;
-
-      if (!p || !h || !m) {
-        showToast('⚠️ All fields required for threat analysis');
-        return;
-      }
-
-      const results = {
-        'same_room': {
-          'starving': { level: 'CATASTROPHIC', cls: 'extreme', desc: 'You are in immediate danger. Josh Gofman is right there, and you haven\'t eaten. You will order everything on the menu. This is not a prediction, it is a certainty. Evacuate immediately or accept your fate.' },
-          'hungry': { level: 'CRITICAL', cls: 'extreme', desc: 'Being hungry in the same room as Josh Gofman is like being dehydrated next to a waterfall. Your willpower has approximately 4 minutes before total collapse.' },
-          'few_hours': { level: 'SEVERE', cls: 'severe', desc: 'You think you\'re fine. You just ate a few hours ago. But Josh is right there, and he\'s going to suggest "just a small bite." There is no such thing as a small bite in his world.' },
-          'just_ate': { level: 'HIGH', cls: 'severe', desc: 'You literally just ate and you still feel a pull. That\'s the Gofman Effect. Somehow dessert sounds reasonable. A cheese plate couldn\'t hurt. Maybe one more glass of wine.' },
-        },
-        'same_city': {
-          'starving': { level: 'CRITICAL', cls: 'extreme', desc: 'You\'re in Cape Town. He\'s in Cape Town. You\'re starving. Every restaurant in this city has been touched by his technology. There is no safe menu to hide behind.' },
-          'hungry': { level: 'SEVERE', cls: 'severe', desc: 'Same city as Gofman and feeling peckish. Any restaurant you walk into has a non-trivial chance of running his software. You will order more than intended.' },
-          'few_hours': { level: 'ELEVATED', cls: 'severe', desc: 'Manageable, but do not open any restaurant apps. Do not look at any menus. Go directly home and eat something boring from your fridge.' },
-          'just_ate': { level: 'MODERATE', cls: 'severe', desc: 'Low immediate risk, but ambient Gofman influence in Cape Town means you\'re never truly safe. Stay vigilant.' },
-        },
-        'same_country': {
-          'starving': { level: 'SEVERE', cls: 'severe', desc: 'You\'re in the same country. The digital menu revolution knows no provincial boundaries. Order delivery immediately before the Gofman signal reaches your area.' },
-          'hungry': { level: 'ELEVATED', cls: 'severe', desc: 'EatApp\'s reach is expanding. Your city may already be compromised. Eat something now while you still have control over portion sizes.' },
-          'few_hours': { level: 'LOW-MODERATE', cls: 'severe', desc: 'Distance provides some protection, but the internet does not. Do not Google "best restaurants near me." The algorithm knows.' },
-          'just_ate': { level: 'MINIMAL', cls: 'severe', desc: 'You\'re about as safe as you can be in a Gofman-active country. Enjoy this feeling. It won\'t last.' },
-        },
-        'different_continent': {
-          'starving': { level: 'MODERATE', cls: 'severe', desc: 'A continent away and starving. You might think you\'re safe, but you\'re reading this dossier right now. You\'re already thinking about food. He\'s already won.' },
-          'hungry': { level: 'LOW', cls: 'severe', desc: 'Distance is your ally. But the fact that you\'re reading about a man who makes digital menus while hungry suggests the influence has already begun.' },
-          'few_hours': { level: 'MINIMAL', cls: 'severe', desc: 'About as safe as it gets. For now. EatApp is expanding. Enjoy your paper menus while they last.' },
-          'just_ate': { level: 'NEGLIGIBLE*', cls: 'severe', desc: '*Negligible threat assumes you will not visit Cape Town. If you visit Cape Town, all bets are off. Rerun this assessment upon arrival.' },
+    // Narrator + episode tracking
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const narration = e.target.dataset.narrator;
+          const episode = e.target.dataset.episode;
+          if (narration) document.getElementById('narratorText').textContent = narration;
+          if (episode) document.getElementById('epTitle').textContent = episode;
         }
-      };
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('section[data-narrator]').forEach(el => sectionObserver.observe(el));
 
-      const result = results[p]?.[h] || { level: 'UNKNOWN', cls: 'severe', desc: 'Even our algorithm cannot predict this combination. Unprecedented.' };
-
-      const el = document.getElementById('calcResult');
-      const levelEl = document.getElementById('calcLevel');
-      const descEl = document.getElementById('calcDesc');
-
-      levelEl.textContent = result.level;
-      levelEl.className = 'calc-result-level ' + result.cls;
-      descEl.textContent = result.desc;
-      el.classList.add('visible');
-    }
-
-    // ============ MENU GENERATOR ============
-    const dishes = [
-      {
-        name: 'The Gofman',
-        desc: 'A deconstructed yoga mat made entirely of kale, quinoa, and audacity. Served on a reclaimed maple wood board from a Thornhill studio. Pairs with existential reflection.',
-        price: 'R 345 // $24 CAD (nostalgia surcharge)',
-        warning: 'ADVISORY: Ordering this dish will cause you to question every career decision you\'ve ever made.'
-      },
-      {
-        name: 'Downward Dog Tartare',
-        desc: 'Hand-pressed tuna tartare, shaped into the downward dog position. Topped with wasabi foam and a single tear of a paper menu manufacturer. Best enjoyed while bending forward.',
-        price: 'R 280 // Flexibility required',
-        warning: 'ADVISORY: Do not attempt to eat this in tree pose.'
-      },
-      {
-        name: 'The Digital Disruption',
-        desc: 'A 7-course tasting menu that only exists on a screen until you order it. Each course is a metaphor for a legacy industry Josh has personally upset. Course 4 is just a QR code that leads to another QR code.',
-        price: 'R 1,200 // Per person // Worth it',
-        warning: 'ADVISORY: Menu cannot be printed. Do not ask.'
-      },
-      {
-        name: 'Ontario to Cape Town Migration Bowl',
-        desc: 'A fusion bowl tracing Josh\'s geographic journey. Poutine base (Ontario), topped with bobotie spice (Cape Town), finished with maple-balsamic reduction. Served in a bowl shaped like the Atlantic Ocean.',
-        price: 'R 195 // Passport not included',
-        warning: 'ADVISORY: May cause sudden urge to relocate continents.'
-      },
-      {
-        name: 'The W.Y.N.N.',
-        desc: 'Whatever You Need Now. Literally. The chef will look into your eyes and prepare exactly what your soul requires. No menu. No choices. Pure intuition. Josh\'s original philosophy, now a dining experience.',
-        price: 'R ??? // You\'ll know when you see the bill',
-        warning: 'ADVISORY: Trust issues with food will not be resolved by this dish.'
-      },
-      {
-        name: 'Savasana Crème Brûlée',
-        desc: 'A crème brûlée so rich you\'ll need to lie down after eating it. Literally designed to be consumed in corpse pose. Comes with a yoga mat and a blanket. Sugar crust crackled tableside by a former yoga instructor.',
-        price: 'R 165 // Nap surcharge R 50',
-        warning: 'ADVISORY: You will not be able to stand up for 20 minutes.'
-      },
-      {
-        name: 'The POS-Integrated Platter',
-        desc: 'A sharing platter that automatically splits the bill based on who ate what, tracked by embedded sensors in the plate. Josh\'s dream made physical. Includes: everything.',
-        price: 'R 890 // Auto-calculated per bite',
-        warning: 'ADVISORY: The plate is watching you.'
-      },
-      {
-        name: 'Table Mountain Lamb Shank',
-        desc: 'Slow-braised for 12 hours, one hour for each month Josh has spent in Cape Town (approximately). Served with a view of Table Mountain, or a picture of Table Mountain if you\'re inside.',
-        price: 'R 425 // Views not guaranteed',
-        warning: 'ADVISORY: This dish has converted 7 vegetarians. It\'s that serious.'
-      }
+    // ============ VOCALIZATIONS ============
+    const calls = [
+      { text: '"Have you considered going digital with your menu?"', context: 'Observed during 94% of all social interactions, including weddings.' },
+      { text: '"What you need now... is a better menu experience."', context: 'The WYNN philosophy, repurposed for its true calling.' },
+      { text: '"No, no, the font is wrong. The customer needs to FEEL the risotto."', context: 'Overheard during a 3-hour menu design session.' },
+      { text: '"I used to teach people to breathe. Now I teach menus to breathe."', context: 'Said with complete sincerity. The listener needed a moment.' },
+      { text: '"Back in Thornhill, we had a saying at the studio..."', context: 'He never finishes this sentence. The yoga past is a door he opens but never walks through.' },
+      { text: '"That lamb shank photo is at a 7. I need it at a 12."', context: 'Scale goes to 10. The Gofman operates beyond conventional metrics.' },
+      { text: '"Cape Town doesn\'t have a restaurant problem. It has a menu problem. I\'m fixing it."', context: 'The quiet confidence of a man who moved hemispheres for better menus.' },
+      { text: '"You know what WYNN stands for? What You Need Now. And right now, you need this app."', context: 'The original acronym finds its final form.' },
+      { text: '"Namaste... and also, check out this new feature we launched."', context: 'The yoga-to-tech pipeline in a single sentence.' },
+      { text: '"I didn\'t leave yoga. Yoga prepared me for this."', context: 'Deep. Possibly true. Researchers are still debating.' },
     ];
+    let lastCallIdx = -1;
 
-    let lastDishIdx = -1;
-
-    function generateDish() {
+    function playCall() {
       let idx;
-      do { idx = Math.floor(Math.random() * dishes.length); } while (idx === lastDishIdx);
-      lastDishIdx = idx;
-      const d = dishes[idx];
-      document.getElementById('generatorOutput').innerHTML = `
-        <div class="dish-name">${d.name}</div>
-        <div class="dish-desc">${d.desc}</div>
-        <div class="dish-price">${d.price}</div>
-        <div class="dish-warning">${d.warning}</div>
+      do { idx = Math.floor(Math.random() * calls.length); } while (idx === lastCallIdx);
+      lastCallIdx = idx;
+      const c = calls[idx];
+      document.getElementById('callOutput').innerHTML = `
+        <div class="call-text">${c.text}</div>
+        <div class="call-context">${c.context}</div>
       `;
     }
 
-    // ============ REDACTED CLICK COUNTER (Easter Egg) ============
-    let redactedClicks = 0;
-    document.addEventListener('click', (e) => {
-      if (e.target.classList.contains('redacted')) {
-        redactedClicks++;
-        if (redactedClicks === 3) {
-          showToast('🕵️ Clearance Level Upgraded: You can now see classified information');
-        }
-        if (redactedClicks === 7) {
-          showToast('🔓 FULL ACCESS GRANTED: Josh Gofman would be proud of your persistence');
-        }
+    // ============ SPECIES QUIZ ============
+    const quizData = [
+      {
+        q: 'A restaurant hands you a paper menu. Your first thought is:',
+        opts: [
+          'Finally, something tangible.',
+          'This could use some better typography.',
+          'Why isn\'t this on my phone?',
+          'I wonder what the specials are that aren\'t on here.'
+        ]
+      },
+      {
+        q: 'Someone tells you they\'re moving to a different continent. You think:',
+        opts: [
+          'That\'s terrifying.',
+          'That\'s exciting, but I\'d need a plan first.',
+          'Where? When? I\'ll help you pack.',
+          'I\'ve been thinking about that too, actually.'
+        ]
+      },
+      {
+        q: 'Your approach to yoga is best described as:',
+        opts: [
+          'Never tried it. Suspicious of the calm.',
+          'Occasionally, when my back hurts.',
+          'Regular practice. It centers me.',
+          'I built the largest yoga studio in my city, then left to build restaurant software.'
+        ]
+      },
+      {
+        q: 'At dinner, you spend the most time:',
+        opts: [
+          'Talking to the people I\'m with.',
+          'Savoring the food.',
+          'Analyzing the menu design.',
+          'Wondering if this restaurant has heard of EatApp.'
+        ]
       }
-    });
+    ];
 
-    // ============ KONAMI CODE (Easter Egg) ============
-    const konamiCode = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
-    let konamiIdx = 0;
+    let quizStep = 0;
+    let quizAnswers = [];
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === konamiCode[konamiIdx]) {
-        konamiIdx++;
-        if (konamiIdx === konamiCode.length) {
-          konamiIdx = 0;
-          activateKonami();
-        }
+    function initQuiz() {
+      quizAnswers = new Array(quizData.length).fill(-1);
+      renderQuiz();
+    }
+
+    function renderQuiz() {
+      const q = quizData[quizStep];
+      document.getElementById('quizQuestion').textContent = q.q;
+      document.getElementById('quizOptions').innerHTML = q.opts.map((o, i) =>
+        `<div class="quiz-option ${quizAnswers[quizStep] === i ? 'selected' : ''}" onclick="selectOption(${i})">${o}</div>`
+      ).join('');
+      document.getElementById('quizProgress').textContent = `${quizStep + 1} of ${quizData.length}`;
+      document.getElementById('quizPrev').disabled = quizStep === 0;
+      document.getElementById('quizNext').textContent = quizStep === quizData.length - 1 ? 'See Results' : 'Next';
+    }
+
+    function selectOption(i) {
+      quizAnswers[quizStep] = i;
+      renderQuiz();
+    }
+
+    function quizPrev() {
+      if (quizStep > 0) { quizStep--; renderQuiz(); }
+    }
+
+    function quizNext() {
+      if (quizAnswers[quizStep] === -1) {
+        showToast('Select an answer to continue');
+        return;
+      }
+      if (quizStep < quizData.length - 1) {
+        quizStep++;
+        renderQuiz();
       } else {
-        konamiIdx = 0;
+        showQuizResult();
       }
-    });
+    }
 
-    function activateKonami() {
-      document.body.style.transition = 'filter 0.5s';
-      document.body.style.filter = 'hue-rotate(180deg)';
-      showToast('🧘 NAMASTE MODE ACTIVATED // The yoga past cannot be escaped');
-      setTimeout(() => { document.body.style.filter = ''; }, 5000);
+    function showQuizResult() {
+      const score = quizAnswers.reduce((a, b) => a + b, 0);
+      document.getElementById('quizContainer').style.display = 'none';
+      const r = document.getElementById('quizResult');
+      let species, desc, compat;
+
+      if (score <= 4) {
+        species = 'Traditionalis steadfastus';
+        desc = 'You are a creature of stability, rooted in the familiar. You respect paper, prefer the known, and regard people who move continents with a mixture of awe and concern. You and the Gofman occupy different ecological niches, but you admire each other from a respectful distance.';
+        compat = 'Compatibility: Respectful coexistence';
+      } else if (score <= 8) {
+        species = 'Curiosus adaptabilis';
+        desc = 'You are flexible, open-minded, and intrigued by change even when you\'re not the one initiating it. You\'d try a digital menu. You\'d consider moving. You see the Gofman and think: I understand the impulse. You two could share an ecosystem very comfortably.';
+        compat = 'Compatibility: Natural allies';
+      } else if (score <= 12) {
+        species = 'Innovatus restlessus';
+        desc = 'You are a kindred spirit. Restless, visionary, probably already thinking about your next move. You and the Gofman would either become best friends or start a company together within 48 hours. Possibly both. Cape Town isn\'t big enough for two of you, but it would be entertaining.';
+        compat = 'Compatibility: Dangerously synergistic';
+      } else {
+        species = 'Gofmanus entrepreneurius (variant)';
+        desc = 'You ARE a Gofman. Either you\'re Josh himself taking this quiz (in which case: hello, we see you), or you\'ve independently evolved the same traits. Either way, the world should be concerned. One of you is powerful. Two is an ecosystem event.';
+        compat = 'Compatibility: You might actually BE Josh Gofman';
+      }
+
+      document.getElementById('quizSpecies').textContent = species;
+      document.getElementById('quizDesc').textContent = desc;
+      document.getElementById('quizCompat').textContent = compat;
+      r.classList.add('visible');
     }
 
     // ============ TOAST ============
@@ -1689,14 +1563,49 @@
       const t = document.getElementById('toast');
       t.textContent = msg;
       t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 3500);
+      setTimeout(() => t.classList.remove('show'), 3000);
     }
 
-    // ============ CONSOLE EASTER EGG ============
-    console.log('%c🔒 CLASSIFIED', 'font-size: 24px; color: #4caf50; font-weight: bold;');
-    console.log('%cDepartment of Culinary Intelligence — File JG-0041', 'font-size: 12px; color: #7a8a7a;');
-    console.log('%cIf you\'re reading this, Josh probably told you to check the console.', 'font-size: 11px; color: #ffa000;');
-    console.log('%cHe would do that. He\'s thorough like that.', 'font-size: 11px; color: #7a8a7a;');
+    // ============ EASTER EGGS ============
+    // Triple-click the hero title
+    let heroClicks = 0;
+    document.addEventListener('DOMContentLoaded', () => {
+      const heroTitle = document.querySelector('.hero-title');
+      if (heroTitle) {
+        heroTitle.style.cursor = 'default';
+        heroTitle.addEventListener('click', () => {
+          heroClicks++;
+          if (heroClicks === 3) {
+            showToast('🧘 The specimen acknowledges your persistence');
+          }
+          if (heroClicks === 7) {
+            showToast('🍽️ You have been added to the Gofman\'s dinner reservation');
+            heroClicks = 0;
+          }
+        });
+      }
+    });
+
+    // Konami code
+    const konami = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
+    let kIdx = 0;
+    document.addEventListener('keydown', e => {
+      if (e.key === konami[kIdx]) {
+        kIdx++;
+        if (kIdx === konami.length) {
+          kIdx = 0;
+          document.body.style.transition = 'filter 0.6s';
+          document.body.style.filter = 'sepia(0.6) brightness(1.1)';
+          showToast('🍁 Ontario Mode: Everything now looks like autumn in Thornhill');
+          setTimeout(() => { document.body.style.filter = ''; }, 6000);
+        }
+      } else { kIdx = 0; }
+    });
+
+    // Console
+    console.log('%c🌍 Cape Town Natural History Society', 'font-size: 16px; color: #c4a470; font-weight: bold; font-style: italic;');
+    console.log('%cSpecimen File: Gofmanus entrepreneurius', 'font-size: 11px; color: #9a8e7e;');
+    console.log('%cIf you\'re reading this, you\'re exactly the kind of person Josh would hire.', 'font-size: 11px; color: #c4a470;');
   </script>
 
 </body>
