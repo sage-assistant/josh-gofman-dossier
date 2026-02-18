@@ -47,6 +47,8 @@
       z-index: 9997;
     }
 
+    img { display: block; max-width: 100%; }
+
     /* ============ SPLASH ============ */
     .splash {
       position: fixed;
@@ -66,15 +68,13 @@
     .splash-logo {
       width: 100px;
       height: 100px;
-      border: 2px solid var(--gold);
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.5rem;
+      overflow: hidden;
       margin-bottom: 2rem;
       position: relative;
     }
+
+    .splash-logo img { width: 100%; height: 100%; object-fit: cover; }
 
     .splash-logo::after {
       content: '';
@@ -158,11 +158,7 @@
     }
     .narrator-bar.visible { opacity: 1; }
 
-    .narrator-inner {
-      max-width: 700px;
-      margin: 0 auto;
-      text-align: center;
-    }
+    .narrator-inner { max-width: 700px; margin: 0 auto; text-align: center; }
 
     .narrator-label {
       font-size: 0.55rem;
@@ -234,11 +230,7 @@
       color: var(--cream);
     }
 
-    .section-desc {
-      font-size: 1rem;
-      color: var(--text-dim);
-      line-height: 1.8;
-    }
+    .section-desc { font-size: 1rem; color: var(--text-dim); line-height: 1.8; }
 
     .reveal { opacity: 0; transform: translateY(35px); transition: opacity 0.9s ease-out, transform 0.9s ease-out; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -258,17 +250,28 @@
       overflow: hidden;
     }
 
-    .hero-glow {
+    .hero-bg {
       position: absolute;
-      top: 20%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, var(--gold-glow) 0%, transparent 65%);
-      filter: blur(100px);
-      opacity: 0.15;
+      inset: 0;
+      z-index: 0;
     }
+
+    .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.15;
+      filter: brightness(0.7);
+    }
+
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(transparent 40%, var(--bg) 100%);
+    }
+
+    .hero-content { position: relative; z-index: 1; }
 
     .hero-series {
       font-size: 0.6rem;
@@ -292,6 +295,7 @@
       animation: fadeUp 1s ease-out 0.4s forwards;
       line-height: 1.05;
       letter-spacing: 0.01em;
+      cursor: default;
     }
 
     .hero-subtitle {
@@ -310,9 +314,8 @@
     .hero-meta {
       font-size: 0.65rem;
       color: var(--text-dim);
-      opacity: 0.4;
-      letter-spacing: 0.15em;
       opacity: 0;
+      letter-spacing: 0.15em;
       animation: fadeUp 1s ease-out 0.8s forwards;
     }
 
@@ -344,11 +347,7 @@
       color: var(--gold);
     }
 
-    .specimen-header-right {
-      font-size: 0.6rem;
-      color: var(--text-dim);
-      letter-spacing: 0.1em;
-    }
+    .specimen-header-right { font-size: 0.6rem; color: var(--text-dim); letter-spacing: 0.1em; }
 
     .specimen-body { padding: 2.5rem; }
 
@@ -361,30 +360,12 @@
       margin-bottom: 0.25rem;
     }
 
-    .specimen-common {
-      font-size: 0.9rem;
-      color: var(--text-dim);
-      margin-bottom: 2rem;
-    }
+    .specimen-common { font-size: 0.9rem; color: var(--text-dim); margin-bottom: 2rem; }
 
-    .specimen-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.25rem;
-    }
-
-    .specimen-field {}
-    .specimen-field-label {
-      font-size: 0.55rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      margin-bottom: 0.25rem;
-    }
+    .specimen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .specimen-field-label { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.25rem; }
     .specimen-field-value { font-size: 0.95rem; }
-
     .specimen-full { grid-column: 1 / -1; }
-
     .specimen-divider { grid-column: 1 / -1; height: 1px; background: var(--border); margin: 0.5rem 0; }
 
     .specimen-note {
@@ -396,25 +377,11 @@
       border-left: 3px solid var(--gold);
     }
 
-    .specimen-note-label {
-      font-family: 'Caveat', cursive;
-      font-size: 0.8rem;
-      color: var(--gold);
-      margin-bottom: 0.25rem;
-    }
+    .specimen-note-label { font-family: 'Caveat', cursive; font-size: 0.8rem; color: var(--gold); margin-bottom: 0.25rem; }
+    .specimen-note-text { font-family: 'Caveat', cursive; font-size: 1.05rem; color: var(--cream); line-height: 1.5; }
 
-    .specimen-note-text {
-      font-family: 'Caveat', cursive;
-      font-size: 1.05rem;
-      color: var(--cream);
-      line-height: 1.5;
-    }
-
-    /* ============ NARRATED SECTIONS (prose) ============ */
-    .narration-block {
-      max-width: 650px;
-      margin: 0 auto;
-    }
+    /* ============ NARRATION BLOCKS ============ */
+    .narration-block { max-width: 650px; margin: 0 auto; }
 
     .narration-text {
       font-family: 'Cormorant Garamond', Georgia, serif;
@@ -434,21 +401,10 @@
       border-left: 3px solid var(--gold);
     }
 
-    .narration-aside-label {
-      font-family: 'Caveat', cursive;
-      font-size: 0.85rem;
-      color: var(--gold);
-      margin-bottom: 0.25rem;
-    }
+    .narration-aside-label { font-family: 'Caveat', cursive; font-size: 0.85rem; color: var(--gold); margin-bottom: 0.25rem; }
+    .narration-aside-text { font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--text-dim); line-height: 1.5; }
 
-    .narration-aside-text {
-      font-family: 'Caveat', cursive;
-      font-size: 1.1rem;
-      color: var(--text-dim);
-      line-height: 1.5;
-    }
-
-    /* ============ HABITAT MAP ============ */
+    /* ============ HABITAT CARDS ============ */
     .habitat-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 
     .habitat-cards {
@@ -463,41 +419,40 @@
       background: var(--bg);
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 2rem;
+      overflow: hidden;
       transition: transform 0.3s, border-color 0.3s;
       position: relative;
-      overflow: hidden;
     }
 
     .habitat-card:hover { transform: translateY(-3px); border-color: var(--gold); }
 
-    .habitat-card.current::after {
-      content: 'CURRENT';
+    .habitat-card-badge {
       position: absolute;
       top: 1rem;
       right: 1rem;
       font-size: 0.5rem;
       letter-spacing: 0.2em;
-      color: var(--sage);
-      background: var(--sage-soft);
       padding: 0.25rem 0.6rem;
       border-radius: 100px;
+      z-index: 2;
+      text-transform: uppercase;
+      font-weight: 600;
     }
 
-    .habitat-card.former::after {
-      content: 'FORMER';
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      font-size: 0.5rem;
-      letter-spacing: 0.2em;
-      color: var(--text-dim);
-      background: rgba(154,142,126,0.1);
-      padding: 0.25rem 0.6rem;
-      border-radius: 100px;
+    .habitat-card-badge.current { color: var(--sage); background: var(--sage-soft); }
+    .habitat-card-badge.former { color: var(--text-dim); background: rgba(154,142,126,0.15); }
+
+    .habitat-img {
+      width: 100%;
+      height: 140px;
+      overflow: hidden;
+      position: relative;
     }
 
-    .habitat-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .habitat-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
+    .habitat-img::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 40px; background: linear-gradient(transparent, var(--bg)); }
+
+    .habitat-body { padding: 1.5rem 2rem 2rem; }
 
     .habitat-name {
       font-family: 'Cormorant Garamond', Georgia, serif;
@@ -507,7 +462,6 @@
     }
 
     .habitat-region { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 1rem; }
-
     .habitat-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.7; }
 
     /* ============ BEHAVIORAL TRAITS ============ */
@@ -528,7 +482,15 @@
 
     .trait-card:hover { transform: translateY(-3px); }
 
-    .trait-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .trait-icon {
+      width: 56px;
+      height: 56px;
+      margin: 0 auto 1rem;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .trait-icon img { width: 100%; height: 100%; object-fit: cover; }
 
     .trait-name {
       font-family: 'Cormorant Garamond', Georgia, serif;
@@ -539,7 +501,7 @@
 
     .trait-desc { font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; }
 
-    /* ============ MIGRATION PATTERN ============ */
+    /* ============ MIGRATION ============ */
     .migration-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 
     .migration-path {
@@ -560,10 +522,7 @@
       opacity: 0.4;
     }
 
-    .migration-stop {
-      position: relative;
-      padding: 0 0 3.5rem 2rem;
-    }
+    .migration-stop { position: relative; padding: 0 0 3.5rem 2rem; }
 
     .migration-stop::before {
       content: '';
@@ -579,12 +538,7 @@
 
     .migration-stop:last-child::before { background: var(--sage); border-color: var(--sage); }
 
-    .migration-season {
-      font-family: 'Caveat', cursive;
-      font-size: 0.9rem;
-      color: var(--gold);
-      margin-bottom: 0.35rem;
-    }
+    .migration-season { font-family: 'Caveat', cursive; font-size: 0.9rem; color: var(--gold); margin-bottom: 0.35rem; }
 
     .migration-place {
       font-family: 'Cormorant Garamond', Georgia, serif;
@@ -593,13 +547,9 @@
       margin-bottom: 0.5rem;
     }
 
-    .migration-observation {
-      font-size: 0.9rem;
-      color: var(--text-dim);
-      line-height: 1.7;
-    }
+    .migration-observation { font-size: 0.9rem; color: var(--text-dim); line-height: 1.7; }
 
-    /* ============ DIET ANALYSIS ============ */
+    /* ============ DIET ============ */
     .diet-section { background: var(--bg); }
 
     .diet-wheel {
@@ -621,7 +571,15 @@
 
     .diet-item:last-child { border-bottom: none; }
 
-    .diet-icon { font-size: 1.5rem; flex-shrink: 0; width: 40px; text-align: center; }
+    .diet-icon {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .diet-icon img { width: 100%; height: 100%; object-fit: cover; }
 
     .diet-info { flex: 1; }
     .diet-name { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.15rem; }
@@ -647,7 +605,7 @@
     .diet-bar-fill.warm { background: var(--warm); }
     .diet-bar-fill.sage { background: var(--sage); }
 
-    /* ============ MATING CALL (Interactive) ============ */
+    /* ============ VOCALIZATIONS ============ */
     .call-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 
     .call-box {
@@ -721,31 +679,13 @@
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 2rem;
-      position: relative;
     }
 
-    .field-note-date {
-      font-family: 'Caveat', cursive;
-      font-size: 0.85rem;
-      color: var(--gold);
-      margin-bottom: 0.75rem;
-    }
+    .field-note-date { font-family: 'Caveat', cursive; font-size: 0.85rem; color: var(--gold); margin-bottom: 0.75rem; }
+    .field-note-text { font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--cream); line-height: 1.6; }
+    .field-note-author { margin-top: 1rem; font-size: 0.7rem; color: var(--text-dim); font-style: italic; }
 
-    .field-note-text {
-      font-family: 'Caveat', cursive;
-      font-size: 1.1rem;
-      color: var(--cream);
-      line-height: 1.6;
-    }
-
-    .field-note-author {
-      margin-top: 1rem;
-      font-size: 0.7rem;
-      color: var(--text-dim);
-      font-style: italic;
-    }
-
-    /* ============ COMPATIBILITY QUIZ ============ */
+    /* ============ QUIZ ============ */
     .quiz-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 
     .quiz-box {
@@ -781,11 +721,7 @@
     .quiz-option:hover { border-color: var(--gold); color: var(--text); }
     .quiz-option.selected { border-color: var(--gold); background: var(--gold-soft); color: var(--gold); }
 
-    .quiz-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+    .quiz-nav { display: flex; justify-content: space-between; align-items: center; }
 
     .quiz-nav-btn {
       padding: 0.75rem 1.5rem;
@@ -806,17 +742,9 @@
     .quiz-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
     .quiz-nav-btn:disabled:hover { background: transparent; color: var(--gold); }
 
-    .quiz-progress {
-      font-size: 0.7rem;
-      color: var(--text-dim);
-      letter-spacing: 0.1em;
-    }
+    .quiz-progress { font-size: 0.7rem; color: var(--text-dim); letter-spacing: 0.1em; }
 
-    .quiz-result {
-      text-align: center;
-      display: none;
-    }
-
+    .quiz-result { text-align: center; display: none; }
     .quiz-result.visible { display: block; animation: fadeUp 0.6s ease-out; }
 
     .quiz-result-species {
@@ -827,12 +755,7 @@
       margin-bottom: 0.5rem;
     }
 
-    .quiz-result-desc {
-      font-size: 0.95rem;
-      color: var(--text-dim);
-      line-height: 1.7;
-      margin-bottom: 1.5rem;
-    }
+    .quiz-result-desc { font-size: 0.95rem; color: var(--text-dim); line-height: 1.7; margin-bottom: 1.5rem; }
 
     .quiz-result-compat {
       display: inline-block;
@@ -845,7 +768,7 @@
       letter-spacing: 0.1em;
     }
 
-    /* ============ CONSERVATION STATUS ============ */
+    /* ============ CONSERVATION ============ */
     .conservation-section { background: var(--bg); }
 
     .conservation-card {
@@ -879,17 +802,10 @@
       margin: 0 auto 1.5rem;
     }
 
-    .conservation-fine-print {
-      font-size: 0.7rem;
-      color: var(--text-dim);
-      opacity: 0.5;
-    }
+    .conservation-fine-print { font-size: 0.7rem; color: var(--text-dim); opacity: 0.5; }
 
     /* ============ CLOSING ============ */
-    .closing-section {
-      text-align: center;
-      padding: 8rem 2rem;
-    }
+    .closing-section { text-align: center; padding: 8rem 2rem; }
 
     .closing-title {
       font-family: 'Cormorant Garamond', Georgia, serif;
@@ -955,12 +871,14 @@
 
   <!-- SPLASH -->
   <div class="splash" id="splash">
-    <div class="splash-logo">🌍</div>
+    <div class="splash-logo">
+      <img src="img/logo.png" alt="Emblem">
+    </div>
     <div class="splash-network">Cape Town Natural History Society</div>
     <h1>The Gofman</h1>
     <h2>A Nature Documentary in Ten Observations</h2>
     <button class="splash-btn" onclick="enterSite()">Begin Viewing</button>
-    <div class="splash-footer">Filmed on location in the Western Cape &bull; No Gofmans were harmed in the making of this documentary</div>
+    <div class="splash-footer">Filmed on location in the Western Cape · No Gofmans were harmed in the making of this documentary</div>
   </div>
 
   <!-- NARRATOR BAR -->
@@ -986,11 +904,15 @@
 
     <!-- HERO -->
     <section class="hero">
-      <div class="hero-glow"></div>
-      <div class="hero-series" style="opacity:0;animation:fadeUp 1s ease-out 0.2s forwards;">Cape Town Natural History Society Presents</div>
-      <h1 class="hero-title">The Gofman</h1>
-      <p class="hero-subtitle">A study of one of the most remarkable migratory species ever observed in the Western Cape. Part yoga instructor, part tech visionary, entirely uncategorizable.</p>
-      <div class="hero-meta" style="opacity:0;animation:fadeUp 1s ease-out 0.8s forwards;">Narrated with the gravity this subject deserves</div>
+      <div class="hero-bg">
+        <img src="img/hero-bg.png" alt="">
+      </div>
+      <div class="hero-content">
+        <div class="hero-series" style="opacity:0;animation:fadeUp 1s ease-out 0.2s forwards;">Cape Town Natural History Society Presents</div>
+        <h1 class="hero-title">The Gofman</h1>
+        <p class="hero-subtitle">A study of one of the most remarkable migratory species ever observed in the Western Cape. Part yoga instructor, part tech visionary, entirely uncategorizable.</p>
+        <div class="hero-meta" style="opacity:0;animation:fadeUp 1s ease-out 0.8s forwards;">Narrated with the gravity this subject deserves</div>
+      </div>
     </section>
 
     <!-- SPECIMEN CARD -->
@@ -1009,7 +931,7 @@
           </div>
           <div class="specimen-body">
             <div class="specimen-latin">Gofmanus entrepreneurius</div>
-            <div class="specimen-common">Common name: The Gofman &nbsp;|&nbsp; Josh to associates</div>
+            <div class="specimen-common">Common name: The Gofman | Josh to associates</div>
             <div class="specimen-grid">
               <div class="specimen-field">
                 <div class="specimen-field-label">Species Origin</div>
@@ -1037,7 +959,7 @@
                 <div class="specimen-field-value" style="color: var(--sage);">One of a kind. No known duplicates. Handle with admiration.</div>
               </div>
               <div class="specimen-note">
-                <div class="specimen-note-label">Researcher's note —</div>
+                <div class="specimen-note-label">Researcher's note:</div>
                 <div class="specimen-note-text">I've been studying this specimen for weeks and I still can't figure out how you go from running the biggest yoga studio in Thornhill to building restaurant tech in Cape Town. The evolutionary leap is staggering. Darwin would have questions.</div>
               </div>
             </div>
@@ -1066,7 +988,7 @@
             For years, this was his world. Mats and mantras. Breath and balance. A quiet kingdom of downward dogs and sun salutations. And then, with no warning that anyone can recall, he <em>left</em>.
           </p>
           <div class="narration-aside">
-            <div class="narration-aside-label">Field researcher's annotation —</div>
+            <div class="narration-aside-label">Field researcher's annotation:</div>
             <div class="narration-aside-text">When asked why he left yoga for restaurant tech, most of his former students just stare into the middle distance and whisper "we never saw it coming." One of them is still holding a tree pose.</div>
           </div>
         </div>
@@ -1083,35 +1005,47 @@
         </div>
 
         <div class="habitat-cards reveal">
-          <div class="habitat-card former">
-            <div class="habitat-icon">🍁</div>
-            <div class="habitat-name">Thornhill, Ontario</div>
-            <div class="habitat-region">Greater Toronto Area, Canada</div>
-            <div class="habitat-desc">A suburban environment known for strip malls, hockey culture, and a surprising number of yoga studios (one of which was significantly larger than the rest, for reasons that should be obvious by now). Climate: cold enough to make you dream of Africa.</div>
+          <div class="habitat-card">
+            <span class="habitat-card-badge former">Former</span>
+            <div class="habitat-img"><img src="img/habitat-canada.png" alt="Thornhill, Ontario"></div>
+            <div class="habitat-body">
+              <div class="habitat-name">Thornhill, Ontario</div>
+              <div class="habitat-region">Greater Toronto Area, Canada</div>
+              <div class="habitat-desc">A suburban environment known for strip malls, hockey culture, and a surprising number of yoga studios (one of which was significantly larger than the rest, for reasons that should be obvious by now). Climate: cold enough to make you dream of Africa.</div>
+            </div>
           </div>
-          <div class="habitat-card current">
-            <div class="habitat-icon">⛰️</div>
-            <div class="habitat-name">Cape Town, Western Cape</div>
-            <div class="habitat-region">Republic of South Africa</div>
-            <div class="habitat-desc">A coastal metropolis with world-class dining, exceptional wine, and a mountain in the middle of it. The perfect environment for a specimen whose primary skill is making food look irresistible on screens. Coincidence? Researchers think not.</div>
+          <div class="habitat-card">
+            <span class="habitat-card-badge current">Current</span>
+            <div class="habitat-img"><img src="img/habitat-capetown.png" alt="Cape Town"></div>
+            <div class="habitat-body">
+              <div class="habitat-name">Cape Town, Western Cape</div>
+              <div class="habitat-region">Republic of South Africa</div>
+              <div class="habitat-desc">A coastal metropolis with world-class dining, exceptional wine, and a mountain in the middle of it. The perfect environment for a specimen whose primary skill is making food look irresistible on screens. Coincidence? Researchers think not.</div>
+            </div>
           </div>
-          <div class="habitat-card former">
-            <div class="habitat-icon">🧘</div>
-            <div class="habitat-name">WYNN Yoga Studio</div>
-            <div class="habitat-region">Thornhill, Ontario (microhabitat)</div>
-            <div class="habitat-desc">The largest yoga studio in Thornhill and the only one with a fitness component. Operated by the specimen for several years before being abandoned during what scientists now call "The Great Pivot." The studio's legacy lives on in the flexibility of everyone who attended and the Urban Dictionary entry that defines its name.</div>
+          <div class="habitat-card">
+            <span class="habitat-card-badge former">Former</span>
+            <div class="habitat-img"><img src="img/habitat-yoga.png" alt="WYNN Yoga"></div>
+            <div class="habitat-body">
+              <div class="habitat-name">WYNN Yoga Studio</div>
+              <div class="habitat-region">Thornhill, Ontario (microhabitat)</div>
+              <div class="habitat-desc">The largest yoga studio in Thornhill and the only one with a fitness component. Operated by the specimen for several years before being abandoned during what scientists now call "The Great Pivot." The studio's legacy lives on in the flexibility of everyone who attended and the Urban Dictionary entry that defines its name.</div>
+            </div>
           </div>
-          <div class="habitat-card current">
-            <div class="habitat-icon">🍽️</div>
-            <div class="habitat-name">Cape Town Restaurant Scene</div>
-            <div class="habitat-region">Western Cape (ecosystem)</div>
-            <div class="habitat-desc">The specimen's current primary ecosystem. Through EatApp Menu, Gofman has integrated himself into the digital infrastructure of Cape Town dining. Restaurants using his technology report that customers order more, linger longer, and occasionally weep at the beauty of a well-photographed lamb shank.</div>
+          <div class="habitat-card">
+            <span class="habitat-card-badge current">Current</span>
+            <div class="habitat-img"><img src="img/habitat-restaurant.png" alt="Restaurant scene"></div>
+            <div class="habitat-body">
+              <div class="habitat-name">Cape Town Restaurant Scene</div>
+              <div class="habitat-region">Western Cape (ecosystem)</div>
+              <div class="habitat-desc">The specimen's current primary ecosystem. Through EatApp Menu, Gofman has integrated himself into the digital infrastructure of Cape Town dining. Restaurants using his technology report that customers order more, linger longer, and occasionally weep at the beauty of a well-photographed lamb shank.</div>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- MIGRATION PATTERN -->
+    <!-- MIGRATION -->
     <section class="migration-section" data-narrator="The migration patterns of the Gofman defy conventional understanding." data-episode="III. Migration">
       <div class="container">
         <div class="section-header reveal">
@@ -1161,32 +1095,32 @@
 
         <div class="traits-grid reveal">
           <div class="trait-card">
-            <div class="trait-icon">🔄</div>
+            <div class="trait-icon"><img src="img/trait-adapt.png" alt=""></div>
             <div class="trait-name">Radical Adaptation</div>
             <div class="trait-desc">Capable of completely reinventing itself across industries and continents. Most creatures specialize. The Gofman generalizes, then specializes in the new thing better than most.</div>
           </div>
           <div class="trait-card">
-            <div class="trait-icon">📱</div>
+            <div class="trait-icon"><img src="img/trait-digital.png" alt=""></div>
             <div class="trait-name">Digital Symbiosis</div>
             <div class="trait-desc">Has formed a symbiotic relationship with restaurant technology. The restaurants provide the food; the Gofman provides the platform that makes the food irresistible before it even arrives at the table.</div>
           </div>
           <div class="trait-card">
-            <div class="trait-icon">🧘</div>
+            <div class="trait-icon"><img src="img/trait-flex.png" alt=""></div>
             <div class="trait-name">Residual Flexibility</div>
             <div class="trait-desc">Despite having left the yoga world, the specimen retains unusual physical and mental flexibility. This manifests as the ability to pivot, bend deadlines, and stretch a metaphor further than any reasonable person would.</div>
           </div>
           <div class="trait-card">
-            <div class="trait-icon">✈️</div>
+            <div class="trait-icon"><img src="img/trait-bold.png" alt=""></div>
             <div class="trait-name">Hemispheric Boldness</div>
             <div class="trait-desc">The decision to move from Thornhill to Cape Town suggests a specimen unafraid of dramatic environmental change. Most entrepreneurs stay in their biome. The Gofman simply chose a better one.</div>
           </div>
           <div class="trait-card">
-            <div class="trait-icon">📖</div>
+            <div class="trait-icon"><img src="img/trait-name.png" alt=""></div>
             <div class="trait-name">Nomenclature Drive</div>
             <div class="trait-desc">Has a documented compulsion to name and define things. See: coining "WYNN" and then registering it on Urban Dictionary. This is the behavior of a creature that needs the world to understand its vocabulary.</div>
           </div>
           <div class="trait-card">
-            <div class="trait-icon">🍷</div>
+            <div class="trait-icon"><img src="img/trait-palate.png" alt=""></div>
             <div class="trait-name">Elevated Palate</div>
             <div class="trait-desc">Extended time in Cape Town's food scene has resulted in a palate that makes normal menus look insufficient. The specimen reportedly cannot eat anywhere without mentally redesigning the menu.</div>
           </div>
@@ -1194,7 +1128,7 @@
       </div>
     </section>
 
-    <!-- DIET ANALYSIS -->
+    <!-- DIET -->
     <section class="diet-section" data-narrator="What does the Gofman consume? The answer is more complex than you might expect." data-episode="V. Diet">
       <div class="container">
         <div class="section-header reveal">
@@ -1205,7 +1139,7 @@
 
         <div class="diet-wheel reveal" id="dietWheel">
           <div class="diet-item">
-            <div class="diet-icon">💡</div>
+            <div class="diet-icon"><img src="img/diet-idea.png" alt=""></div>
             <div class="diet-info">
               <div class="diet-name">New ideas at 2 AM</div>
               <div class="diet-note">Primary energy source. Arrives uninvited.</div>
@@ -1213,7 +1147,7 @@
             <div class="diet-bar-track"><div class="diet-bar-fill gold" data-width="95"></div></div>
           </div>
           <div class="diet-item">
-            <div class="diet-icon">🍷</div>
+            <div class="diet-icon"><img src="img/diet-wine.png" alt=""></div>
             <div class="diet-info">
               <div class="diet-name">Western Cape wine</div>
               <div class="diet-note">For research purposes only, obviously.</div>
@@ -1221,7 +1155,7 @@
             <div class="diet-bar-track"><div class="diet-bar-fill warm" data-width="82"></div></div>
           </div>
           <div class="diet-item">
-            <div class="diet-icon">📊</div>
+            <div class="diet-icon"><img src="img/diet-data.png" alt=""></div>
             <div class="diet-info">
               <div class="diet-name">Restaurant analytics dashboards</div>
               <div class="diet-note">Checks these more than most people check Instagram.</div>
@@ -1229,7 +1163,7 @@
             <div class="diet-bar-track"><div class="diet-bar-fill gold" data-width="88"></div></div>
           </div>
           <div class="diet-item">
-            <div class="diet-icon">☀️</div>
+            <div class="diet-icon"><img src="img/diet-sun.png" alt=""></div>
             <div class="diet-info">
               <div class="diet-name">Cape Town sunshine</div>
               <div class="diet-note">A significant upgrade from the Ontario variety.</div>
@@ -1237,7 +1171,7 @@
             <div class="diet-bar-track"><div class="diet-bar-fill sage" data-width="90"></div></div>
           </div>
           <div class="diet-item">
-            <div class="diet-icon">🍳</div>
+            <div class="diet-icon"><img src="img/diet-meal.png" alt=""></div>
             <div class="diet-info">
               <div class="diet-name">Meals at restaurants he's digitized</div>
               <div class="diet-note">Quality assurance. Strictly professional.</div>
@@ -1245,7 +1179,7 @@
             <div class="diet-bar-track"><div class="diet-bar-fill warm" data-width="76"></div></div>
           </div>
           <div class="diet-item">
-            <div class="diet-icon">🧘</div>
+            <div class="diet-icon"><img src="img/diet-yoga.png" alt=""></div>
             <div class="diet-info">
               <div class="diet-name">Residual yoga energy</div>
               <div class="diet-note">Still metabolizing years of stored namaste.</div>
@@ -1256,7 +1190,7 @@
       </div>
     </section>
 
-    <!-- VOCALIZATIONS (Interactive) -->
+    <!-- VOCALIZATIONS -->
     <section class="call-section" data-narrator="Every creature has its call. The Gofman's is... distinctive." data-episode="VI. Vocalizations">
       <div class="container">
         <div class="section-header reveal">
@@ -1288,28 +1222,28 @@
           <div class="field-note">
             <div class="field-note-date">Day 12, Camps Bay</div>
             <div class="field-note-text">Spotted the Gofman at a beachfront restaurant. He wasn't eating. He was staring at the menu with the intensity of someone defusing a bomb. After 4 minutes, he pulled out his phone and started taking notes. The waiter looked concerned. I don't think the waiter understands what's happening to his menu.</div>
-            <div class="field-note-author">— Researcher A, Cape Town Field Office</div>
+            <div class="field-note-author">Researcher A, Cape Town Field Office</div>
           </div>
           <div class="field-note">
             <div class="field-note-date">Day 27, Stellenbosch</div>
             <div class="field-note-text">Subject was observed at a wine estate. Tasted 6 wines. Complimented each one. Then asked if their tasting menu was digital. When told it was printed, his expression suggested he'd just been shown a fax machine. He left his business card. I give that paper menu 3 weeks.</div>
-            <div class="field-note-author">— Researcher B, Winelands Division</div>
+            <div class="field-note-author">Researcher B, Winelands Division</div>
           </div>
           <div class="field-note">
             <div class="field-note-date">Day 41, Video Call Intercept</div>
             <div class="field-note-text">Overheard the specimen on a video call explaining EatApp to a potential client. His passion for digital menus is the kind of energy usually reserved for people describing their firstborn child. The client signed up before the call ended. I'm beginning to think resistance is futile.</div>
-            <div class="field-note-author">— Researcher C, Digital Surveillance</div>
+            <div class="field-note-author">Researcher C, Digital Surveillance</div>
           </div>
           <div class="field-note">
             <div class="field-note-date">Day 58, Long Street</div>
             <div class="field-note-text">Attempted to engage the specimen in conversation about his yoga past. He smiled politely and changed the subject to restaurant technology within 90 seconds. It was the smoothest topic pivot I've ever witnessed. Years of yoga transitions clearly trained him for conversational flexibility.</div>
-            <div class="field-note-author">— Researcher D, Behavioral Analysis</div>
+            <div class="field-note-author">Researcher D, Behavioral Analysis</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- SPECIES QUIZ -->
+    <!-- QUIZ -->
     <section class="quiz-section" data-narrator="And now... a moment of participation." data-episode="VIII. Classification">
       <div class="container">
         <div class="section-header reveal">
@@ -1337,7 +1271,7 @@
       </div>
     </section>
 
-    <!-- CONSERVATION STATUS -->
+    <!-- CONSERVATION -->
     <section class="conservation-section" data-narrator="Some things are too rare to let the world overlook them." data-episode="IX. Conservation">
       <div class="container">
         <div class="section-header reveal">
@@ -1356,7 +1290,7 @@
           <p class="conservation-text" style="color: var(--gold);">
             The Gofman doesn't need to be conserved. He needs to be appreciated. Preferably over a well-plated meal, viewed on a beautifully designed digital menu.
           </p>
-          <div class="conservation-fine-print">Classification verified by peer review &bull; No objections recorded &bull; One reviewer simply wrote "yeah, sounds about right"</div>
+          <div class="conservation-fine-print">Classification verified by peer review · No objections recorded · One reviewer simply wrote "yeah, sounds about right"</div>
         </div>
       </div>
     </section>
@@ -1381,7 +1315,6 @@
   </main>
 
   <script>
-    // ============ SPLASH ============
     function enterSite() {
       document.getElementById('splash').classList.add('hidden');
       document.getElementById('mainContent').style.display = 'block';
@@ -1392,12 +1325,11 @@
       initQuiz();
     }
 
-    // ============ SCROLL: REVEALS + NARRATOR + EPISODE ============
+    // Scroll reveals + diet bars
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
           e.target.classList.add('visible');
-          // diet bars
           if (e.target.id === 'dietWheel') {
             e.target.querySelectorAll('.diet-bar-fill').forEach(bar => {
               bar.style.width = bar.dataset.width + '%';
@@ -1408,7 +1340,7 @@
     }, { threshold: 0.15 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // Narrator + episode tracking
+    // Narrator + episode
     const sectionObserver = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
@@ -1421,7 +1353,7 @@
     }, { threshold: 0.3 });
     document.querySelectorAll('section[data-narrator]').forEach(el => sectionObserver.observe(el));
 
-    // ============ VOCALIZATIONS ============
+    // Vocalizations
     const calls = [
       { text: '"Have you considered going digital with your menu?"', context: 'Observed during 94% of all social interactions, including weddings.' },
       { text: '"What you need now... is a better menu experience."', context: 'The WYNN philosophy, repurposed for its true calling.' },
@@ -1447,7 +1379,7 @@
       `;
     }
 
-    // ============ SPECIES QUIZ ============
+    // Quiz
     const quizData = [
       {
         q: 'A restaurant hands you a paper menu. Your first thought is:',
@@ -1506,26 +1438,13 @@
       document.getElementById('quizNext').textContent = quizStep === quizData.length - 1 ? 'See Results' : 'Next';
     }
 
-    function selectOption(i) {
-      quizAnswers[quizStep] = i;
-      renderQuiz();
-    }
-
-    function quizPrev() {
-      if (quizStep > 0) { quizStep--; renderQuiz(); }
-    }
+    function selectOption(i) { quizAnswers[quizStep] = i; renderQuiz(); }
+    function quizPrev() { if (quizStep > 0) { quizStep--; renderQuiz(); } }
 
     function quizNext() {
-      if (quizAnswers[quizStep] === -1) {
-        showToast('Select an answer to continue');
-        return;
-      }
-      if (quizStep < quizData.length - 1) {
-        quizStep++;
-        renderQuiz();
-      } else {
-        showQuizResult();
-      }
+      if (quizAnswers[quizStep] === -1) { showToast('Select an answer to continue'); return; }
+      if (quizStep < quizData.length - 1) { quizStep++; renderQuiz(); }
+      else { showQuizResult(); }
     }
 
     function showQuizResult() {
@@ -1558,7 +1477,7 @@
       r.classList.add('visible');
     }
 
-    // ============ TOAST ============
+    // Toast
     function showToast(msg) {
       const t = document.getElementById('toast');
       t.textContent = msg;
@@ -1566,27 +1485,19 @@
       setTimeout(() => t.classList.remove('show'), 3000);
     }
 
-    // ============ EASTER EGGS ============
-    // Triple-click the hero title
+    // Easter eggs
     let heroClicks = 0;
     document.addEventListener('DOMContentLoaded', () => {
       const heroTitle = document.querySelector('.hero-title');
       if (heroTitle) {
-        heroTitle.style.cursor = 'default';
         heroTitle.addEventListener('click', () => {
           heroClicks++;
-          if (heroClicks === 3) {
-            showToast('🧘 The specimen acknowledges your persistence');
-          }
-          if (heroClicks === 7) {
-            showToast('🍽️ You have been added to the Gofman\'s dinner reservation');
-            heroClicks = 0;
-          }
+          if (heroClicks === 3) showToast('The specimen acknowledges your persistence');
+          if (heroClicks === 7) { showToast('You have been added to the Gofman\'s dinner reservation'); heroClicks = 0; }
         });
       }
     });
 
-    // Konami code
     const konami = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
     let kIdx = 0;
     document.addEventListener('keydown', e => {
@@ -1596,14 +1507,13 @@
           kIdx = 0;
           document.body.style.transition = 'filter 0.6s';
           document.body.style.filter = 'sepia(0.6) brightness(1.1)';
-          showToast('🍁 Ontario Mode: Everything now looks like autumn in Thornhill');
+          showToast('Ontario Mode: Everything now looks like autumn in Thornhill');
           setTimeout(() => { document.body.style.filter = ''; }, 6000);
         }
       } else { kIdx = 0; }
     });
 
-    // Console
-    console.log('%c🌍 Cape Town Natural History Society', 'font-size: 16px; color: #c4a470; font-weight: bold; font-style: italic;');
+    console.log('%cCape Town Natural History Society', 'font-size: 16px; color: #c4a470; font-weight: bold; font-style: italic;');
     console.log('%cSpecimen File: Gofmanus entrepreneurius', 'font-size: 11px; color: #9a8e7e;');
     console.log('%cIf you\'re reading this, you\'re exactly the kind of person Josh would hire.', 'font-size: 11px; color: #c4a470;');
   </script>
