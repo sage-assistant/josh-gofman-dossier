@@ -3,33 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Gofman — A Nature Documentary</title>
+  <title>The Gofman — He Is The One</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0d0b08;
-      --surface: #161210;
-      --surface-2: #1c1814;
-      --border: rgba(196,164,112,0.1);
-      --text: #f0ebe3;
-      --text-dim: #9a8e7e;
-      --gold: #c4a470;
-      --gold-soft: rgba(196,164,112,0.08);
-      --gold-glow: rgba(196,164,112,0.2);
-      --warm: #c47044;
-      --warm-soft: rgba(196,112,68,0.1);
-      --sage: #7a9a6d;
-      --sage-soft: rgba(122,154,109,0.1);
-      --cream: #e8dcc8;
+      --bg: #000000;
+      --surface: #0a0a0a;
+      --surface-2: #111111;
+      --border: rgba(0,255,65,0.08);
+      --text: #e0e0e0;
+      --text-dim: #5a5a5a;
+      --green: #00ff41;
+      --green-mid: #00cc33;
+      --green-dark: #008f11;
+      --green-soft: rgba(0,255,65,0.06);
+      --green-glow: rgba(0,255,65,0.2);
+      --red: #ff3333;
+      --red-soft: rgba(255,51,51,0.08);
+      --blue: #3399ff;
+      --blue-soft: rgba(51,153,255,0.08);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'DM Sans', -apple-system, sans-serif;
+      font-family: 'Inter', -apple-system, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.7;
@@ -37,17 +38,16 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    body::after {
-      content: '';
+    img { display: block; max-width: 100%; }
+
+    /* ============ MATRIX RAIN (canvas) ============ */
+    #matrixCanvas {
       position: fixed;
       inset: 0;
-      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      opacity: 0.035;
+      z-index: 0;
+      opacity: 0.07;
       pointer-events: none;
-      z-index: 9997;
     }
-
-    img { display: block; max-width: 100%; }
 
     /* ============ SPLASH ============ */
     .splash {
@@ -65,172 +65,115 @@
     }
     .splash.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
 
-    .splash-logo {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
+    .splash-terminal {
+      max-width: 500px;
+      width: 100%;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
       overflow: hidden;
-      margin-bottom: 2rem;
-      position: relative;
     }
 
-    .splash-logo img { width: 100%; height: 100%; object-fit: cover; }
-
-    .splash-logo::after {
-      content: '';
-      position: absolute;
-      inset: -12px;
-      border: 1px solid rgba(196,164,112,0.2);
-      border-radius: 50%;
-      animation: logo-breathe 3s ease-in-out infinite;
+    .terminal-bar {
+      padding: 0.6rem 1rem;
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
-    @keyframes logo-breathe { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.08); opacity: 1; } }
+    .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .terminal-dot.r { background: #ff5f57; }
+    .terminal-dot.y { background: #ffbd2e; }
+    .terminal-dot.g { background: #28c840; }
 
-    .splash-network {
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.6rem;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 2rem;
-      opacity: 0.7;
-    }
-
-    .splash h1 {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(2.5rem, 7vw, 4.5rem);
-      font-weight: 300;
-      font-style: italic;
-      color: var(--cream);
-      margin-bottom: 0.5rem;
-      letter-spacing: 0.02em;
-    }
-
-    .splash h2 {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(1rem, 2.5vw, 1.3rem);
-      font-weight: 300;
+    .terminal-title {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
       color: var(--text-dim);
-      margin-bottom: 3rem;
-      font-style: italic;
+      margin-left: auto;
+      letter-spacing: 0.1em;
     }
 
-    .splash-btn {
-      padding: 1rem 3rem;
-      background: transparent;
-      border: 1px solid var(--gold);
-      border-radius: 100px;
-      color: var(--gold);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.4s;
+    .terminal-body {
+      padding: 2rem;
+      text-align: left;
+      min-height: 200px;
     }
 
-    .splash-btn:hover { background: var(--gold); color: var(--bg); }
-
-    .splash-footer {
-      position: absolute;
-      bottom: 2.5rem;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.6rem;
-      color: var(--text-dim);
-      opacity: 0.35;
-      letter-spacing: 0.15em;
-    }
-
-    /* ============ NARRATOR BAR ============ */
-    .narrator-bar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      z-index: 9999;
-      padding: 1rem 2rem;
-      background: linear-gradient(transparent, rgba(13,11,8,0.95) 30%);
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.6s;
-    }
-    .narrator-bar.visible { opacity: 1; }
-
-    .narrator-inner { max-width: 700px; margin: 0 auto; text-align: center; }
-
-    .narrator-label {
-      font-size: 0.55rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 0.3rem;
-      opacity: 0.6;
-    }
-
-    .narrator-text {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.1rem;
-      font-style: italic;
-      color: var(--cream);
-      line-height: 1.6;
-      opacity: 0.9;
-    }
-
-    /* ============ EPISODE COUNTER ============ */
-    .episode-tracker {
-      position: fixed;
-      top: 1.5rem;
-      right: 2rem;
-      z-index: 9999;
-      text-align: right;
-      opacity: 0;
-      transition: opacity 0.5s;
-    }
-    .episode-tracker.visible { opacity: 1; }
-
-    .episode-tracker .ep-label {
-      font-size: 0.5rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--gold);
-      opacity: 0.5;
-    }
-
-    .episode-tracker .ep-title {
-      font-family: 'Cormorant Garamond', Georgia, serif;
+    .terminal-line {
+      font-family: 'Share Tech Mono', monospace;
       font-size: 0.9rem;
-      font-style: italic;
-      color: var(--text-dim);
+      color: var(--green);
+      margin-bottom: 0.5rem;
+      opacity: 0;
     }
+
+    .terminal-line.visible { opacity: 1; }
+    .terminal-line.dim { color: var(--text-dim); }
+    .terminal-line.bright { color: var(--green); text-shadow: 0 0 10px var(--green-glow); }
+
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      height: 16px;
+      background: var(--green);
+      animation: blink-cursor 1s step-end infinite;
+      vertical-align: text-bottom;
+    }
+
+    @keyframes blink-cursor { 50% { opacity: 0; } }
+
+    .splash-enter {
+      margin-top: 2rem;
+      padding: 0.85rem 2.5rem;
+      background: transparent;
+      border: 1px solid var(--green);
+      border-radius: 4px;
+      color: var(--green);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+      transition: all 0.3s;
+      opacity: 0;
+    }
+
+    .splash-enter.visible { opacity: 1; }
+    .splash-enter:hover { background: var(--green); color: var(--bg); box-shadow: 0 0 30px var(--green-glow); }
 
     /* ============ LAYOUT ============ */
     .container { max-width: 1000px; margin: 0 auto; padding: 0 clamp(1.5rem, 5vw, 4rem); position: relative; z-index: 1; }
 
     .label {
+      font-family: 'Share Tech Mono', monospace;
       font-size: 0.55rem;
-      font-weight: 600;
+      font-weight: 400;
       letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: var(--gold);
-      opacity: 0.7;
+      color: var(--green-dark);
     }
 
-    section { padding: clamp(5rem, 12vw, 8rem) 0; }
+    section { padding: clamp(5rem, 12vw, 8rem) 0; position: relative; z-index: 1; }
     .section-header { text-align: center; max-width: 700px; margin: 0 auto 4rem; }
 
     .section-title {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 300;
-      font-style: italic;
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(1.6rem, 4vw, 2.8rem);
+      font-weight: 700;
       margin-top: 0.75rem;
       margin-bottom: 1.25rem;
-      color: var(--cream);
+      color: var(--green);
+      text-shadow: 0 0 20px var(--green-glow);
+      letter-spacing: 0.05em;
     }
 
-    .section-desc { font-size: 1rem; color: var(--text-dim); line-height: 1.8; }
+    .section-desc {
+      font-size: 1rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+    }
 
     .reveal { opacity: 0; transform: translateY(35px); transition: opacity 0.9s ease-out, transform 0.9s ease-out; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -250,1064 +193,888 @@
       overflow: hidden;
     }
 
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-    }
-
-    .hero-bg img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.15;
-      filter: brightness(0.7);
-    }
-
-    .hero-bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(transparent 40%, var(--bg) 100%);
-    }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; }
+    .hero-bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.12; }
+    .hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent 30%, var(--bg) 100%); }
 
     .hero-content { position: relative; z-index: 1; }
 
-    .hero-series {
-      font-size: 0.6rem;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 2rem;
-      opacity: 0;
-      animation: fadeUp 1s ease-out 0.2s forwards;
-    }
-
-    .hero-title {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(3rem, 9vw, 7rem);
-      font-weight: 300;
-      font-style: italic;
-      color: var(--cream);
-      max-width: 800px;
+    .hero-glitch {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(3.5rem, 10vw, 8rem);
+      font-weight: 900;
+      color: var(--green);
+      text-shadow: 0 0 40px var(--green-glow), 0 0 80px rgba(0,255,65,0.1);
       margin-bottom: 1rem;
       opacity: 0;
-      animation: fadeUp 1s ease-out 0.4s forwards;
-      line-height: 1.05;
-      letter-spacing: 0.01em;
-      cursor: default;
+      animation: fadeUp 1s ease-out 0.3s forwards;
+      letter-spacing: 0.08em;
+      position: relative;
     }
 
-    .hero-subtitle {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
-      font-weight: 300;
+    .hero-glitch::before, .hero-glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      right: 0;
+      overflow: hidden;
+      clip-path: inset(0);
+    }
+
+    .hero-glitch::before {
+      color: var(--red);
+      animation: glitch-1 3s infinite linear alternate-reverse;
+    }
+
+    .hero-glitch::after {
+      color: var(--blue);
+      animation: glitch-2 3s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch-1 {
+      0%, 95% { clip-path: inset(0 0 100% 0); }
+      96% { clip-path: inset(20% 0 60% 0); transform: translateX(-3px); }
+      97% { clip-path: inset(50% 0 20% 0); transform: translateX(3px); }
+      98% { clip-path: inset(70% 0 10% 0); transform: translateX(-2px); }
+      100% { clip-path: inset(0 0 100% 0); }
+    }
+
+    @keyframes glitch-2 {
+      0%, 94% { clip-path: inset(0 0 100% 0); }
+      95% { clip-path: inset(40% 0 30% 0); transform: translateX(3px); }
+      96% { clip-path: inset(10% 0 70% 0); transform: translateX(-3px); }
+      98% { clip-path: inset(60% 0 20% 0); transform: translateX(2px); }
+      100% { clip-path: inset(0 0 100% 0); }
+    }
+
+    .hero-sub {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: clamp(0.85rem, 2vw, 1.1rem);
       color: var(--text-dim);
       max-width: 550px;
-      line-height: 1.7;
-      margin-bottom: 3rem;
-      font-style: italic;
+      margin: 0 auto 2rem;
       opacity: 0;
       animation: fadeUp 1s ease-out 0.6s forwards;
     }
 
-    .hero-meta {
-      font-size: 0.65rem;
-      color: var(--text-dim);
+    .hero-tagline {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--green-dark);
+      letter-spacing: 0.2em;
       opacity: 0;
-      letter-spacing: 0.15em;
-      animation: fadeUp 1s ease-out 0.8s forwards;
+      animation: fadeUp 1s ease-out 0.9s forwards;
     }
 
-    /* ============ SPECIMEN CARD ============ */
-    .specimen-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    /* ============ PILL CHOICE ============ */
+    .pill-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 
-    .specimen-card {
-      max-width: 750px;
-      margin: 0 auto;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-    }
-
-    .specimen-header {
-      padding: 1.25rem 2rem;
-      background: var(--surface-2);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .specimen-header-left {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 0.85rem;
-      font-style: italic;
-      color: var(--gold);
-    }
-
-    .specimen-header-right { font-size: 0.6rem; color: var(--text-dim); letter-spacing: 0.1em; }
-
-    .specimen-body { padding: 2.5rem; }
-
-    .specimen-latin {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 2rem;
-      font-style: italic;
-      font-weight: 300;
-      color: var(--gold);
-      margin-bottom: 0.25rem;
-    }
-
-    .specimen-common { font-size: 0.9rem; color: var(--text-dim); margin-bottom: 2rem; }
-
-    .specimen-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
-    .specimen-field-label { font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.25rem; }
-    .specimen-field-value { font-size: 0.95rem; }
-    .specimen-full { grid-column: 1 / -1; }
-    .specimen-divider { grid-column: 1 / -1; height: 1px; background: var(--border); margin: 0.5rem 0; }
-
-    .specimen-note {
-      grid-column: 1 / -1;
-      margin-top: 1rem;
-      padding: 1.25rem;
-      background: var(--gold-soft);
-      border-radius: 8px;
-      border-left: 3px solid var(--gold);
-    }
-
-    .specimen-note-label { font-family: 'Caveat', cursive; font-size: 0.8rem; color: var(--gold); margin-bottom: 0.25rem; }
-    .specimen-note-text { font-family: 'Caveat', cursive; font-size: 1.05rem; color: var(--cream); line-height: 1.5; }
-
-    /* ============ NARRATION BLOCKS ============ */
-    .narration-block { max-width: 650px; margin: 0 auto; }
-
-    .narration-text {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.35rem;
-      font-weight: 400;
-      line-height: 1.9;
-      color: var(--cream);
-    }
-
-    .narration-text em { color: var(--gold); font-style: italic; }
-
-    .narration-aside {
-      margin-top: 2rem;
-      padding: 1.5rem;
-      background: var(--surface);
-      border-radius: 12px;
-      border-left: 3px solid var(--gold);
-    }
-
-    .narration-aside-label { font-family: 'Caveat', cursive; font-size: 0.85rem; color: var(--gold); margin-bottom: 0.25rem; }
-    .narration-aside-text { font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--text-dim); line-height: 1.5; }
-
-    /* ============ HABITAT CARDS ============ */
-    .habitat-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-
-    .habitat-cards {
+    .pill-choice {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 2rem;
+      align-items: center;
       max-width: 800px;
       margin: 0 auto;
     }
 
-    .habitat-card {
+    .pill-card {
       background: var(--bg);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      overflow: hidden;
-      transition: transform 0.3s, border-color 0.3s;
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.4s;
       position: relative;
+      overflow: hidden;
     }
 
-    .habitat-card:hover { transform: translateY(-3px); border-color: var(--gold); }
+    .pill-card:hover { transform: translateY(-4px); }
+    .pill-card.red:hover { border-color: var(--red); box-shadow: 0 0 30px var(--red-soft); }
+    .pill-card.blue:hover { border-color: var(--blue); box-shadow: 0 0 30px var(--blue-soft); }
 
-    .habitat-card-badge {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      font-size: 0.5rem;
+    .pill-card.chosen { border-width: 2px; }
+    .pill-card.red.chosen { border-color: var(--red); background: var(--red-soft); }
+    .pill-card.blue.chosen { border-color: var(--blue); background: var(--blue-soft); }
+    .pill-card.faded { opacity: 0.2; pointer-events: none; }
+
+    .pill-img { width: 80px; height: 80px; margin: 0 auto 1.5rem; border-radius: 50%; overflow: hidden; }
+    .pill-img img { width: 100%; height: 100%; object-fit: cover; }
+
+    .pill-label {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    .pill-card.red .pill-label { color: var(--red); }
+    .pill-card.blue .pill-label { color: var(--blue); }
+
+    .pill-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; }
+
+    .pill-or {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      text-align: center;
+    }
+
+    .pill-result {
+      max-width: 600px;
+      margin: 2.5rem auto 0;
+      padding: 2rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      text-align: center;
+      display: none;
+    }
+
+    .pill-result.visible { display: block; animation: fadeUp 0.6s ease-out; }
+
+    .pill-result-text {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.95rem;
+      color: var(--green);
+      line-height: 1.8;
+    }
+
+    /* ============ PROPHECY ============ */
+    .prophecy-section { background: var(--bg); }
+
+    .prophecy-box {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .prophecy-text {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1.15rem;
+      color: var(--green);
+      line-height: 2;
+      text-shadow: 0 0 10px var(--green-glow);
+    }
+
+    .prophecy-text .highlight { color: #fff; text-shadow: 0 0 15px rgba(255,255,255,0.3); }
+
+    .prophecy-attribution {
+      margin-top: 2rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+    }
+
+    /* ============ SYSTEM LOG ============ */
+    .log-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .system-log {
+      max-width: 750px;
+      margin: 0 auto;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .log-bar {
+      padding: 0.6rem 1.25rem;
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .log-bar-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); animation: blink-cursor 2s ease-in-out infinite; }
+
+    .log-bar-title {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      letter-spacing: 0.15em;
+    }
+
+    .log-body { padding: 1.5rem; max-height: 500px; overflow-y: auto; }
+
+    .log-entry {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.8rem;
+      line-height: 1.9;
+      margin-bottom: 0.15rem;
+    }
+
+    .log-entry .ts { color: var(--text-dim); }
+    .log-entry .level-info { color: var(--green-dark); }
+    .log-entry .level-warn { color: #ffbd2e; }
+    .log-entry .level-critical { color: var(--red); }
+    .log-entry .msg { color: var(--text); }
+    .log-entry .val { color: var(--green); }
+
+    /* ============ TRAINING PROGRAM ============ */
+    .training-section { background: var(--bg); position: relative; }
+
+    .training-hero-img {
+      max-width: 800px;
+      margin: 0 auto 3rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .training-hero-img img { width: 100%; opacity: 0.5; }
+
+    .training-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .training-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.75rem;
+      transition: border-color 0.3s;
+    }
+
+    .training-card:hover { border-color: var(--green); }
+
+    .training-card-label {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.55rem;
+      color: var(--green-dark);
       letter-spacing: 0.2em;
-      padding: 0.25rem 0.6rem;
-      border-radius: 100px;
-      z-index: 2;
       text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+
+    .training-card-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1rem;
       font-weight: 600;
+      color: var(--green);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.03em;
     }
 
-    .habitat-card-badge.current { color: var(--sage); background: var(--sage-soft); }
-    .habitat-card-badge.former { color: var(--text-dim); background: rgba(154,142,126,0.15); }
+    .training-card-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; }
 
-    .habitat-img {
-      width: 100%;
-      height: 140px;
+    .training-card-bar {
+      margin-top: 1rem;
+      height: 4px;
+      background: var(--surface-2);
+      border-radius: 2px;
       overflow: hidden;
-      position: relative;
     }
 
-    .habitat-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
-    .habitat-img::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 40px; background: linear-gradient(transparent, var(--bg)); }
-
-    .habitat-body { padding: 1.5rem 2rem 2rem; }
-
-    .habitat-name {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.25rem;
-      font-weight: 500;
-      margin-bottom: 0.25rem;
+    .training-card-fill {
+      height: 100%;
+      background: var(--green);
+      border-radius: 2px;
+      width: 0;
+      transition: width 1.5s ease-out;
+      box-shadow: 0 0 8px var(--green-glow);
     }
 
-    .habitat-region { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 1rem; }
-    .habitat-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.7; }
+    /* ============ AGENTS ============ */
+    .agents-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 
-    /* ============ BEHAVIORAL TRAITS ============ */
-    .traits-grid {
+    .agents-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1.25rem;
     }
 
-    .trait-card {
-      background: var(--surface);
+    .agent-card {
+      background: var(--bg);
       border: 1px solid var(--border);
-      border-radius: 14px;
+      border-radius: 10px;
       padding: 2rem 1.5rem;
       text-align: center;
-      transition: transform 0.3s;
+      transition: all 0.3s;
     }
 
-    .trait-card:hover { transform: translateY(-3px); }
+    .agent-card:hover { border-color: var(--red); transform: translateY(-3px); }
 
-    .trait-icon {
-      width: 56px;
-      height: 56px;
+    .agent-icon {
+      width: 48px;
+      height: 48px;
       margin: 0 auto 1rem;
-      border-radius: 50%;
-      overflow: hidden;
-    }
-
-    .trait-icon img { width: 100%; height: 100%; object-fit: cover; }
-
-    .trait-name {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.1rem;
-      font-style: italic;
-      margin-bottom: 0.5rem;
-    }
-
-    .trait-desc { font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; }
-
-    /* ============ MIGRATION ============ */
-    .migration-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-
-    .migration-path {
-      max-width: 700px;
-      margin: 0 auto;
-      position: relative;
-      padding-left: 3rem;
-    }
-
-    .migration-path::before {
-      content: '';
-      position: absolute;
-      left: 8px;
-      top: 0;
-      bottom: 0;
-      width: 1px;
-      background: linear-gradient(to bottom, var(--gold), var(--warm), var(--sage));
-      opacity: 0.4;
-    }
-
-    .migration-stop { position: relative; padding: 0 0 3.5rem 2rem; }
-
-    .migration-stop::before {
-      content: '';
-      position: absolute;
-      left: -2.55rem;
-      top: 0.6rem;
-      width: 18px;
-      height: 18px;
-      border-radius: 50%;
-      border: 2px solid var(--gold);
-      background: var(--bg);
-    }
-
-    .migration-stop:last-child::before { background: var(--sage); border-color: var(--sage); }
-
-    .migration-season { font-family: 'Caveat', cursive; font-size: 0.9rem; color: var(--gold); margin-bottom: 0.35rem; }
-
-    .migration-place {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.4rem;
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-    }
-
-    .migration-observation { font-size: 0.9rem; color: var(--text-dim); line-height: 1.7; }
-
-    /* ============ DIET ============ */
-    .diet-section { background: var(--bg); }
-
-    .diet-wheel {
-      max-width: 600px;
-      margin: 0 auto;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 2.5rem;
-    }
-
-    .diet-item {
+      background: var(--red-soft);
+      border: 1px solid rgba(255,51,51,0.2);
+      border-radius: 8px;
       display: flex;
       align-items: center;
-      gap: 1.25rem;
-      padding: 1rem 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .diet-item:last-child { border-bottom: none; }
-
-    .diet-icon {
-      width: 36px;
-      height: 36px;
-      flex-shrink: 0;
-      border-radius: 50%;
-      overflow: hidden;
-    }
-
-    .diet-icon img { width: 100%; height: 100%; object-fit: cover; }
-
-    .diet-info { flex: 1; }
-    .diet-name { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.15rem; }
-    .diet-note { font-size: 0.75rem; color: var(--text-dim); }
-
-    .diet-bar-track {
-      width: 120px;
-      height: 6px;
-      background: var(--bg);
-      border-radius: 3px;
-      overflow: hidden;
-      flex-shrink: 0;
-    }
-
-    .diet-bar-fill {
-      height: 100%;
-      border-radius: 3px;
-      width: 0;
-      transition: width 1.2s ease-out;
-    }
-
-    .diet-bar-fill.gold { background: var(--gold); }
-    .diet-bar-fill.warm { background: var(--warm); }
-    .diet-bar-fill.sage { background: var(--sage); }
-
-    /* ============ VOCALIZATIONS ============ */
-    .call-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-
-    .call-box {
-      max-width: 600px;
-      margin: 0 auto;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 2.5rem;
-      text-align: center;
-    }
-
-    .call-prompt {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.15rem;
-      font-style: italic;
-      color: var(--text-dim);
-      margin-bottom: 2rem;
-    }
-
-    .call-btn {
-      padding: 1rem 2.5rem;
-      background: var(--gold);
-      border: none;
-      border-radius: 100px;
-      color: var(--bg);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 600;
+      justify-content: center;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--red);
       letter-spacing: 0.1em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: transform 0.2s, box-shadow 0.3s;
-      margin-bottom: 2rem;
     }
 
-    .call-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px var(--gold-glow); }
-
-    .call-output {
-      min-height: 80px;
-      padding: 1.5rem;
-      background: var(--surface);
-      border-radius: 10px;
+    .agent-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.25rem;
     }
 
-    .call-output .call-text {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.3rem;
-      font-style: italic;
-      color: var(--cream);
-      margin-bottom: 0.5rem;
-    }
-
-    .call-output .call-context {
-      font-family: 'Caveat', cursive;
-      font-size: 0.9rem;
+    .agent-role {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
       color: var(--text-dim);
+      letter-spacing: 0.1em;
+      margin-bottom: 0.75rem;
     }
 
-    /* ============ FIELD NOTES ============ */
-    .notes-grid {
+    .agent-desc { font-size: 0.8rem; color: var(--text-dim); line-height: 1.6; }
+
+    .agent-status {
+      margin-top: 1rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--red);
+      letter-spacing: 0.1em;
+    }
+
+    /* ============ INTERCEPTED TRANSMISSION ============ */
+    .transmission-section { background: var(--bg); }
+
+    .transmissions {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
+      gap: 1.25rem;
       max-width: 800px;
       margin: 0 auto;
     }
 
-    .field-note {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 2rem;
-    }
-
-    .field-note-date { font-family: 'Caveat', cursive; font-size: 0.85rem; color: var(--gold); margin-bottom: 0.75rem; }
-    .field-note-text { font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--cream); line-height: 1.6; }
-    .field-note-author { margin-top: 1rem; font-size: 0.7rem; color: var(--text-dim); font-style: italic; }
-
-    /* ============ QUIZ ============ */
-    .quiz-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-
-    .quiz-box {
-      max-width: 600px;
-      margin: 0 auto;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 2.5rem;
-    }
-
-    .quiz-question {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.2rem;
-      font-style: italic;
-      margin-bottom: 1.5rem;
-      color: var(--cream);
-    }
-
-    .quiz-options { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 1.5rem; }
-
-    .quiz-option {
-      padding: 1rem 1.25rem;
+    .transmission {
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-size: 0.9rem;
+      padding: 1.75rem;
+    }
+
+    .transmission-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .transmission-avatar {
+      width: 36px;
+      height: 36px;
+      background: var(--green-soft);
+      border: 1px solid var(--green-dark);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--green-dark);
+    }
+
+    .transmission-meta strong { display: block; font-size: 0.8rem; color: var(--text); }
+    .transmission-meta span { font-family: 'Share Tech Mono', monospace; font-size: 0.55rem; color: var(--text-dim); letter-spacing: 0.1em; }
+
+    .transmission-body {
+      font-size: 0.88rem;
       color: var(--text-dim);
-    }
-
-    .quiz-option:hover { border-color: var(--gold); color: var(--text); }
-    .quiz-option.selected { border-color: var(--gold); background: var(--gold-soft); color: var(--gold); }
-
-    .quiz-nav { display: flex; justify-content: space-between; align-items: center; }
-
-    .quiz-nav-btn {
-      padding: 0.75rem 1.5rem;
-      background: transparent;
-      border: 1px solid var(--gold);
-      border-radius: 100px;
-      color: var(--gold);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .quiz-nav-btn:hover { background: var(--gold); color: var(--bg); }
-    .quiz-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-    .quiz-nav-btn:disabled:hover { background: transparent; color: var(--gold); }
-
-    .quiz-progress { font-size: 0.7rem; color: var(--text-dim); letter-spacing: 0.1em; }
-
-    .quiz-result { text-align: center; display: none; }
-    .quiz-result.visible { display: block; animation: fadeUp 0.6s ease-out; }
-
-    .quiz-result-species {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 2rem;
+      line-height: 1.7;
       font-style: italic;
-      color: var(--gold);
-      margin-bottom: 0.5rem;
+      padding-left: 1rem;
+      border-left: 2px solid var(--green-soft);
     }
 
-    .quiz-result-desc { font-size: 0.95rem; color: var(--text-dim); line-height: 1.7; margin-bottom: 1.5rem; }
+    /* ============ OPERATOR CONSOLE (interactive) ============ */
+    .console-section { background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 
-    .quiz-result-compat {
-      display: inline-block;
-      padding: 0.5rem 1.5rem;
-      background: var(--sage-soft);
-      border: 1px solid var(--sage);
-      border-radius: 100px;
-      font-size: 0.75rem;
-      color: var(--sage);
+    .console-box {
+      max-width: 650px;
+      margin: 0 auto;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .console-bar {
+      padding: 0.6rem 1rem;
+      background: var(--surface-2);
+      border-bottom: 1px solid var(--border);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--text-dim);
       letter-spacing: 0.1em;
     }
 
-    /* ============ CONSERVATION ============ */
-    .conservation-section { background: var(--bg); }
+    .console-body { padding: 1.5rem; }
 
-    .conservation-card {
-      max-width: 700px;
-      margin: 0 auto;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 3rem;
-      text-align: center;
-    }
-
-    .conservation-badge {
-      display: inline-block;
-      padding: 0.6rem 2rem;
-      border: 2px solid var(--sage);
-      border-radius: 100px;
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.3rem;
-      font-style: italic;
-      color: var(--sage);
-      margin-bottom: 2rem;
-    }
-
-    .conservation-text {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.2rem;
-      color: var(--cream);
-      line-height: 1.9;
-      max-width: 550px;
-      margin: 0 auto 1.5rem;
-    }
-
-    .conservation-fine-print { font-size: 0.7rem; color: var(--text-dim); opacity: 0.5; }
-
-    /* ============ CLOSING ============ */
-    .closing-section { text-align: center; padding: 8rem 2rem; }
-
-    .closing-title {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 300;
-      font-style: italic;
-      color: var(--cream);
+    .console-prompt {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--green);
       margin-bottom: 1.5rem;
     }
 
-    .closing-text {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.15rem;
+    .console-btn {
+      width: 100%;
+      padding: 0.85rem;
+      background: transparent;
+      border: 1px solid var(--green);
+      border-radius: 6px;
+      color: var(--green);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-bottom: 1.5rem;
+    }
+
+    .console-btn:hover { background: var(--green); color: var(--bg); }
+
+    .console-output {
+      min-height: 80px;
+      padding: 1.25rem;
+      background: var(--surface);
+      border-radius: 8px;
+    }
+
+    .console-output .co-line {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--green);
+      line-height: 1.8;
+    }
+
+    .console-output .co-dim { color: var(--text-dim); }
+
+    /* ============ SKYLINE ============ */
+    .skyline-img {
+      max-width: 900px;
+      margin: 0 auto 3rem;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .skyline-img img { width: 100%; opacity: 0.4; }
+
+    /* ============ THE ONE ============ */
+    .one-section {
+      text-align: center;
+      padding: 8rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .one-section::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, var(--green-glow) 0%, transparent 65%);
+      filter: blur(80px);
+      opacity: 0.3;
+    }
+
+    .one-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-weight: 900;
+      color: var(--green);
+      text-shadow: 0 0 40px var(--green-glow), 0 0 80px rgba(0,255,65,0.15);
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+      letter-spacing: 0.1em;
+    }
+
+    .one-text {
+      font-size: 1.1rem;
       color: var(--text-dim);
+      max-width: 600px;
+      margin: 0 auto 1.5rem;
+      line-height: 1.9;
+      position: relative;
+      z-index: 1;
+    }
+
+    .one-text-bright {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 1rem;
+      color: var(--green);
       max-width: 550px;
       margin: 0 auto 3rem;
       line-height: 1.8;
-      font-style: italic;
+      text-shadow: 0 0 8px var(--green-glow);
+      position: relative;
+      z-index: 1;
     }
 
-    .closing-credits {
-      font-size: 0.6rem;
+    .one-credits {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.55rem;
       color: var(--text-dim);
-      opacity: 0.35;
+      opacity: 0.3;
       letter-spacing: 0.15em;
-      line-height: 2;
+      line-height: 2.2;
+      position: relative;
+      z-index: 1;
     }
 
     /* ============ TOAST ============ */
     .toast {
       position: fixed;
-      bottom: 5rem;
+      bottom: 2rem;
       left: 50%;
       transform: translateX(-50%) translateY(80px);
       background: var(--surface-2);
-      border: 1px solid var(--gold);
-      border-radius: 100px;
+      border: 1px solid var(--green);
+      border-radius: 6px;
       padding: 0.75rem 1.75rem;
-      font-family: 'Caveat', cursive;
-      font-size: 1rem;
-      color: var(--gold);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--green);
       z-index: 10001;
       transition: transform 0.4s ease-out;
       pointer-events: none;
-      white-space: nowrap;
     }
 
     .toast.show { transform: translateX(-50%) translateY(0); }
 
     /* ============ RESPONSIVE ============ */
     @media (max-width: 768px) {
-      .specimen-grid { grid-template-columns: 1fr; }
-      .habitat-cards { grid-template-columns: 1fr; }
-      .traits-grid { grid-template-columns: 1fr; }
-      .notes-grid { grid-template-columns: 1fr; }
-      .episode-tracker { display: none; }
-      .narrator-bar { padding: 0.75rem 1rem; }
-      .diet-bar-track { width: 80px; }
+      .pill-choice { grid-template-columns: 1fr; }
+      .pill-or { display: none; }
+      .training-grid { grid-template-columns: 1fr; }
+      .agents-grid { grid-template-columns: 1fr; }
+      .transmissions { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
+  <canvas id="matrixCanvas"></canvas>
+
   <!-- SPLASH -->
   <div class="splash" id="splash">
-    <div class="splash-logo">
-      <img src="img/logo.png" alt="Emblem">
+    <div class="splash-terminal">
+      <div class="terminal-bar">
+        <div class="terminal-dot r"></div>
+        <div class="terminal-dot y"></div>
+        <div class="terminal-dot g"></div>
+        <div class="terminal-title">SYSTEM TERMINAL</div>
+      </div>
+      <div class="terminal-body" id="terminalBody">
+        <div class="terminal-line dim" id="tl1">Wake up, Josh...</div>
+        <div class="terminal-line dim" id="tl2">The Matrix has you...</div>
+        <div class="terminal-line" id="tl3"></div>
+        <div class="terminal-line bright" id="tl4">Follow the white rabbit.</div>
+        <div class="terminal-line" id="tl5"></div>
+        <div class="terminal-line" id="tl6">Knock, knock.</div>
+      </div>
     </div>
-    <div class="splash-network">Cape Town Natural History Society</div>
-    <h1>The Gofman</h1>
-    <h2>A Nature Documentary in Ten Observations</h2>
-    <button class="splash-btn" onclick="enterSite()">Begin Viewing</button>
-    <div class="splash-footer">Filmed on location in the Western Cape · No Gofmans were harmed in the making of this documentary</div>
+    <button class="splash-enter" id="splashEnter" onclick="enterSite()">ENTER THE MATRIX</button>
   </div>
 
-  <!-- NARRATOR BAR -->
-  <div class="narrator-bar" id="narratorBar">
-    <div class="narrator-inner">
-      <div class="narrator-label">Narrator</div>
-      <div class="narrator-text" id="narratorText">And here, in its natural habitat, we observe the creature at rest...</div>
-    </div>
-  </div>
-
-  <!-- EPISODE TRACKER -->
-  <div class="episode-tracker" id="episodeTracker">
-    <div class="ep-label">Now Viewing</div>
-    <div class="ep-title" id="epTitle">The Gofman</div>
-  </div>
-
-  <!-- TOAST -->
   <div class="toast" id="toast"></div>
-
-  <div style="position:fixed;inset:0;background:radial-gradient(ellipse 120% 80% at 50% 0%, rgba(196,164,112,0.03) 0%, transparent 60%);pointer-events:none;"></div>
 
   <main id="mainContent" style="display:none;">
 
     <!-- HERO -->
     <section class="hero">
-      <div class="hero-bg">
-        <img src="img/hero-bg.png" alt="">
-      </div>
+      <div class="hero-bg"><img src="img/code-bg.png" alt=""></div>
       <div class="hero-content">
-        <div class="hero-series" style="opacity:0;animation:fadeUp 1s ease-out 0.2s forwards;">Cape Town Natural History Society Presents</div>
-        <h1 class="hero-title">The Gofman</h1>
-        <p class="hero-subtitle">A study of one of the most remarkable migratory species ever observed in the Western Cape. Part yoga instructor, part tech visionary, entirely uncategorizable.</p>
-        <div class="hero-meta" style="opacity:0;animation:fadeUp 1s ease-out 0.8s forwards;">Narrated with the gravity this subject deserves</div>
+        <h1 class="hero-glitch" data-text="GOFMAN">GOFMAN</h1>
+        <p class="hero-sub">He was told the restaurant industry couldn't be changed. He didn't listen. He never listened.</p>
+        <div class="hero-tagline">THE MENU IS A PRISON. HE IS THE KEY.</div>
       </div>
     </section>
 
-    <!-- SPECIMEN CARD -->
-    <section class="specimen-section" data-narrator="The specimen before you has been studied extensively. And yet, it continues to surprise.">
+    <!-- THE CHOICE -->
+    <section class="pill-section" data-narrator="">
       <div class="container">
         <div class="section-header reveal">
-          <span class="label">Observation I</span>
-          <h2 class="section-title">Specimen Identification</h2>
-          <p class="section-desc">Every great documentary begins with classification. Though, in this case, the subject resists it.</p>
+          <span class="label">THE CHOICE</span>
+          <h2 class="section-title">Red Pill or Blue Pill</h2>
+          <p class="section-desc">This is your last chance. After this, there is no turning back.</p>
         </div>
 
-        <div class="specimen-card reveal">
-          <div class="specimen-header">
-            <div class="specimen-header-left">Field Specimen Card No. 041</div>
-            <div class="specimen-header-right">Western Cape Registry</div>
+        <div class="pill-choice reveal">
+          <div class="pill-card blue" id="pillBlue" onclick="choosePill('blue')">
+            <div class="pill-img"><img src="img/blue-pill.png" alt=""></div>
+            <div class="pill-label">BLUE PILL</div>
+            <div class="pill-desc">You keep your paper menu. The story ends. You wake up in your restaurant and believe whatever you want to believe about laminated specials.</div>
           </div>
-          <div class="specimen-body">
-            <div class="specimen-latin">Gofmanus entrepreneurius</div>
-            <div class="specimen-common">Common name: The Gofman | Josh to associates</div>
-            <div class="specimen-grid">
-              <div class="specimen-field">
-                <div class="specimen-field-label">Species Origin</div>
-                <div class="specimen-field-value">Ontario, Canada (Thornhill region)</div>
-              </div>
-              <div class="specimen-field">
-                <div class="specimen-field-label">Current Range</div>
-                <div class="specimen-field-value">Cape Town, Western Cape</div>
-              </div>
-              <div class="specimen-field">
-                <div class="specimen-field-label">Primary Vocation</div>
-                <div class="specimen-field-value">CEO & Founder, EatApp Menu</div>
-              </div>
-              <div class="specimen-field">
-                <div class="specimen-field-label">Previous Vocation</div>
-                <div class="specimen-field-value">Co-owner, WYNN Yoga (Thornhill)</div>
-              </div>
-              <div class="specimen-divider"></div>
-              <div class="specimen-field specimen-full">
-                <div class="specimen-field-label">Distinguishing Characteristics</div>
-                <div class="specimen-field-value">Ability to make any restaurant menu look 400% more appealing through digital technology. Also possesses alarming flexibility from years of yoga instruction, though this skill appears dormant in the current phase.</div>
-              </div>
-              <div class="specimen-field specimen-full">
-                <div class="specimen-field-label">Conservation Status</div>
-                <div class="specimen-field-value" style="color: var(--sage);">One of a kind. No known duplicates. Handle with admiration.</div>
-              </div>
-              <div class="specimen-note">
-                <div class="specimen-note-label">Researcher's note:</div>
-                <div class="specimen-note-text">I've been studying this specimen for weeks and I still can't figure out how you go from running the biggest yoga studio in Thornhill to building restaurant tech in Cape Town. The evolutionary leap is staggering. Darwin would have questions.</div>
-              </div>
-            </div>
+          <div class="pill-or">or</div>
+          <div class="pill-card red" id="pillRed" onclick="choosePill('red')">
+            <div class="pill-img"><img src="img/red-pill.png" alt=""></div>
+            <div class="pill-label">RED PILL</div>
+            <div class="pill-desc">You download EatApp. You stay in Wonderland. And Josh shows you how deep the rabbit hole of digital menus really goes.</div>
           </div>
+        </div>
+        <div class="pill-result" id="pillResult">
+          <div class="pill-result-text" id="pillResultText"></div>
         </div>
       </div>
     </section>
 
-    <!-- NARRATION: ORIGINS -->
-    <section data-narrator="Listen closely. The origin story is always the most important part." data-episode="I. Origins">
+    <!-- THE PROPHECY -->
+    <section class="prophecy-section">
       <div class="container">
         <div class="section-header reveal">
-          <span class="label">Observation II</span>
-          <h2 class="section-title">The Ontario Period</h2>
+          <span class="label">THE PROPHECY</span>
+          <h2 class="section-title">The Oracle Spoke</h2>
         </div>
-        <div class="narration-block reveal">
-          <p class="narration-text">
-            In the suburban sprawl of Thornhill, Ontario, a young Josh Gofman did something that most people only talk about at dinner parties: he <em>actually started a business</em>. Not just any business. A yoga studio. WYNN Yoga. He grew it into the largest studio in the city, the only one with a fitness offering alongside the stretching and the silence.
+
+        <div class="prophecy-box reveal">
+          <p class="prophecy-text">
+            "When the Matrix was first built, there was a man born inside<br>
+            who had the ability to change whatever he wanted,<br>
+            to remake the <span class="highlight">menu</span> as he saw fit.<br><br>
+            He would come from the <span class="highlight">frozen north</span>,<br>
+            trained in the ancient art of <span class="highlight">flexibility</span>,<br>
+            and he would migrate south to a land of <span class="highlight">mountains and wine</span>,<br>
+            where he would free the restaurants from their <span class="highlight">laminated prisons</span>.<br><br>
+            His name would be an acronym for something motivational.<br>
+            He would register it on <span class="highlight">Urban Dictionary</span>.<br>
+            That is how you will know him."
           </p>
-          <br>
-          <p class="narration-text">
-            He even coined the name himself. W.Y.N.N. <em>"What You Need Now."</em> Then, in a move of staggering commitment, he registered the definition on Urban Dictionary. This is a man who does not do things halfway.
-          </p>
-          <br>
-          <p class="narration-text">
-            For years, this was his world. Mats and mantras. Breath and balance. A quiet kingdom of downward dogs and sun salutations. And then, with no warning that anyone can recall, he <em>left</em>.
-          </p>
-          <div class="narration-aside">
-            <div class="narration-aside-label">Field researcher's annotation:</div>
-            <div class="narration-aside-text">When asked why he left yoga for restaurant tech, most of his former students just stare into the middle distance and whisper "we never saw it coming." One of them is still holding a tree pose.</div>
+          <div class="prophecy-attribution">
+            THE ORACLE, CAPE TOWN CONSTRUCT, CIRCA 2019
           </div>
         </div>
       </div>
     </section>
 
-    <!-- HABITAT CARDS -->
-    <section class="habitat-section" data-narrator="Every creature is shaped by the places it inhabits. The Gofman is no exception." data-episode="II. Habitat">
+    <!-- SYSTEM LOG -->
+    <section class="log-section">
       <div class="container">
         <div class="section-header reveal">
-          <span class="label">Observation III</span>
-          <h2 class="section-title">Known Habitats</h2>
-          <p class="section-desc">The Gofman has been observed in two primary environments, each leaving a distinct mark on its development.</p>
+          <span class="label">OPERATOR FEED</span>
+          <h2 class="section-title">System Log: Gofman.exe</h2>
+          <p class="section-desc">Real-time event log tracking the subject's journey through the Matrix.</p>
         </div>
 
-        <div class="habitat-cards reveal">
-          <div class="habitat-card">
-            <span class="habitat-card-badge former">Former</span>
-            <div class="habitat-img"><img src="img/habitat-canada.png" alt="Thornhill, Ontario"></div>
-            <div class="habitat-body">
-              <div class="habitat-name">Thornhill, Ontario</div>
-              <div class="habitat-region">Greater Toronto Area, Canada</div>
-              <div class="habitat-desc">A suburban environment known for strip malls, hockey culture, and a surprising number of yoga studios (one of which was significantly larger than the rest, for reasons that should be obvious by now). Climate: cold enough to make you dream of Africa.</div>
-            </div>
+        <div class="system-log reveal">
+          <div class="log-bar">
+            <div class="log-bar-dot"></div>
+            <div class="log-bar-title">OPERATOR CONSOLE // LIVE FEED</div>
           </div>
-          <div class="habitat-card">
-            <span class="habitat-card-badge current">Current</span>
-            <div class="habitat-img"><img src="img/habitat-capetown.png" alt="Cape Town"></div>
-            <div class="habitat-body">
-              <div class="habitat-name">Cape Town, Western Cape</div>
-              <div class="habitat-region">Republic of South Africa</div>
-              <div class="habitat-desc">A coastal metropolis with world-class dining, exceptional wine, and a mountain in the middle of it. The perfect environment for a specimen whose primary skill is making food look irresistible on screens. Coincidence? Researchers think not.</div>
-            </div>
-          </div>
-          <div class="habitat-card">
-            <span class="habitat-card-badge former">Former</span>
-            <div class="habitat-img"><img src="img/habitat-yoga.png" alt="WYNN Yoga"></div>
-            <div class="habitat-body">
-              <div class="habitat-name">WYNN Yoga Studio</div>
-              <div class="habitat-region">Thornhill, Ontario (microhabitat)</div>
-              <div class="habitat-desc">The largest yoga studio in Thornhill and the only one with a fitness component. Operated by the specimen for several years before being abandoned during what scientists now call "The Great Pivot." The studio's legacy lives on in the flexibility of everyone who attended and the Urban Dictionary entry that defines its name.</div>
-            </div>
-          </div>
-          <div class="habitat-card">
-            <span class="habitat-card-badge current">Current</span>
-            <div class="habitat-img"><img src="img/habitat-restaurant.png" alt="Restaurant scene"></div>
-            <div class="habitat-body">
-              <div class="habitat-name">Cape Town Restaurant Scene</div>
-              <div class="habitat-region">Western Cape (ecosystem)</div>
-              <div class="habitat-desc">The specimen's current primary ecosystem. Through EatApp Menu, Gofman has integrated himself into the digital infrastructure of Cape Town dining. Restaurants using his technology report that customers order more, linger longer, and occasionally weep at the beauty of a well-photographed lamb shank.</div>
-            </div>
+          <div class="log-body">
+            <div class="log-entry"><span class="ts">[YEAR.01]</span> <span class="level-info">[INFO]</span> <span class="msg">Subject <span class="val">GOFMAN</span> detected in Ontario sector. Status:</span> <span class="val">UNAWARE</span></div>
+            <div class="log-entry"><span class="ts">[YEAR.02]</span> <span class="level-info">[INFO]</span> <span class="msg">Subject initializing process: <span class="val">WYNN_YOGA.exe</span></span></div>
+            <div class="log-entry"><span class="ts">[YEAR.03]</span> <span class="level-info">[INFO]</span> <span class="msg">WYNN Yoga now largest studio in Thornhill. Fitness module: <span class="val">ENABLED</span></span></div>
+            <div class="log-entry"><span class="ts">[YEAR.04]</span> <span class="level-info">[INFO]</span> <span class="msg">Subject registers acronym on Urban Dictionary. Commitment level: <span class="val">EXTREME</span></span></div>
+            <div class="log-entry"><span class="ts">[YEAR.05]</span> <span class="level-warn">[WARN]</span> <span class="msg">Anomaly detected. Subject questioning the nature of <span class="val">PRINTED MENUS</span></span></div>
+            <div class="log-entry"><span class="ts">[YEAR.06]</span> <span class="level-warn">[WARN]</span> <span class="msg">Subject beginning to see the code. Restaurant industry matrix: <span class="val">VISIBLE</span></span></div>
+            <div class="log-entry"><span class="ts">[YEAR.07]</span> <span class="level-critical">[CRITICAL]</span> <span class="msg">WYNN_YOGA.exe terminated. New process: <span class="val">EATAPP_MENU.exe</span></span></div>
+            <div class="log-entry"><span class="ts">[YEAR.08]</span> <span class="level-critical">[CRITICAL]</span> <span class="msg">Subject building POS-integrated digital menu platform. Threat to paper menus: <span class="val">MAXIMUM</span></span></div>
+            <div class="log-entry"><span class="ts">[YEAR.09]</span> <span class="level-critical">[CRITICAL]</span> <span class="msg">Subject relocating to <span class="val">CAPE TOWN SECTOR</span>. Cross-hemispheric migration detected</span></div>
+            <div class="log-entry"><span class="ts">[YEAR.10]</span> <span class="level-critical">[CRITICAL]</span> <span class="msg">Restaurants converting to digital menus at accelerating rate. The Matrix is destabilizing.</span></div>
+            <div class="log-entry"><span class="ts">[NOW]&nbsp;&nbsp;&nbsp;</span> <span class="level-critical">[CRITICAL]</span> <span class="msg">Subject status: <span class="val">FULLY AWAKENED</span>. Containment: <span class="val">IMPOSSIBLE</span></span></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- MIGRATION -->
-    <section class="migration-section" data-narrator="The migration patterns of the Gofman defy conventional understanding." data-episode="III. Migration">
+    <!-- TRAINING PROGRAM -->
+    <section class="training-section">
       <div class="container">
         <div class="section-header reveal">
-          <span class="label">Observation IV</span>
-          <h2 class="section-title">Migration Pattern</h2>
-          <p class="section-desc">Most creatures migrate for food or warmth. The Gofman migrated because he had a better idea.</p>
+          <span class="label">CONSTRUCT PROGRAM</span>
+          <h2 class="section-title">Training Protocols</h2>
+          <p class="section-desc">"I know Kung Fu." "Show me." Except in this case, it was yoga. And then it was restaurant technology. The training program was... unconventional.</p>
         </div>
 
-        <div class="migration-path reveal">
-          <div class="migration-stop">
-            <div class="migration-season">Early Period</div>
-            <div class="migration-place">Ontario: The Nesting Phase</div>
-            <div class="migration-observation">The Gofman establishes territory in Thornhill. Builds WYNN Yoga from scratch. Demonstrates a rare capacity for both physical discipline and entrepreneurial ambition. The local population responds positively. The mat is warm. The studio thrives.</div>
+        <div class="training-hero-img reveal">
+          <img src="img/dojo.png" alt="">
+        </div>
+
+        <div class="training-grid reveal" id="trainingGrid">
+          <div class="training-card">
+            <div class="training-card-label">PROTOCOL 01</div>
+            <div class="training-card-title">FLEXIBILITY.SYS</div>
+            <div class="training-card-desc">Years of yoga instruction at WYNN gave the subject superhuman ability to pivot. Literally and figuratively. When the Matrix threw a career change at him, he just... bent.</div>
+            <div class="training-card-bar"><div class="training-card-fill" data-width="95"></div></div>
           </div>
-          <div class="migration-stop">
-            <div class="migration-season">Transitional Period</div>
-            <div class="migration-place">The Restlessness</div>
-            <div class="migration-observation">Something shifts. Researchers have spent years debating what triggered it. Was it a particularly uninspiring paper menu at a Thornhill restaurant? A vision during savasana? The realization that "What You Need Now" could apply to more than yoga? Whatever it was, the Gofman begins to turn his attention toward food.</div>
+          <div class="training-card">
+            <div class="training-card-label">PROTOCOL 02</div>
+            <div class="training-card-title">ENTREPRENEUR.DAT</div>
+            <div class="training-card-desc">Built the largest yoga studio in Thornhill before most people finish writing a business plan. Then abandoned it for something bigger. Startup energy that borders on the supernatural.</div>
+            <div class="training-card-bar"><div class="training-card-fill" data-width="92"></div></div>
           </div>
-          <div class="migration-stop">
-            <div class="migration-season">The Pivot</div>
-            <div class="migration-place">EatApp: A New Species Emerges</div>
-            <div class="migration-observation">The Gofman founds EatApp Menu, a platform that transforms static restaurant menus into interactive digital experiences with POS integration. The yoga community mourns. The restaurant industry, unaware of what is about to happen to it, continues printing laminated menus in blissful ignorance.</div>
+          <div class="training-card">
+            <div class="training-card-label">PROTOCOL 03</div>
+            <div class="training-card-title">MIGRATION.EXE</div>
+            <div class="training-card-desc">Relocated from Canada to Cape Town without flinching. Most people can't move neighborhoods without a support group. The Gofman moved hemispheres like he was changing tabs.</div>
+            <div class="training-card-bar"><div class="training-card-fill" data-width="98"></div></div>
           </div>
-          <div class="migration-stop">
-            <div class="migration-season">The Great Migration</div>
-            <div class="migration-place">Destination: Cape Town</div>
-            <div class="migration-observation">In a move that stunned naturalists, the Gofman crosses the Atlantic entirely, relocating from Canada to South Africa. Cape Town's combination of world-class food culture, natural beauty, and an emerging tech scene creates the ideal environment. The specimen thrives immediately. Table Mountain provides a dramatic backdrop for what is essentially a one-man restaurant revolution.</div>
-          </div>
-          <div class="migration-stop">
-            <div class="migration-season">Present Day</div>
-            <div class="migration-place">Fully Established</div>
-            <div class="migration-observation">The Gofman now moves freely through Cape Town's dining ecosystem, leaving a trail of beautifully digitized menus and slightly overwhelmed restaurant owners in his wake. Attempts to predict his next move have proven futile. He is, by all accounts, exactly where he's supposed to be.</div>
+          <div class="training-card">
+            <div class="training-card-label">PROTOCOL 04</div>
+            <div class="training-card-title">MENU_VISION.AI</div>
+            <div class="training-card-desc">The ability to look at any restaurant menu and immediately see what it could be. Digital, interactive, POS-integrated, beautiful. He doesn't just read menus. He sees through them.</div>
+            <div class="training-card-bar"><div class="training-card-fill" data-width="100"></div></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- BEHAVIORAL TRAITS -->
-    <section data-narrator="Observe the behavior carefully. Each trait reveals something extraordinary." data-episode="IV. Behavior">
+    <!-- AGENTS -->
+    <section class="agents-section">
       <div class="container">
         <div class="section-header reveal">
-          <span class="label">Observation V</span>
-          <h2 class="section-title">Behavioral Analysis</h2>
-          <p class="section-desc">Key behaviors observed during extended fieldwork.</p>
+          <span class="label">HOSTILE PROGRAMS</span>
+          <h2 class="section-title">The Agents</h2>
+          <p class="section-desc">Every system has its enforcers. These are the programs designed to preserve the old order and prevent the Gofman from changing anything.</p>
         </div>
 
-        <div class="traits-grid reveal">
-          <div class="trait-card">
-            <div class="trait-icon"><img src="img/trait-adapt.png" alt=""></div>
-            <div class="trait-name">Radical Adaptation</div>
-            <div class="trait-desc">Capable of completely reinventing itself across industries and continents. Most creatures specialize. The Gofman generalizes, then specializes in the new thing better than most.</div>
+        <div class="agents-grid reveal">
+          <div class="agent-card">
+            <div class="agent-icon">A.L</div>
+            <div class="agent-name">Agent Laminate</div>
+            <div class="agent-role">MENU PRESERVATION UNIT</div>
+            <div class="agent-desc">"We've always done it this way." Guards the sacred tradition of sticky, faded paper menus. Has been defending the same specials insert since 2003.</div>
+            <div class="agent-status">STATUS: LOSING</div>
           </div>
-          <div class="trait-card">
-            <div class="trait-icon"><img src="img/trait-digital.png" alt=""></div>
-            <div class="trait-name">Digital Symbiosis</div>
-            <div class="trait-desc">Has formed a symbiotic relationship with restaurant technology. The restaurants provide the food; the Gofman provides the platform that makes the food irresistible before it even arrives at the table.</div>
+          <div class="agent-card">
+            <div class="agent-icon">A.P</div>
+            <div class="agent-name">Agent Printer</div>
+            <div class="agent-role">ANALOG ENFORCEMENT</div>
+            <div class="agent-desc">"You'll need 500 copies of that." The physical manifestation of the printing industry's resistance to digital menus. Carries a stapler at all times.</div>
+            <div class="agent-status">STATUS: OBSOLETE</div>
           </div>
-          <div class="trait-card">
-            <div class="trait-icon"><img src="img/trait-flex.png" alt=""></div>
-            <div class="trait-name">Residual Flexibility</div>
-            <div class="trait-desc">Despite having left the yoga world, the specimen retains unusual physical and mental flexibility. This manifests as the ability to pivot, bend deadlines, and stretch a metaphor further than any reasonable person would.</div>
-          </div>
-          <div class="trait-card">
-            <div class="trait-icon"><img src="img/trait-bold.png" alt=""></div>
-            <div class="trait-name">Hemispheric Boldness</div>
-            <div class="trait-desc">The decision to move from Thornhill to Cape Town suggests a specimen unafraid of dramatic environmental change. Most entrepreneurs stay in their biome. The Gofman simply chose a better one.</div>
-          </div>
-          <div class="trait-card">
-            <div class="trait-icon"><img src="img/trait-name.png" alt=""></div>
-            <div class="trait-name">Nomenclature Drive</div>
-            <div class="trait-desc">Has a documented compulsion to name and define things. See: coining "WYNN" and then registering it on Urban Dictionary. This is the behavior of a creature that needs the world to understand its vocabulary.</div>
-          </div>
-          <div class="trait-card">
-            <div class="trait-icon"><img src="img/trait-palate.png" alt=""></div>
-            <div class="trait-name">Elevated Palate</div>
-            <div class="trait-desc">Extended time in Cape Town's food scene has resulted in a palate that makes normal menus look insufficient. The specimen reportedly cannot eat anywhere without mentally redesigning the menu.</div>
+          <div class="agent-card">
+            <div class="agent-icon">A.C</div>
+            <div class="agent-name">Agent Comfort</div>
+            <div class="agent-role">CHANGE PREVENTION</div>
+            <div class="agent-desc">"Why would you leave a successful yoga studio?" The voice that tells every entrepreneur to stay safe. The Gofman walked right through this one.</div>
+            <div class="agent-status">STATUS: DEFEATED</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- DIET -->
-    <section class="diet-section" data-narrator="What does the Gofman consume? The answer is more complex than you might expect." data-episode="V. Diet">
+    <!-- INTERCEPTED TRANSMISSIONS -->
+    <section class="transmission-section">
       <div class="container">
         <div class="section-header reveal">
-          <span class="label">Observation VI</span>
-          <h2 class="section-title">Dietary Composition</h2>
-          <p class="section-desc">A breakdown of what sustains the specimen, both literally and figuratively.</p>
+          <span class="label">INTERCEPTED SIGNALS</span>
+          <h2 class="section-title">Operator Transcripts</h2>
+          <p class="section-desc">Communications intercepted from within the Matrix. The resistance is growing.</p>
         </div>
 
-        <div class="diet-wheel reveal" id="dietWheel">
-          <div class="diet-item">
-            <div class="diet-icon"><img src="img/diet-idea.png" alt=""></div>
-            <div class="diet-info">
-              <div class="diet-name">New ideas at 2 AM</div>
-              <div class="diet-note">Primary energy source. Arrives uninvited.</div>
+        <div class="transmissions reveal">
+          <div class="transmission">
+            <div class="transmission-header">
+              <div class="transmission-avatar">OP1</div>
+              <div class="transmission-meta">
+                <strong>Operator, V&A Waterfront Node</strong>
+                <span>SIGNAL INTERCEPTED 14:32 SAST</span>
+              </div>
             </div>
-            <div class="diet-bar-track"><div class="diet-bar-fill gold" data-width="95"></div></div>
+            <div class="transmission-body">"He walked into the restaurant, looked at the paper menu for exactly four seconds, then pulled out his phone. Two weeks later, the entire restaurant was on EatApp. The owner says dessert sales tripled. I don't think the owner fully understands what happened."</div>
           </div>
-          <div class="diet-item">
-            <div class="diet-icon"><img src="img/diet-wine.png" alt=""></div>
-            <div class="diet-info">
-              <div class="diet-name">Western Cape wine</div>
-              <div class="diet-note">For research purposes only, obviously.</div>
+          <div class="transmission">
+            <div class="transmission-header">
+              <div class="transmission-avatar">OP2</div>
+              <div class="transmission-meta">
+                <strong>Operator, Thornhill Archive</strong>
+                <span>SIGNAL INTERCEPTED 09:15 EST</span>
+              </div>
             </div>
-            <div class="diet-bar-track"><div class="diet-bar-fill warm" data-width="82"></div></div>
+            <div class="transmission-body">"He was the best instructor we ever had at WYNN. Then one morning he said 'I need to do something about menus' and we thought he was having a breakdown. It was not a breakdown. It was an awakening."</div>
           </div>
-          <div class="diet-item">
-            <div class="diet-icon"><img src="img/diet-data.png" alt=""></div>
-            <div class="diet-info">
-              <div class="diet-name">Restaurant analytics dashboards</div>
-              <div class="diet-note">Checks these more than most people check Instagram.</div>
+          <div class="transmission">
+            <div class="transmission-header">
+              <div class="transmission-avatar">OP3</div>
+              <div class="transmission-meta">
+                <strong>Operator, Stellenbosch Sector</strong>
+                <span>SIGNAL INTERCEPTED 16:45 SAST</span>
+              </div>
             </div>
-            <div class="diet-bar-track"><div class="diet-bar-fill gold" data-width="88"></div></div>
+            <div class="transmission-body">"Spotted the subject at a wine estate. He complimented the Chenin Blanc. Then asked if they'd considered making their tasting menu interactive. The sommelier looked confused. The sommelier will not be confused for long."</div>
           </div>
-          <div class="diet-item">
-            <div class="diet-icon"><img src="img/diet-sun.png" alt=""></div>
-            <div class="diet-info">
-              <div class="diet-name">Cape Town sunshine</div>
-              <div class="diet-note">A significant upgrade from the Ontario variety.</div>
+          <div class="transmission">
+            <div class="transmission-header">
+              <div class="transmission-avatar">OP4</div>
+              <div class="transmission-meta">
+                <strong>Operator, Deep Cover</strong>
+                <span>SIGNAL INTERCEPTED 22:08 SAST</span>
+              </div>
             </div>
-            <div class="diet-bar-track"><div class="diet-bar-fill sage" data-width="90"></div></div>
-          </div>
-          <div class="diet-item">
-            <div class="diet-icon"><img src="img/diet-meal.png" alt=""></div>
-            <div class="diet-info">
-              <div class="diet-name">Meals at restaurants he's digitized</div>
-              <div class="diet-note">Quality assurance. Strictly professional.</div>
-            </div>
-            <div class="diet-bar-track"><div class="diet-bar-fill warm" data-width="76"></div></div>
-          </div>
-          <div class="diet-item">
-            <div class="diet-icon"><img src="img/diet-yoga.png" alt=""></div>
-            <div class="diet-info">
-              <div class="diet-name">Residual yoga energy</div>
-              <div class="diet-note">Still metabolizing years of stored namaste.</div>
-            </div>
-            <div class="diet-bar-track"><div class="diet-bar-fill sage" data-width="35"></div></div>
+            <div class="transmission-body">"I was assigned to observe him at a restaurant running EatApp. Observe only. Do not engage. I ordered the tasting menu within 7 minutes. The digital menu made the lamb shank look like a religious experience. I'm compromised. Requesting extraction."</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- VOCALIZATIONS -->
-    <section class="call-section" data-narrator="Every creature has its call. The Gofman's is... distinctive." data-episode="VI. Vocalizations">
+    <!-- OPERATOR CONSOLE -->
+    <section class="console-section">
       <div class="container">
         <div class="section-header reveal">
-          <span class="label">Observation VII</span>
-          <h2 class="section-title">Documented Vocalizations</h2>
-          <p class="section-desc">Field researchers have catalogued the following phrases, each observed in the wild during various stages of the specimen's daily cycle.</p>
+          <span class="label">INTERACTIVE CONSTRUCT</span>
+          <h2 class="section-title">Operator Console</h2>
+          <p class="section-desc">Query the Matrix for Gofman intelligence. What do you need to know?</p>
         </div>
 
-        <div class="call-box reveal">
-          <div class="call-prompt">Press to hear a documented Gofman vocalization</div>
-          <button class="call-btn" onclick="playCall()">Observe Vocalization</button>
-          <div class="call-output" id="callOutput">
-            <div style="text-align:center;font-family:'Caveat',cursive;color:var(--text-dim);font-size:1rem;">Awaiting observation...</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FIELD NOTES -->
-    <section data-narrator="The researchers have been thorough. Perhaps too thorough." data-episode="VII. Field Notes">
-      <div class="container">
-        <div class="section-header reveal">
-          <span class="label">Observation VIII</span>
-          <h2 class="section-title">Researcher Field Notes</h2>
-          <p class="section-desc">Handwritten observations from field researchers stationed across the Western Cape.</p>
-        </div>
-
-        <div class="notes-grid reveal">
-          <div class="field-note">
-            <div class="field-note-date">Day 12, Camps Bay</div>
-            <div class="field-note-text">Spotted the Gofman at a beachfront restaurant. He wasn't eating. He was staring at the menu with the intensity of someone defusing a bomb. After 4 minutes, he pulled out his phone and started taking notes. The waiter looked concerned. I don't think the waiter understands what's happening to his menu.</div>
-            <div class="field-note-author">Researcher A, Cape Town Field Office</div>
-          </div>
-          <div class="field-note">
-            <div class="field-note-date">Day 27, Stellenbosch</div>
-            <div class="field-note-text">Subject was observed at a wine estate. Tasted 6 wines. Complimented each one. Then asked if their tasting menu was digital. When told it was printed, his expression suggested he'd just been shown a fax machine. He left his business card. I give that paper menu 3 weeks.</div>
-            <div class="field-note-author">Researcher B, Winelands Division</div>
-          </div>
-          <div class="field-note">
-            <div class="field-note-date">Day 41, Video Call Intercept</div>
-            <div class="field-note-text">Overheard the specimen on a video call explaining EatApp to a potential client. His passion for digital menus is the kind of energy usually reserved for people describing their firstborn child. The client signed up before the call ended. I'm beginning to think resistance is futile.</div>
-            <div class="field-note-author">Researcher C, Digital Surveillance</div>
-          </div>
-          <div class="field-note">
-            <div class="field-note-date">Day 58, Long Street</div>
-            <div class="field-note-text">Attempted to engage the specimen in conversation about his yoga past. He smiled politely and changed the subject to restaurant technology within 90 seconds. It was the smoothest topic pivot I've ever witnessed. Years of yoga transitions clearly trained him for conversational flexibility.</div>
-            <div class="field-note-author">Researcher D, Behavioral Analysis</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- QUIZ -->
-    <section class="quiz-section" data-narrator="And now... a moment of participation." data-episode="VIII. Classification">
-      <div class="container">
-        <div class="section-header reveal">
-          <span class="label">Observation IX</span>
-          <h2 class="section-title">Species Compatibility Assessment</h2>
-          <p class="section-desc">Determine which species you are, and how compatible you'd be sharing an ecosystem with the Gofman.</p>
-        </div>
-
-        <div class="quiz-box reveal">
-          <div id="quizContainer">
-            <div class="quiz-question" id="quizQuestion"></div>
-            <div class="quiz-options" id="quizOptions"></div>
-            <div class="quiz-nav">
-              <button class="quiz-nav-btn" id="quizPrev" onclick="quizPrev()" disabled>Previous</button>
-              <span class="quiz-progress" id="quizProgress"></span>
-              <button class="quiz-nav-btn" id="quizNext" onclick="quizNext()">Next</button>
+        <div class="console-box reveal">
+          <div class="console-bar">OPERATOR CONSOLE v4.1 // CAPE TOWN NODE</div>
+          <div class="console-body">
+            <div class="console-prompt">root@matrix:~$ query gofman --random</div>
+            <button class="console-btn" onclick="queryMatrix()">EXECUTE QUERY</button>
+            <div class="console-output" id="consoleOutput">
+              <div class="co-line co-dim">Awaiting input...</div>
             </div>
           </div>
-          <div class="quiz-result" id="quizResult">
-            <div class="quiz-result-species" id="quizSpecies"></div>
-            <div class="quiz-result-desc" id="quizDesc"></div>
-            <div class="quiz-result-compat" id="quizCompat"></div>
-          </div>
         </div>
       </div>
     </section>
 
-    <!-- CONSERVATION -->
-    <section class="conservation-section" data-narrator="Some things are too rare to let the world overlook them." data-episode="IX. Conservation">
+    <!-- CAPE TOWN SKYLINE -->
+    <section>
       <div class="container">
-        <div class="section-header reveal">
-          <span class="label">Observation X</span>
-          <h2 class="section-title">Conservation Assessment</h2>
-        </div>
-
-        <div class="conservation-card reveal">
-          <div class="conservation-badge">Status: Thriving Brilliantly</div>
-          <p class="conservation-text">
-            After extensive observation, the Cape Town Natural History Society has concluded that the Gofman requires no protection. If anything, the rest of us need protection from the quiet, relentless way he makes everything around him better.
-          </p>
-          <p class="conservation-text">
-            He took a yoga studio in Thornhill and made it the biggest in the city. He took restaurant menus and turned them into experiences. He took himself from Ontario to Cape Town and made it look like the most natural migration in the world.
-          </p>
-          <p class="conservation-text" style="color: var(--gold);">
-            The Gofman doesn't need to be conserved. He needs to be appreciated. Preferably over a well-plated meal, viewed on a beautifully designed digital menu.
-          </p>
-          <div class="conservation-fine-print">Classification verified by peer review · No objections recorded · One reviewer simply wrote "yeah, sounds about right"</div>
+        <div class="skyline-img reveal">
+          <img src="img/skyline.png" alt="">
         </div>
       </div>
     </section>
 
-    <!-- CLOSING -->
-    <section class="closing-section reveal">
+    <!-- HE IS THE ONE -->
+    <section class="one-section reveal">
       <div class="container">
-        <h2 class="closing-title">End of Observation</h2>
-        <p class="closing-text">
-          The Gofman continues to operate in the wild, unbothered by classification, undeterred by the distance between who he was and who he's becoming. We will continue to watch. And, inevitably, to eat.
+        <h2 class="one-title">HE IS THE ONE</h2>
+        <p class="one-text">
+          He came from Thornhill, Ontario. He built the biggest yoga studio in the city, then walked away from it. He founded EatApp Menu and began transforming how restaurants connect with their customers. He moved to Cape Town because he saw something the rest of us couldn't see yet.
         </p>
-        <div class="closing-credits">
-          A Cape Town Natural History Society Production<br>
-          Filmed entirely without the subject's knowledge<br>
-          (He was probably too busy redesigning a menu to notice)<br><br>
-          No paper menus were harmed in the making of this documentary<br>
-          (Several were gently retired)
+        <p class="one-text">
+          The agents of the old world tried to stop him. The paper menus. The "we've always done it this way." The comfort of staying put. He walked through all of them.
+        </p>
+        <p class="one-text-bright">
+          Josh Gofman didn't just take the red pill. He built the red pill, branded it, integrated it with a POS system, and made it available on iOS and Android.
+        </p>
+        <div class="one-credits">
+          A PRODUCTION OF THE RESISTANCE<br>
+          CAPE TOWN CONSTRUCT // ZION MAINFRAME<br><br>
+          NO PAPER MENUS WERE HARMED IN THE MAKING OF THIS SITE<br>
+          (SEVERAL WERE GENTLY DEPRECATED)<br><br>
+          "THERE IS NO MENU" // THE GOFMAN, PROBABLY
         </div>
       </div>
     </section>
@@ -1315,23 +1082,74 @@
   </main>
 
   <script>
+    // ============ MATRIX RAIN ============
+    const canvas = document.getElementById('matrixCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789EATAPPMENU';
+    const fontSize = 14;
+    let columns = Math.floor(canvas.width / fontSize);
+    let drops = new Array(columns).fill(1);
+
+    function drawMatrix() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#00ff41';
+      ctx.font = fontSize + 'px monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+      }
+    }
+
+    setInterval(drawMatrix, 50);
+
+    window.addEventListener('resize', () => {
+      columns = Math.floor(canvas.width / fontSize);
+      drops = new Array(columns).fill(1);
+    });
+
+    // ============ SPLASH TYPING ============
+    const splashLines = [
+      { id: 'tl1', delay: 500 },
+      { id: 'tl2', delay: 2000 },
+      { id: 'tl4', delay: 4000 },
+      { id: 'tl6', delay: 6000 },
+    ];
+
+    splashLines.forEach(l => {
+      setTimeout(() => {
+        document.getElementById(l.id).classList.add('visible');
+      }, l.delay);
+    });
+
+    setTimeout(() => {
+      document.getElementById('splashEnter').classList.add('visible');
+    }, 7500);
+
+    // ============ ENTER ============
     function enterSite() {
       document.getElementById('splash').classList.add('hidden');
       document.getElementById('mainContent').style.display = 'block';
-      setTimeout(() => {
-        document.getElementById('episodeTracker').classList.add('visible');
-        document.getElementById('narratorBar').classList.add('visible');
-      }, 600);
-      initQuiz();
     }
 
-    // Scroll reveals + diet bars
+    // ============ SCROLL REVEALS ============
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (e.isIntersecting) {
           e.target.classList.add('visible');
-          if (e.target.id === 'dietWheel') {
-            e.target.querySelectorAll('.diet-bar-fill').forEach(bar => {
+          if (e.target.id === 'trainingGrid') {
+            e.target.querySelectorAll('.training-card-fill').forEach(bar => {
               bar.style.width = bar.dataset.width + '%';
             });
           }
@@ -1340,164 +1158,119 @@
     }, { threshold: 0.15 });
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    // Narrator + episode
-    const sectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          const narration = e.target.dataset.narrator;
-          const episode = e.target.dataset.episode;
-          if (narration) document.getElementById('narratorText').textContent = narration;
-          if (episode) document.getElementById('epTitle').textContent = episode;
-        }
-      });
-    }, { threshold: 0.3 });
-    document.querySelectorAll('section[data-narrator]').forEach(el => sectionObserver.observe(el));
+    // ============ PILL CHOICE ============
+    let pillChosen = false;
 
-    // Vocalizations
-    const calls = [
-      { text: '"Have you considered going digital with your menu?"', context: 'Observed during 94% of all social interactions, including weddings.' },
-      { text: '"What you need now... is a better menu experience."', context: 'The WYNN philosophy, repurposed for its true calling.' },
-      { text: '"No, no, the font is wrong. The customer needs to FEEL the risotto."', context: 'Overheard during a 3-hour menu design session.' },
-      { text: '"I used to teach people to breathe. Now I teach menus to breathe."', context: 'Said with complete sincerity. The listener needed a moment.' },
-      { text: '"Back in Thornhill, we had a saying at the studio..."', context: 'He never finishes this sentence. The yoga past is a door he opens but never walks through.' },
-      { text: '"That lamb shank photo is at a 7. I need it at a 12."', context: 'Scale goes to 10. The Gofman operates beyond conventional metrics.' },
-      { text: '"Cape Town doesn\'t have a restaurant problem. It has a menu problem. I\'m fixing it."', context: 'The quiet confidence of a man who moved hemispheres for better menus.' },
-      { text: '"You know what WYNN stands for? What You Need Now. And right now, you need this app."', context: 'The original acronym finds its final form.' },
-      { text: '"Namaste... and also, check out this new feature we launched."', context: 'The yoga-to-tech pipeline in a single sentence.' },
-      { text: '"I didn\'t leave yoga. Yoga prepared me for this."', context: 'Deep. Possibly true. Researchers are still debating.' },
-    ];
-    let lastCallIdx = -1;
+    function choosePill(color) {
+      if (pillChosen) return;
+      pillChosen = true;
 
-    function playCall() {
-      let idx;
-      do { idx = Math.floor(Math.random() * calls.length); } while (idx === lastCallIdx);
-      lastCallIdx = idx;
-      const c = calls[idx];
-      document.getElementById('callOutput').innerHTML = `
-        <div class="call-text">${c.text}</div>
-        <div class="call-context">${c.context}</div>
-      `;
-    }
+      const red = document.getElementById('pillRed');
+      const blue = document.getElementById('pillBlue');
+      const result = document.getElementById('pillResult');
+      const text = document.getElementById('pillResultText');
 
-    // Quiz
-    const quizData = [
-      {
-        q: 'A restaurant hands you a paper menu. Your first thought is:',
-        opts: [
-          'Finally, something tangible.',
-          'This could use some better typography.',
-          'Why isn\'t this on my phone?',
-          'I wonder what the specials are that aren\'t on here.'
-        ]
-      },
-      {
-        q: 'Someone tells you they\'re moving to a different continent. You think:',
-        opts: [
-          'That\'s terrifying.',
-          'That\'s exciting, but I\'d need a plan first.',
-          'Where? When? I\'ll help you pack.',
-          'I\'ve been thinking about that too, actually.'
-        ]
-      },
-      {
-        q: 'Your approach to yoga is best described as:',
-        opts: [
-          'Never tried it. Suspicious of the calm.',
-          'Occasionally, when my back hurts.',
-          'Regular practice. It centers me.',
-          'I built the largest yoga studio in my city, then left to build restaurant software.'
-        ]
-      },
-      {
-        q: 'At dinner, you spend the most time:',
-        opts: [
-          'Talking to the people I\'m with.',
-          'Savoring the food.',
-          'Analyzing the menu design.',
-          'Wondering if this restaurant has heard of EatApp.'
-        ]
-      }
-    ];
-
-    let quizStep = 0;
-    let quizAnswers = [];
-
-    function initQuiz() {
-      quizAnswers = new Array(quizData.length).fill(-1);
-      renderQuiz();
-    }
-
-    function renderQuiz() {
-      const q = quizData[quizStep];
-      document.getElementById('quizQuestion').textContent = q.q;
-      document.getElementById('quizOptions').innerHTML = q.opts.map((o, i) =>
-        `<div class="quiz-option ${quizAnswers[quizStep] === i ? 'selected' : ''}" onclick="selectOption(${i})">${o}</div>`
-      ).join('');
-      document.getElementById('quizProgress').textContent = `${quizStep + 1} of ${quizData.length}`;
-      document.getElementById('quizPrev').disabled = quizStep === 0;
-      document.getElementById('quizNext').textContent = quizStep === quizData.length - 1 ? 'See Results' : 'Next';
-    }
-
-    function selectOption(i) { quizAnswers[quizStep] = i; renderQuiz(); }
-    function quizPrev() { if (quizStep > 0) { quizStep--; renderQuiz(); } }
-
-    function quizNext() {
-      if (quizAnswers[quizStep] === -1) { showToast('Select an answer to continue'); return; }
-      if (quizStep < quizData.length - 1) { quizStep++; renderQuiz(); }
-      else { showQuizResult(); }
-    }
-
-    function showQuizResult() {
-      const score = quizAnswers.reduce((a, b) => a + b, 0);
-      document.getElementById('quizContainer').style.display = 'none';
-      const r = document.getElementById('quizResult');
-      let species, desc, compat;
-
-      if (score <= 4) {
-        species = 'Traditionalis steadfastus';
-        desc = 'You are a creature of stability, rooted in the familiar. You respect paper, prefer the known, and regard people who move continents with a mixture of awe and concern. You and the Gofman occupy different ecological niches, but you admire each other from a respectful distance.';
-        compat = 'Compatibility: Respectful coexistence';
-      } else if (score <= 8) {
-        species = 'Curiosus adaptabilis';
-        desc = 'You are flexible, open-minded, and intrigued by change even when you\'re not the one initiating it. You\'d try a digital menu. You\'d consider moving. You see the Gofman and think: I understand the impulse. You two could share an ecosystem very comfortably.';
-        compat = 'Compatibility: Natural allies';
-      } else if (score <= 12) {
-        species = 'Innovatus restlessus';
-        desc = 'You are a kindred spirit. Restless, visionary, probably already thinking about your next move. You and the Gofman would either become best friends or start a company together within 48 hours. Possibly both. Cape Town isn\'t big enough for two of you, but it would be entertaining.';
-        compat = 'Compatibility: Dangerously synergistic';
+      if (color === 'red') {
+        red.classList.add('chosen');
+        blue.classList.add('faded');
+        text.innerHTML = 'You chose wisely. The digital menu awaits. There is no going back to laminated specials.<br><br>Welcome to the real world.';
       } else {
-        species = 'Gofmanus entrepreneurius (variant)';
-        desc = 'You ARE a Gofman. Either you\'re Josh himself taking this quiz (in which case: hello, we see you), or you\'ve independently evolved the same traits. Either way, the world should be concerned. One of you is powerful. Two is an ecosystem event.';
-        compat = 'Compatibility: You might actually BE Josh Gofman';
+        blue.classList.add('chosen');
+        red.classList.add('faded');
+        text.innerHTML = 'You chose the paper menu. You will wake up tomorrow believing that a folded A4 with clip art is an acceptable dining experience.<br><br>Josh will be here when you\'re ready.';
       }
 
-      document.getElementById('quizSpecies').textContent = species;
-      document.getElementById('quizDesc').textContent = desc;
-      document.getElementById('quizCompat').textContent = compat;
-      r.classList.add('visible');
+      result.classList.add('visible');
     }
 
-    // Toast
-    function showToast(msg) {
-      const t = document.getElementById('toast');
-      t.textContent = msg;
-      t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 3000);
-    }
-
-    // Easter eggs
-    let heroClicks = 0;
-    document.addEventListener('DOMContentLoaded', () => {
-      const heroTitle = document.querySelector('.hero-title');
-      if (heroTitle) {
-        heroTitle.addEventListener('click', () => {
-          heroClicks++;
-          if (heroClicks === 3) showToast('The specimen acknowledges your persistence');
-          if (heroClicks === 7) { showToast('You have been added to the Gofman\'s dinner reservation'); heroClicks = 0; }
-        });
+    // ============ OPERATOR CONSOLE ============
+    const queries = [
+      {
+        query: 'query gofman --origin',
+        lines: [
+          '> ORIGIN: Thornhill, Ontario, Canada',
+          '> INITIAL_PROGRAM: WYNN_YOGA.exe',
+          '> STATUS: Largest yoga studio in Thornhill',
+          '> UNIQUE_FLAG: Only studio with fitness offering',
+          '> ACRONYM: W.Y.N.N. = "What You Need Now"',
+          '> URBAN_DICTIONARY: Entry confirmed. Commitment level off the charts.',
+        ]
+      },
+      {
+        query: 'query gofman --current_mission',
+        lines: [
+          '> ACTIVE_PROGRAM: EATAPP_MENU.exe',
+          '> FUNCTION: Digital restaurant menu platform',
+          '> INTEGRATION: POS-connected, iOS + Android',
+          '> LOCATION: Cape Town, Western Cape',
+          '> IMPACT: Restaurants reporting increased orders',
+          '> PAPER_MENU_STATUS: Endangered species',
+        ]
+      },
+      {
+        query: 'query gofman --threat_assessment',
+        lines: [
+          '> THREAT_TO_PAPER_MENUS: [##########] 100%',
+          '> THREAT_TO_COMFORT_ZONES: [########--] 80%',
+          '> THREAT_TO_BORING_DINING: [#########-] 95%',
+          '> CONTAINMENT_POSSIBLE: FALSE',
+          '> RECOMMENDATION: Do not engage. You will end up on EatApp.',
+        ]
+      },
+      {
+        query: 'query gofman --abilities',
+        lines: [
+          '> FLEXIBILITY: Superhuman (yoga-trained)',
+          '> PIVOT_SPEED: Industry-record',
+          '> MENU_VISION: Can see the digital future of any paper menu',
+          '> MIGRATION: Cross-hemispheric, no hesitation',
+          '> PERSUASION: Will have you on EatApp before dessert',
+          '> WEAKNESS: None found. Still searching.',
+        ]
+      },
+      {
+        query: 'query gofman --philosophy',
+        lines: [
+          '> CORE_BELIEF: "What You Need Now" applies to everything',
+          '> ON_YOGA: "It wasn\'t a career. It was training."',
+          '> ON_MENUS: "A menu is the first conversation a restaurant has with you."',
+          '> ON_CAPE_TOWN: "The right place finds you when you\'re ready."',
+          '> ON_CHANGE: "If the mat fits, stay. If it doesn\'t, build an app."',
+        ]
+      },
+      {
+        query: 'query gofman --prediction',
+        lines: [
+          '> MODELING FUTURE STATE...',
+          '> YEAR_1: Cape Town fully digitized',
+          '> YEAR_3: South Africa paper-menu-free',
+          '> YEAR_5: Global EatApp adoption',
+          '> YEAR_10: Josh still mentally redesigning every menu he sees',
+          '> CONFIDENCE: 97.3%',
+          '> NOTE: The remaining 2.7% is one very stubborn deli in Thornhill.',
+        ]
       }
-    });
+    ];
+    let lastQueryIdx = -1;
 
+    function queryMatrix() {
+      let idx;
+      do { idx = Math.floor(Math.random() * queries.length); } while (idx === lastQueryIdx);
+      lastQueryIdx = idx;
+      const q = queries[idx];
+      const output = document.getElementById('consoleOutput');
+      output.innerHTML = `<div class="co-line co-dim">root@matrix:~$ ${q.query}</div>`;
+
+      q.lines.forEach((line, i) => {
+        setTimeout(() => {
+          output.innerHTML += `<div class="co-line">${line}</div>`;
+          output.scrollTop = output.scrollHeight;
+        }, (i + 1) * 300);
+      });
+    }
+
+    // ============ EASTER EGGS ============
+    // Konami code
     const konami = ['ArrowUp','ArrowUp','ArrowDown','ArrowDown','ArrowLeft','ArrowRight','ArrowLeft','ArrowRight','b','a'];
     let kIdx = 0;
     document.addEventListener('keydown', e => {
@@ -1505,17 +1278,35 @@
         kIdx++;
         if (kIdx === konami.length) {
           kIdx = 0;
-          document.body.style.transition = 'filter 0.6s';
-          document.body.style.filter = 'sepia(0.6) brightness(1.1)';
-          showToast('Ontario Mode: Everything now looks like autumn in Thornhill');
-          setTimeout(() => { document.body.style.filter = ''; }, 6000);
+          document.getElementById('matrixCanvas').style.opacity = '0.25';
+          showToast('BULLET TIME ACTIVATED: The code is everywhere now');
+          setTimeout(() => { document.getElementById('matrixCanvas').style.opacity = '0.07'; }, 6000);
         }
       } else { kIdx = 0; }
     });
 
-    console.log('%cCape Town Natural History Society', 'font-size: 16px; color: #c4a470; font-weight: bold; font-style: italic;');
-    console.log('%cSpecimen File: Gofmanus entrepreneurius', 'font-size: 11px; color: #9a8e7e;');
-    console.log('%cIf you\'re reading this, you\'re exactly the kind of person Josh would hire.', 'font-size: 11px; color: #c4a470;');
+    // Triple click hero
+    let heroClicks = 0;
+    document.addEventListener('DOMContentLoaded', () => {
+      const h = document.querySelector('.hero-glitch');
+      if (h) h.addEventListener('click', () => {
+        heroClicks++;
+        if (heroClicks === 3) showToast('There is no spoon. There is no paper menu.');
+        if (heroClicks === 7) { showToast('FREE YOUR MIND: You have been unplugged'); heroClicks = 0; }
+      });
+    });
+
+    // Console
+    console.log('%cWAKE UP...', 'font-size: 20px; color: #00ff41; font-family: monospace;');
+    console.log('%cThe Matrix has you.', 'font-size: 12px; color: #5a5a5a; font-family: monospace;');
+    console.log('%cFollow the white rabbit: eatappmenu.com', 'font-size: 11px; color: #00ff41; font-family: monospace;');
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3500);
+    }
   </script>
 
 </body>
